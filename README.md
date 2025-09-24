@@ -4257,144 +4257,149 @@ Accuracy improvement: 35-50% higher
 
 ## Integration Summary
 
-These foundation implementations create the core infrastructure for the Triple-System Synergy. The REPL-Kernel Validation Pipeline provides real-time verification, the Background Self-Healing Environment ensures continuous system health, Smart Context Management optimizes our cognitive processing, and the Predictive Task Queuing system anticipates and prepares for future work. Together, they form a self-reinforcing system where each component improves the others' effectiveness, creating an exponentially more powerful development environment.
+这些基础实现构成了三系统协同的核心基础设施。REPL-内核验证流水线提供实时校验，后台自愈环境确保系统持续健康，智能上下文管理优化我们的认知处理，而预测式任务队列系统会提前预判并为未来工作做好准备。它们共同构成一个自我强化的体系，让每个组件相互提升效果，进而打造出指数级更强大的开发环境。
 
 ## Quick Reference Cards
+（快速参考卡片）
 
-> **🔥 Synergy Tip**: These quick references work best when combined. Example: Use Background Tasks + Status Line + Subagents for ultimate productivity.
+> **🔥 协同提示**：这些速查卡联合使用效果最佳。例如：同时使用后台任务 + 状态栏 + 子代理即可获得最高生产力。
 
-[↑ Back to Top](#quick-navigation)
+[↑ 返回顶部](#quick-navigation)
 
 ### Instant Command Reference
+（即时命令速查）
 ```bash
-# Background Tasks (NEW - Implementation evolving)
-npm run dev &                    # Run in background
-[NOTE: Commands below are from announcements, verify availability]
-/bashes                          # List background processes (verify)
-/bash-output <id>                # Check output (verify)
-/kill-bash <id>                  # Stop process (verify)
+# 后台任务（NEW - 实现仍在演进）
+npm run dev &                    # 后台运行
+[注意：下列命令来自官方公告，使用前请确认当前会话已支持]
+/bashes                          # 列出后台进程（待确认）
+/bash-output <id>                # 查看指定进程输出（待确认）
+/kill-bash <id>                  # 停止后台进程（待确认）
 
-# Status Line (NEW)
-/statusline git branch           # Show git branch
-/statusline "📍 $(pwd)"          # Show current directory
-/statusline custom               # Custom status
+# 状态栏（NEW）
+/statusline git branch           # 显示当前 Git 分支
+/statusline "📍 $(pwd)"          # 显示当前目录
+/statusline custom               # 自定义状态显示
 
-# Security
-[NOTE: /security-review is a custom command example, not built-in]
-# Create your own: ~/.claude/commands/security-review.md
+# 安全
+[注意：/security-review 是自定义命令示例，并非内置]
+# 可在 ~/.claude/commands/security-review.md 创建
 
-# Subagents (OFFICIAL)
-/agents                          # Manage subagents (OFFICIAL)
-@code-reviewer fix this          # Direct agent mention (per announcements)
-@architect design auth           # Call specific agent (per announcements)
+# 子代理（OFFICIAL）
+/agents                          # 管理子代理（官方支持）
+@code-reviewer fix this          # 指定代码审查代理（公告能力）
+@architect design auth           # 呼叫特定架构代理（公告能力）
 
-# Context Management
-/compact "focus on auth"         # Compact conversation (OFFICIAL)
-/add-dir ../other-project        # Add working directory (OFFICIAL)
-[NOTE: /microcompact mentioned in announcements but not in docs]
+# 上下文管理
+/compact "focus on auth"         # 压缩对话上下文（官方支持）
+/add-dir ../other-project        # 添加工作目录（官方支持）
+[注意：/microcompact 出现在公告中，文档暂未收录]
 
-# Essential Commands (OFFICIAL)
-/help                            # Show all commands
-/clear                           # Clear conversation  
-/model                           # Switch AI model
-/review                          # Request code review
-/compact                         # Compact conversation
-/init                           # Initialize CLAUDE.md
-/memory                         # Edit memory files
+# 核心命令（OFFICIAL）
+/help                            # 查看全部命令
+/clear                           # 清理对话
+/model                           # 切换 AI 模型
+/review                          # 请求代码审查
+/compact                         # 压缩对话
+/init                           # 初始化 CLAUDE.md
+/memory                         # 编辑记忆文件
 ```
 
 ### Feature Quick Reference
+（特性速览）
 ```bash
-# Background Tasks
-→ Long-running: dev servers, tests, builds
-→ Real-time monitoring: logs, errors, output
-→ Auto-recovery: Claude can fix crashes
+# 后台任务
+→ 长时间运行：开发服务器、测试、构建
+→ 实时监控：日志、错误、输出
+→ 自动恢复：Claude 可尝试修复崩溃
 
-# Multi-Directory
-→ Monorepos: work across packages
-→ Shared configs: access from anywhere
-→ Cross-project: migrate code easily
+# 多目录
+→ 单仓多包：跨包协作
+→ 共享配置：任意目录可访问
+→ 跨项目：轻松迁移代码
 
-# PDF Support
-→ Direct reading: no conversion needed
-→ Use cases: specs, docs, research papers
-→ Reference: @document.pdf
+# PDF 支持
+→ 直接阅读：无需转换
+→ 典型场景：规范、文档、研究论文
+→ 引用方式：@document.pdf
 
-# Security Reviews
-→ Vulnerabilities: SQL injection, XSS, data leaks
-→ GitHub Actions: automatic PR reviews
-→ Fixes: Claude can fix found issues
+# 安全审查
+→ 漏洞关注：SQL 注入、XSS、数据泄露
+→ GitHub Actions：自动执行 PR 审查
+→ 修复步骤：Claude 可协助处理问题
 ```
 
 ### Power User Shortcuts
+（高手快捷方式）
 ```bash
-# Parallel Background Tasks
+# 并行后台任务
 npm run dev & npm run test:watch & npm run storybook &
 
-# Smart Debugging
-"Server crashed" → Claude checks background logs → Auto-fix
+# 智能调试
+"服务器崩溃了" → Claude 检查后台日志 → 自动修复
 
-# Subagent Teams
-@architect @reviewer @tester "Review auth implementation"
+# 子代理小队
+@architect @reviewer @tester "审查认证实现"
 
-# Context Optimization
-Long session → /microcompact → Continue working
-Switching focus → /compact "new feature" → Fresh context
+# 上下文优化
+长会话 → /microcompact → 继续工作
+切换焦点 → /compact "新功能" → 刷新上下文
 
-# Multi-Repo Workflow
+# 多仓工作流
 /add-dir ../api-server
 /add-dir ../frontend
-"Sync API types across projects"
+"同步多个项目的 API 类型"
 ```
 
 ### Task State Reference
+（任务状态速查）
 ```bash
-# Background Process States
-RUNNING   → Active process
-COMPLETED → Finished successfully
-FAILED    → Crashed (Claude can debug)
-KILLED    → Manually stopped
+# 后台进程状态
+RUNNING   → 正在运行
+COMPLETED → 已成功完成
+FAILED    → 进程崩溃（Claude 可协助调试）
+KILLED    → 手动终止
 
-# Context States (Approximate)
-FRESH     → Early in session
-OPTIMAL   → Good working state
-FULL      → Getting lengthy
-CRITICAL  → Sluggish (use /microcompact)
+# 上下文状态（大致）
+FRESH     → 会话初期
+OPTIMAL   → 状态良好
+FULL      → 内容偏多
+CRITICAL  → 变慢（使用 /microcompact）
 
-# Agent Activity
-IDLE      → Waiting for tasks
-ACTIVE    → Processing request
-BLOCKED   → Needs user input
-COMPLETE  → Task finished
+# 代理活动
+IDLE      → 等待任务
+ACTIVE    → 正在处理请求
+BLOCKED   → 需要用户输入
+COMPLETE  → 任务完成
 ```
 
 ### Common Workflows Card
+（常见工作流卡片）
 ```bash
-# Start Development Session
-1. npm run dev &                  # Start in background
-2. /statusline "🚀 Dev Mode"     # Set status
-3. /add-dir ../shared            # Add shared configs
-4. "Fix the login bug"           # Claude monitors logs
+# 开发会话启动
+1. npm run dev &                  # 后台启动
+2. /statusline "🚀 Dev Mode"     # 设置状态栏
+3. /add-dir ../shared            # 添加共享配置
+4. "修复登录问题"               # Claude 监控日志
 
-# Security-First Development
-1. "Implement user input"         # Build feature
-2. /security-review              # Check vulnerabilities
-3. "Fix the XSS issue"          # Address findings
-4. git commit                    # Secure code
+# 安全优先开发
+1. "实现用户输入处理"           # 构建功能
+2. /security-review              # 执行安全检查
+3. "修复 XSS 问题"             # 处理风险
+4. git commit                    # 提交安全代码
 
-# Multi-Agent Review
-1. "Build auth system"           # Initial implementation
-2. @architect "Review design"   # Architecture check
-3. @security "Check for vulns"  # Security audit
-4. @tester "Write tests"        # Test coverage
+# 多代理评审
+1. "构建认证系统"               # 初始实现
+2. @architect "审查架构"        # 架构检查
+3. @security "检查安全漏洞"     # 安全审计
+4. @tester "编写测试"           # 补齐测试
 
-# Long Session Management
-1. Work for hours               # Context builds up
-2. /microcompact                # Clear old calls
-3. Continue seamlessly          # Keep working
-4. /compact when switching      # Full reset if needed
+# 长会话管理
+1. 长时间工作                    # 上下文累积
+2. /microcompact                # 清理旧调用
+3. 无缝继续                      # 维持进度
+4. /compact 切换任务            # 需要时完全重置
 ```
-
 ## Core Concepts (Start Here)
 
 > **🧑‍💻 Start Here**: New to Claude Code? Begin with [Core Capabilities](#core-claude-code-capabilities), then explore [Permission Model](#permission-model), and set up your first [CLAUDE.md](#project-context-claudemd).
@@ -4593,76 +4598,77 @@ Verify updates are:
 ```
 
 ### CLAUDE.md Template for Optimal Recall
+（CLAUDE.md 最佳记忆模板）
 ```markdown
-# Project: [Name]
+# Project: [项目名称]
 
 ## 🔴 Critical Context (Read First)
-- [Most important thing to know]
-- [Second most important thing]
+- [最重要的须知]
+- [第二重要的提醒]
 
 ## Commands That Work
-\`\`\`bash
-npm run dev          # Start development server
-npm run test:watch   # Run tests in watch mode
-npm run lint:fix     # Auto-fix linting issues
-\`\`\`
-
-## Patterns to Follow
-- Use MultiEdit for multiple changes to same file
-- Always run tests before committing
-- Check @database:migrations before schema changes
-
-## ⚠️ Gotchas & What NOT to Do
-- DON'T use `npm run build` - it's broken, use `npm run build:prod`
-- DON'T edit generated files in `/dist`
-- DON'T trust the old documentation in `/docs` - it's outdated
-
-## File Structure Patterns
-- Components: `/src/components/[Name]/[Name].tsx`
-- Tests: Adjacent to source as `[Name].test.tsx`
-- Styles: CSS modules as `[Name].module.css`
-
-## Recent Learnings
-- [Date]: Fixed auth by using JWT_SECRET from .env.local (not .env)
-- [Date]: Database queries need explicit error handling
-- [Date]: React hooks must be called unconditionally
+```bash
+npm run dev          # 启动开发服务器
+npm run test:watch   # 监视模式运行测试
+npm run lint:fix     # 自动修复 lint 问题
 ```
 
-**Key Understanding**: CLAUDE.md should be written BY Claude FOR Claude. Use specialized agents to avoid context bias and ensure high-quality, actionable memories.
+## Patterns to Follow
+- 使用 MultiEdit 同步修改同一文件的多处内容
+- 提交前必须运行测试
+- 修改数据库前先检查 @database:migrations
+
+## ⚠️ Gotchas & What NOT to Do
+- 不要使用 `npm run build` —— 它已损坏，应改用 `npm run build:prod`
+- 不要编辑 `/dist` 中的生成文件
+- 不要依赖 `/docs` 目录下的旧文档——内容已过时
+
+## File Structure Patterns
+- 组件：`/src/components/[Name]/[Name].tsx`
+- 测试：与源码同目录，命名为 `[Name].test.tsx`
+- 样式：CSS Modules，命名为 `[Name].module.css`
+
+## Recent Learnings
+- [日期]：修复认证问题需使用 .env.local 中的 JWT_SECRET（而非 .env）
+- [日期]：数据库查询必须显式处理错误
+- [日期]：React hooks 必须无条件调用
+```
+**核心认识**：CLAUDE.md 必须由 Claude 为 Claude 编写。请善用专门子代理，避免上下文偏差并保证记忆内容高质量、可执行。
 
 ### 4. ROADMAP.md Project Management
-The roadmap serves as the central nervous system for project state:
+该路线图相当于项目状态的中枢神经系统：
 
 ```markdown
 # Project Roadmap
 
 ## Current Sprint (Week X-Y)
-- [-] Feature currently in development
-- [ ] Planned feature for this sprint
-- [ ] Another planned item
+- [-] 当前正在推进的功能
+- [ ] 本迭代计划开发的功能
+- [ ] 其他排期事项
 
 ## Upcoming Priorities
-- [ ] Next major feature
-- [ ] System improvement
+- [ ] 下一个重点功能
+- [ ] 系统级改进
 
 ## Recently Completed
-- [x] Completed feature
-- [x] Infrastructure update
+- [x] 已完成的功能
+- [x] 基础设施更新
 
 ## Technical Debt
-- [ ] Refactoring task
-- [ ] Documentation update
+- [ ] 重构任务
+- [ ] 文档更新
 ```
 
-**Task States**:
-- `[ ]` - Planned/TODO
-- `[-]` - In Progress (only one at a time)
-- `[x]` - Completed
-- `[~]` - Partially complete
-- `[!]` - Blocked
-- `[?]` - Needs clarification
 
-**Key Understanding**: ROADMAP.md is the single source of truth for project state. Update it as work progresses.
+**任务状态说明**：
+- `[ ]` - 计划中 / 待处理
+- `[-]` - 进行中（同一时间仅保留一个）
+- `[x]` - 已完成
+- `[~]` - 部分完成
+- `[!]` - 被阻塞
+- `[?]` - 需要澄清
+
+**核心认识**：ROADMAP.md 是项目状态的唯一可信来源，应当随着工作推进及时更新。
 
 ### 5. Context & Session Management
 Understanding continuity and context preservation:
