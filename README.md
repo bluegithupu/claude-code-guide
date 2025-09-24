@@ -8917,41 +8917,41 @@ description: Proactive system maintenance
 # Proactive Maintenance
 
 ## Task
-Analyze system health indicators:
+分析系统健康指标：
 
-1. Log analysis for warning signs:
-   - Increasing error rates
-   - Performance degradation
-   - Memory growth patterns
-   
-2. Code analysis for risk areas:
-   - Complex functions (cyclomatic complexity >10)
-   - Files with high churn rate
-   - Dependencies with vulnerabilities
-   
-3. Create preventive tasks:
-   - Refactor risky code
-   - Add missing tests
-   - Update dependencies
-   - Optimize slow operations
+1. 日志预警分析：
+   - 错误率是否上升
+   - 性能是否退化
+   - 内存是否持续增长
+
+2. 代码风险排查：
+   - 复杂函数（圈复杂度 >10）
+   - 高频改动的文件
+   - 存在漏洞的依赖
+
+3. 建立前置防护任务：
+   - 重构高风险代码
+   - 补齐缺失测试
+   - 更新依赖版本
+   - 优化缓慢操作
 
 TodoWrite([
-  {id: "1", content: "Address high-risk areas", status: "pending"},
-  {id: "2", content: "Prevent predicted failures", status: "pending"}
+  {id: "1", content: "处理高风险区域", status: "pending"},
+  {id: "2", content: "预防已预测的故障", status: "pending"}
 ])
 ```
 
-### Cross-Session Intelligence Network
+### 跨会话智能网络
 ```bash
-# Build institutional knowledge across all sessions
+# 在所有会话间构建组织级知识
 # .claude/intelligence/network.json
 {
   "shared_learnings": {
     "error_patterns": {
       "database_timeout": {
         "frequency": 23,
-        "solution": "Add connection pooling",
-        "prevention": "Monitor connection count"
+        "solution": "添加连接池",
+        "prevention": "监控连接数"
       }
     },
     "successful_patterns": {
@@ -8964,27 +8964,27 @@ TodoWrite([
     "workflow_optimizations": {
       "discovered": 47,
       "implemented": 32,
-      "time_saved_daily": "2.5 hours"
+      "time_saved_daily": "2.5 小时"
     }
   }
 }
 
-# Query shared intelligence
-# Check shared intelligence for:
-# 1. Has anyone solved this error before?
-# 2. What's the most efficient workflow for this task?
-# 3. What patterns should I watch for?
+# 查询共享智能
+# 关注以下问题：
+# 1. 这个错误是否已有解决方案？
+# 2. 完成该任务的最高效流程是什么？
+# 3. 我应该关注哪些模式？
 ```
 
-### Adaptive Agent Selection
+### 自适应代理选择
 ```bash
-# Dynamic agent selection based on real performance
+# 基于真实表现的动态代理选择
 # .claude/hooks/smart-agent-selector.sh
 #!/bin/bash
 TASK_TYPE=$1
 COMPLEXITY=$2
 
-# Query performance database
+# 查询性能数据库
 BEST_AGENT=$(sqlite3 ~/.claude/performance.db "
   SELECT agent_type, AVG(success_rate) as avg_success
   FROM agent_performance
@@ -8995,77 +8995,77 @@ BEST_AGENT=$(sqlite3 ~/.claude/performance.db "
   LIMIT 1
 ")
 
-echo "Recommended agent: $BEST_AGENT"
+echo "推荐代理: $BEST_AGENT"
 
-# Auto-escalation logic
+# 自动升级逻辑
 if [ "$BEST_AGENT_SUCCESS" -lt 70 ]; then
-  echo "Low success predicted, escalating to tool-orchestrator"
+  echo "预测成功率偏低，升级到 tool-orchestrator"
   BEST_AGENT="tool-orchestrator"
 fi
 ```
 
-### Intelligent Context Management
+### 智能上下文管理
 ```bash
-# Smart context optimization based on task
-# Analyze current context and task requirements:
-# 1. What context is essential for this task?
-# 2. What can be safely compacted?
-# 3. What should be loaded from memory?
-# 4. What related context might be helpful?
-# 
-# Optimize context for maximum relevance and minimum size
+# 基于任务的上下文智能优化
+# 分析当前上下文与任务需求：
+# 1. 哪些上下文对该任务至关重要？
+# 2. 哪些内容可以安全压缩？
+# 3. 需要从记忆中加载什么？
+# 4. 有哪些关联上下文可能有帮助？
+#
+# 在保持高度相关的同时尽量精简上下文
 
-# Context-aware memory loading
+# 上下文感知的记忆加载
 # .claude/hooks/context-optimizer.sh
 #!/bin/bash
 CURRENT_TASK=$(grep "current_task" ~/.claude/state.json)
 RELEVANT_MEMORY=$(./find-relevant-memory.sh "$CURRENT_TASK")
 
-# Load only relevant sections of CLAUDE.md
+# 仅加载 CLAUDE.md 的相关片段
 grep -A5 -B5 "$CURRENT_TASK" CLAUDE.md > .claude/temp/focused-memory.md
-echo "Loaded focused context for: $CURRENT_TASK"
+echo "已为以下任务加载聚焦上下文: $CURRENT_TASK"
 ```
 
-### The Ultimate Synergy: Self-Organizing System
+### 终极协同：自组织系统
 ```bash
-# The system that improves itself
+# 能够自我进化的系统
 # .claude/intelligence/self-organize.sh
 #!/bin/bash
 
-# Daily self-improvement routine
-# Daily self-organization tasks:
-# 
-# 1. ANALYZE performance over last 24 hours:
-#    - What worked well?
-#    - What failed repeatedly?
-#    - What took too long?
-# 
-# 2. OPTIMIZE based on analysis:
-#    - Create shortcuts for frequent operations
-#    - Fix recurring errors
-#    - Streamline slow workflows
-# 
-# 3. LEARN and document:
-#    - Update CLAUDE.md with insights
-#    - Create new patterns for common workflows
-#    - Generate preventive measures
-# 
-# 4. PREPARE for tomorrow:
-#    - Predict likely tasks from patterns
-#    - Pre-load relevant context
-#    - Set up optimized environment
-# 
-# 5. SHARE learnings:
-#    - Export valuable patterns
-#    - Update knowledge base
-#    - Create reusable components
-# 
-# This makes tomorrow better than today, automatically
+# 每日自我提升循环
+# 日常自组织任务：
+#
+# 1. ANALYZE：回顾过去 24 小时的表现
+#    - 哪些做法效果显著？
+#    - 哪些问题反复出现？
+#    - 哪些环节耗时过久？
+#
+# 2. OPTIMIZE：基于分析执行优化
+#    - 为高频操作创建快捷方式
+#    - 修复重复出现的错误
+#    - 精简缓慢的工作流
+#
+# 3. LEARN：记录并沉淀经验
+#    - 将洞见写入 CLAUDE.md
+#    - 为常见工作流创建新模式
+#    - 生成前置防护措施
+#
+# 4. PREPARE：为明天做好准备
+#    - 根据模式预测可能任务
+#    - 预加载相关上下文
+#    - 布置优化后的环境
+#
+# 5. SHARE：共享成果
+#    - 导出有价值的模式
+#    - 更新知识库
+#    - 创建可复用的组件
+#
+# 让系统自动做到“明天优于今天”
 ```
 
-### Metrics-Driven Evolution
+### 度量驱动的演化
 ```bash
-# Track improvement over time
+# 通过指标追踪长期改进
 # .claude/metrics/evolution.json
 {
   "performance_evolution": {
@@ -9087,62 +9087,62 @@ echo "Loaded focused context for: $CURRENT_TASK"
   },
   "learned_patterns": 247,
   "automated_workflows": 43,
-  "time_saved_monthly": "40 hours"
+  "time_saved_monthly": "40 小时"
 }
 ```
 
-**Key Understanding**: The Intelligent Development Loop now operates in real-time with background monitoring, multi-agent collaboration, and continuous security scanning. Each iteration makes the system more capable.
+**核心洞见**：智能开发循环现已通过后台监控、多代理协同与持续安全扫描实现实时运转，使系统在每一次迭代中都更进一步。
 
-### Real-World Power Workflows (NEW)
-Practical combinations that multiply productivity:
+### 真实世界的高能工作流（NEW）
+能够成倍提升生产力的实战组合：
 
 ```bash
-# 1. Integrated Debugging Environment
+# 1. 一体化调试环境
 npm run dev & npm run test:watch &
-/statusline "🕵️ Debugging Mode"
-"Why is user authentication failing?"
-# Claude checks both server logs AND test output
-# Correlates errors across services
-# Identifies root cause in middleware
-# Fixes issue without stopping either service
+/statusline "🕵️ 调试模式"
+"为什么用户认证会失败？"
+# Claude 同时检查服务器日志与测试输出
+# 关联多服务间的错误
+# 定位中间件中的根因
+# 在不断线的情况下完成修复
 
-# 2. The Security-First Pipeline
-/security-review --watch &       # Continuous scanning
-@security "Monitor all file changes"
-"Implement user input form"
-# Real-time vulnerability detection
-# Immediate alerts on risky patterns
-# Automatic fix suggestions
+# 2. 安全优先流水线
+/security-review --watch &       # 持续扫描
+@security "监控所有文件变更"
+"实现用户输入表单"
+# 实时检测潜在漏洞
+# 对高风险模式即时告警
+# 自动给出修复建议
 
-# 3. The Monorepo Master
-/add-dir packages/*              # Add all packages
+# 3. Monorepo 大师
+/add-dir packages/*              # 添加所有子包
 for pkg in packages/*; do
-  (cd $pkg && npm run build &)  # Build all in parallel
+  (cd $pkg && npm run build &)  # 并行构建
 done
-"Optimize build performance across all packages"
-# Claude monitors all builds simultaneously
-# Identifies common bottlenecks
-# Applies fixes across packages
+"优化所有包的构建性能"
+# Claude 同步监控全部构建
+# 识别常见瓶颈
+# 在各包中应用统一修复
 
-# 4. The Migration Maestro
+# 4. 迁移指挥家
 /add-dir ../old-system
 /add-dir ../new-system
-@architect "Plan migration strategy"
-"Migrate authentication from old to new system"
-# Reads old implementation
-# Adapts to new architecture
-# Preserves business logic
-# Updates tests automatically
+@architect "规划迁移策略"
+"将认证模块从旧系统迁移到新系统"
+# 阅读旧实现
+# 适配新架构
+# 保留业务逻辑
+# 自动更新测试
 
-# 5. The Performance Hunter
+# 5. 性能猎手
 npm run dev & npm run perf:monitor &
-/statusline "⚡ Performance Mode"
-@performance "Watch for bottlenecks"
-"Why is the dashboard slow?"
-# Analyzes performance logs
-# Identifies render bottlenecks
-# Suggests React.memo locations
-# Implements and measures improvement
+/statusline "⚡ 性能模式"
+@performance "监控性能瓶颈"
+"为什么仪表盘很慢？"
+# 分析性能日志
+# 定位渲染瓶颈
+# 建议插入 React.memo 的位置
+# 实施并衡量改进效果
 ```
 
 ## Cognitive Intelligence Patterns
