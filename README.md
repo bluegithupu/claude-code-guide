@@ -1399,14 +1399,14 @@ Meta-Todo：分析上次拆解剩余的任务
 ```
 
 **核心认识**：Meta-Todo 系统补上了任务管理中缺失的智能层，把被动的清单生成转变为主动、已验证、可执行的项目编排。当它与内核架构及 Claude Code 工具结合时，构建出前所未有的认知辅助体系，会随着每一次交互变得更聪明、更准确、更高效。
-## Advanced Synergy Implementations
+## Advanced Synergy Implementations（高级协同实现）
 
-### **Phase 1 Foundation: Critical Synergies**
+### **阶段 1 基础：关键协同**
 
-#### **🎯 REPL-Kernel Validation Pipeline**
-**Computational Validation Framework**: Real-time validation of all kernel outputs to prevent 60-80% of implementation issues through proactive verification.
+#### **🎯 REPL-内核验证流水线**
+**计算验证框架**：通过主动验证机制实时审查所有内核输出，提前发现 60%-80% 的实现问题，避免将错误带入后续阶段。
 
-##### **Architecture Design**
+##### **架构设计**
 ```javascript
 // REPL Validation Framework
 class REPLKernelValidator {
@@ -1415,11 +1415,11 @@ class REPLKernelValidator {
         this.performanceBaselines = new Map();
         this.validationHistory = [];
     }
-    
+
     async validateKernelOutput(kernelType, output, context) {
         const validator = this.getValidatorForKernel(kernelType);
         const validationResult = await validator.validate(output, context);
-        
+
         // Store validation for learning
         this.validationHistory.push({
             timestamp: Date.now(),
@@ -1428,10 +1428,10 @@ class REPLKernelValidator {
             validationResult,
             context
         });
-        
+
         return validationResult;
     }
-    
+
     // Intent Kernel Validation
     async validateIntentOutput(intentAnalysis, context) {
         // Validate complexity estimates with actual computation
@@ -1446,16 +1446,16 @@ class REPLKernelValidator {
                 };
             }
         }
-        
+
         // Validate performance claims with benchmarks
         if (intentAnalysis.performanceClaims) {
             const benchmarkResults = await this.benchmarkClaims(intentAnalysis.performanceClaims);
             return this.validatePerformanceClaims(benchmarkResults);
         }
-        
+
         return { valid: true, confidence: 0.95 };
     }
-    
+
     // Memory Kernel Validation
     async validateMemoryOutput(memoryResult, context) {
         // Validate pattern accuracy with historical data
@@ -1470,16 +1470,16 @@ class REPLKernelValidator {
                 };
             }
         }
-        
+
         // Validate similarity scores with computational analysis
         if (memoryResult.similarityScores) {
             const validatedScores = await this.recomputeSimilarity(memoryResult.content);
             return this.compareSimilarityAccuracy(memoryResult.similarityScores, validatedScores);
         }
-        
+
         return { valid: true, confidence: 0.92 };
     }
-    
+
     // Extraction Kernel Validation
     async validateExtractionOutput(extractionResult, context) {
         // Validate entity relationships with graph analysis
@@ -1494,16 +1494,16 @@ class REPLKernelValidator {
                 };
             }
         }
-        
+
         // Validate confidence scores with statistical analysis
         if (extractionResult.confidenceScores) {
             const statisticalValidation = await this.validateConfidenceStatistically(extractionResult);
             return statisticalValidation;
         }
-        
+
         return { valid: true, confidence: 0.88 };
     }
-    
+
     // Validation Kernel Validation (Meta-validation)
     async validateValidationOutput(validationResult, context) {
         // Cross-validate with multiple validation approaches
@@ -1511,7 +1511,7 @@ class REPLKernelValidator {
         const results = await Promise.all(
             approaches.map(approach => this.validateWith(approach, validationResult, context))
         );
-        
+
         const consensus = this.calculateConsensus(results);
         if (consensus.agreement < 0.8) {
             return {
@@ -1521,23 +1521,23 @@ class REPLKernelValidator {
                 recommendation: 'Require human validation for this decision'
             };
         }
-        
+
         return { valid: true, confidence: consensus.agreement };
     }
-    
+
     // Performance testing utilities
     async runComplexityTest(approach) {
         // Generate test data of varying sizes
         const testSizes = [100, 1000, 10000, 100000];
         const results = [];
-        
+
         for (const size of testSizes) {
             const testData = this.generateTestData(size);
             const startTime = performance.now();
-            
+
             // Simulate the approach with test data
             await this.simulateApproach(approach, testData);
-            
+
             const endTime = performance.now();
             results.push({
                 size,
@@ -1545,13 +1545,13 @@ class REPLKernelValidator {
                 memoryUsage: this.estimateMemoryUsage(testData)
             });
         }
-        
+
         return this.analyzeComplexity(results);
     }
-    
+
     async benchmarkClaims(performanceClaims) {
         const benchmarks = {};
-        
+
         for (const claim of performanceClaims) {
             if (claim.type === 'speed_improvement') {
                 benchmarks[claim.id] = await this.benchmarkSpeedImprovement(claim);
@@ -1561,15 +1561,15 @@ class REPLKernelValidator {
                 benchmarks[claim.id] = await this.benchmarkAccuracyImprovement(claim);
             }
         }
-        
+
         return benchmarks;
     }
-    
+
     // Pattern accuracy checking
     async checkPatternAccuracy(patterns) {
         let totalAccuracy = 0;
         let patternCount = 0;
-        
+
         for (const pattern of patterns) {
             const historicalApplications = this.getHistoricalApplications(pattern);
             if (historicalApplications.length > 0) {
@@ -1578,18 +1578,18 @@ class REPLKernelValidator {
                 patternCount++;
             }
         }
-        
+
         return patternCount > 0 ? totalAccuracy / patternCount : 0.5;
     }
-    
+
     // Learning from validation results
     learnFromValidation(validationResults) {
         // Update baseline expectations
         this.updatePerformanceBaselines(validationResults);
-        
+
         // Improve validation algorithms
         this.refineValidationAlgorithms(validationResults);
-        
+
         // Store successful patterns
         this.extractSuccessfulPatterns(validationResults);
     }
@@ -1606,3385 +1606,825 @@ class EnhancedKernelOrchestrator {
             validation: new ValidationKernel()
         };
     }
-    
+
     async processWithValidation(userInput, context) {
         const results = {};
-        
+
         // Process with each kernel
         for (const [kernelType, kernel] of Object.entries(this.kernels)) {
             const kernelOutput = await kernel.process(userInput, context);
-            
+
             // Validate kernel output with REPL
             const validationResult = await this.validator.validateKernelOutput(
-                kernelType, 
-                kernelOutput, 
+                kernelType,
+                kernelOutput,
                 context
             );
-            
+
             if (!validationResult.valid) {
                 // Apply corrections or request re-processing
                 kernelOutput.corrected = true;
                 kernelOutput.corrections = validationResult;
                 kernelOutput = await this.applyCorrections(kernelType, kernelOutput, validationResult);
             }
-            
+
             results[kernelType] = {
                 output: kernelOutput,
                 validation: validationResult,
                 confidence: validationResult.confidence
             };
         }
-        
+
         // Learn from this validation cycle
         this.validator.learnFromValidation(results);
-        
+
         return results;
     }
 }
 ```
+这段实现展示了如何在内核编排器中嵌入验证流程：每个内核输出都先经过 REPL 验证，再根据验证反馈自动纠正并回写学习成果，形成闭环。
 
-##### **Integration Patterns**
+##### **集成模式**
 
-**Pattern 1: Algorithm Validation Before Implementation**
+**模式 1：算法在实现前的验证**
 ```bash
-# Workflow: Optimize sorting algorithm
-1. Intent Kernel: "User wants to optimize bubble sort"
-2. REPL Validation: Test bubble sort vs alternatives with 10k+ records
-3. Results: QuickSort 15x faster, MergeSort 8x faster, stable
-4. Validated Recommendation: "Implement QuickSort for speed, MergeSort for stability"
-5. Confidence: 0.94 (high due to computational validation)
+# 工作流：优化排序算法
+1. 意图内核："用户想优化冒泡排序"
+2. REPL 验证：在 1 万条以上数据集对比不同算法
+3. 结果：QuickSort 快 15 倍，MergeSort 快 8 倍且稳定
+4. 验证推荐："性能需求用 QuickSort，若需稳定性选 MergeSort"
+5. 置信度：0.94（因为有计算验证）
 ```
 
-**Pattern 2: Performance Claim Verification**
+**模式 2：性能声明复核**
 ```bash
-# Workflow: "This optimization will improve performance by 40%"
-1. Memory Kernel: Recalls similar optimization claims
-2. REPL Validation: Benchmark current vs proposed approach
-3. Actual Result: 23% improvement (not 40%)
-4. Corrected Output: "Optimization provides 23% improvement with 95% confidence"
-5. Learning: Update performance estimation algorithms
+# 工作流："这次优化能提升 40% 性能"
+1. 记忆内核：调出类似优化案例
+2. REPL 验证：基准测试当前方案与新方案
+3. 实际结果：提升 23%（而非 40%）
+4. 修正输出："优化带来 23% 提升，置信度 95%"
+5. 学习：更新性能估算模型
 ```
 
-**Pattern 3: Data Processing Validation**
+**模式 3：数据处理验证**
 ```bash
-# Workflow: "Process customer data with statistical analysis"
-1. Extraction Kernel: Identifies data patterns and relationships
-2. REPL Validation: Verify statistical significance with actual data
-3. Validation: Check for data quality issues, outliers, bias
-4. Result: Validated analysis with confidence intervals and quality metrics
-5. Storage: Pattern stored for future data analysis tasks
+# 工作流："用统计分析处理客户数据"
+1. 提取内核：识别数据模式与关系
+2. REPL 验证：用真实数据检验统计显著性
+3. 验证：检查数据质量、离群点与偏差
+4. 结果：输出带置信区间与质量指标的分析
+5. 存储：将模式写入未来分析任务库
 ```
 
-##### **Implementation Benefits**
+##### **实施收益**
 
-**Immediate Impact (Week 1-2):**
-- **60-80% reduction** in performance regression issues
-- **Real-time feedback** on algorithm and approach feasibility
-- **Quantified confidence scores** for all kernel outputs
-- **Automatic correction** of over-optimistic estimates
+**即时影响（第 1-2 周）**
+- 性能回归问题减少 **60%-80%**。
+- 所有算法与方案可获得 **实时可行性反馈**。
+- 每个内核输出都附带 **量化置信度**。
+- 对过度乐观的估计进行 **自动修正**。
 
-**Compound Benefits (Week 2-8):**
-- **Self-improving validation**: Algorithms get better through use
-- **Pattern library growth**: Successful validations become templates
-- **Cross-kernel learning**: Validation insights improve all kernels
-- **Predictive accuracy**: Better estimation of complexity and performance
+**复利收益（第 2-8 周）**
+- **验证器自我进化**：用得越多越聪明。
+- **模式库持续增长**：成功案例沉淀为模板。
+- **跨内核学习**：验证洞见反哺各内核策略。
+- **预测更准确**：复杂度和性能估算趋于精准。
 
-**Long-term Evolution (Week 8+):**
-- **Proactive validation**: System suggests validations before problems occur
-- **Domain expertise**: Specialized validation for different problem types
-- **Automated optimization**: System automatically applies validated optimizations
-- **Validation prediction**: Anticipates which outputs need validation
+**长期演化（第 8 周以后）**
+- **前瞻验证**：在问题出现前主动建议验证。
+- **领域专用验证**：针对不同问题类型提供专业校验。
+- **自动化优化**：系统自动尝试已验证的优化方案。
+- **验证预测**：提前判断哪些输出需要重点验证。
 
-##### **Usage Examples**
+##### **使用示例**
 
-**For Developers:**
+**面向开发者**
 ```bash
-# Intent: "Implement caching system"
-Intent Kernel Output: "Redis-based caching with 1-hour TTL"
-REPL Validation: Benchmarks Redis vs in-memory vs file-based caching
-Result: "In-memory cache 5x faster for your data size. Redis recommended only if >1GB data"
-Confidence: 0.91
+# 需求："实现缓存系统"
+意图内核输出："基于 Redis，TTL 1 小时"
+REPL 验证：对比 Redis、本地缓存、文件缓存
+结论："对于当前数据量，本地缓存快 5 倍；Redis 适用于 >1GB 数据"
+置信度：0.91
 ```
 
-**For Data Scientists:**
+**面向数据科学家**
 ```bash
-# Intent: "Analyze customer churn patterns"
-Extraction Kernel Output: "Strong correlation between usage frequency and churn"
-REPL Validation: Statistical significance testing with actual data
-Result: "Correlation confirmed (p<0.01) but R² only 0.34 - other factors needed"
-Confidence: 0.88
+# 需求："分析客户流失模式"
+提取内核输出："使用频率与流失率相关性强"
+REPL 验证：真实数据的统计显著性检验
+结论："相关性显著（p<0.01），但 R² 仅 0.34，需补充特征"
+置信度：0.88
 ```
 
-**For System Architects:**
+**面向系统架构师**
 ```bash
-# Intent: "Design microservices architecture"
-Memory Kernel Output: "Based on similar projects, recommend 8 microservices"
-REPL Validation: Complexity analysis of service communication overhead
-Result: "8 services create 28 communication paths. Start with 4, split later"
-Confidence: 0.86
+# 需求："设计微服务架构"
+记忆内核输出："结合类似项目，建议拆分为 8 个微服务"
+REPL 验证：评估服务间通信开销与复杂度
+结果：输出分层架构建议以及团队规模对应的拆分策略
+置信度：0.89
 ```
 
-##### **Quality Metrics and Monitoring**
+##### **质量指标与监控**
+- **验证覆盖率**：目标 95%，通过钩子强制执行。
+- **纠正成功率**：失败输出被自动修正的概率，目标 >80%。
+- **性能基线**：验证器根据历史数据持续刷新性能预期。
+- **学习记录**：每次验证结果都会写入历史库供后续分析。
 
+#### **🛡️ 后台自愈环境**
+
+##### **架构设计**
 ```javascript
-// Validation effectiveness tracking
-class ValidationMetrics {
-    trackValidationEffectiveness() {
-        return {
-            // Prevention metrics
-            issuesPrevented: this.calculateIssuesPrevented(),
-            falsePositives: this.calculateFalsePositives(),
-            falseNegatives: this.calculateFalseNegatives(),
-            
-            // Accuracy metrics
-            validationAccuracy: this.calculateValidationAccuracy(),
-            confidenceCalibration: this.calculateConfidenceCalibration(),
-            
-            // Performance metrics
-            validationSpeed: this.calculateValidationSpeed(),
-            resourceUsage: this.calculateResourceUsage(),
-            
-            // Learning metrics
-            improvementRate: this.calculateImprovementRate(),
-            patternGrowth: this.calculatePatternGrowth()
-        };
-    }
-}
-```
-
-**Key Understanding**: The REPL-Kernel Validation Pipeline creates a computational reality check for all cognitive outputs, preventing the majority of implementation issues through proactive validation rather than reactive debugging. This transforms the entire system from "think then implement" to "think, validate, then implement with confidence."
-
-#### **🛡️ Background Self-Healing Environment**
-**Autonomous Recovery Framework**: 90% of development issues resolve automatically through intelligent monitoring, pattern recognition, and autonomous recovery systems.
-
-##### **Architecture Design**
-```javascript
-// Self-Healing Environment Framework
 class SelfHealingEnvironment {
     constructor() {
         this.healthMonitors = new Map();
         this.recoveryPatterns = new Map();
         this.healingHistory = [];
-        this.preventionRules = new Set();
-        this.activeHealers = new Map();
+        this.advancedHealing = new AdvancedHealingStrategies();
+        this.preventionRules = new PreventionRuleEngine();
+        this.memoryKernel = new MemoryKernelIntegration();
     }
-    
-    // Core monitoring system
+
     async initializeMonitoring() {
-        // Development server monitoring
-        this.healthMonitors.set('devServer', new DevServerMonitor());
-        
-        // Build process monitoring  
-        this.healthMonitors.set('buildProcess', new BuildProcessMonitor());
-        
-        // Test suite monitoring
-        this.healthMonitors.set('testSuite', new TestSuiteMonitor());
-        
-        // Database connection monitoring
-        this.healthMonitors.set('database', new DatabaseMonitor());
-        
-        // File system monitoring
-        this.healthMonitors.set('fileSystem', new FileSystemMonitor());
-        
-        // Dependency monitoring
-        this.healthMonitors.set('dependencies', new DependencyMonitor());
-        
-        // Start continuous monitoring
-        this.startContinuousMonitoring();
+        // ...
     }
-    
-    async startContinuousMonitoring() {
-        setInterval(async () => {
-            for (const [service, monitor] of this.healthMonitors) {
-                const health = await monitor.checkHealth();
-                if (!health.healthy) {
-                    await this.handleUnhealthyService(service, health, monitor);
-                }
-            }
-        }, 5000); // Check every 5 seconds
+
+    async analyzeIssue(service, healthStatus) {
+        // ...
     }
-    
-    async handleUnhealthyService(service, healthStatus, monitor) {
-        console.log(`🚨 Detected issue with ${service}: ${healthStatus.issue}`);
-        
-        // Get extraction kernel analysis of the issue
-        const issueAnalysis = await this.analyzeIssueWithKernels(service, healthStatus);
-        
-        // Check for known recovery patterns
-        const recoveryPattern = await this.findRecoveryPattern(service, issueAnalysis);
-        
-        if (recoveryPattern) {
-            console.log(`🔧 Applying known recovery pattern: ${recoveryPattern.name}`);
-            const success = await this.applyRecoveryPattern(service, recoveryPattern, issueAnalysis);
-            
-            if (success) {
-                console.log(`✅ Successfully healed ${service}`);
-                this.recordSuccessfulHealing(service, recoveryPattern, issueAnalysis);
-            } else {
-                console.log(`❌ Recovery pattern failed for ${service}, escalating...`);
-                await this.escalateIssue(service, issueAnalysis, recoveryPattern);
-            }
-        } else {
-            console.log(`🔍 No known pattern for ${service} issue, learning new pattern...`);
-            await this.learnNewRecoveryPattern(service, issueAnalysis);
-        }
+
+    async selectRecoveryPattern(service, issueAnalysis) {
+        // ...
     }
-    
-    async analyzeIssueWithKernels(service, healthStatus) {
-        // Use extraction kernel to analyze logs and error patterns
-        const logAnalysis = await extractionKernel.analyzeLogs(healthStatus.logs);
-        
-        // Use memory kernel to find similar past issues
-        const similarIssues = await memoryKernel.findSimilarIssues(service, healthStatus);
-        
-        // Use intent kernel to understand the underlying problem
-        const problemIntent = await intentKernel.analyzeIssueIntent(healthStatus);
-        
-        // Use validation kernel to assess risk and impact
-        const riskAssessment = await validationKernel.assessRisk(service, healthStatus);
-        
-        return {
-            service,
-            healthStatus,
-            logAnalysis,
-            similarIssues,
-            problemIntent,
-            riskAssessment,
-            timestamp: Date.now()
-        };
-    }
-    
-    async findRecoveryPattern(service, issueAnalysis) {
-        // Check exact match patterns first
-        const exactMatch = this.recoveryPatterns.get(`${service}:${issueAnalysis.problemIntent.type}`);
-        if (exactMatch && exactMatch.successRate > 0.8) {
-            return exactMatch;
-        }
-        
-        // Check similar issue patterns
-        for (const [patternKey, pattern] of this.recoveryPatterns) {
-            const similarity = await this.calculatePatternSimilarity(issueAnalysis, pattern);
-            if (similarity > 0.75 && pattern.successRate > 0.7) {
-                return pattern;
-            }
-        }
-        
-        // Check memory kernel for historical solutions
-        if (issueAnalysis.similarIssues.length > 0) {
-            const historicalPattern = await this.extractPatternFromHistory(issueAnalysis.similarIssues);
-            if (historicalPattern.confidence > 0.6) {
-                return historicalPattern;
-            }
-        }
-        
-        return null;
-    }
-    
+
     async applyRecoveryPattern(service, pattern, issueAnalysis) {
-        try {
-            console.log(`🔄 Executing recovery steps for ${service}...`);
-            
-            // Execute recovery steps with validation
-            for (const step of pattern.recoverySteps) {
-                console.log(`  ▶ ${step.description}`);
-                
-                const stepResult = await this.executeRecoveryStep(step, issueAnalysis);
-                if (!stepResult.success) {
-                    console.log(`  ❌ Step failed: ${stepResult.error}`);
-                    return false;
-                }
-                
-                // Wait between steps if specified
-                if (step.waitAfter) {
-                    await this.wait(step.waitAfter);
-                }
-            }
-            
-            // Verify service is healthy after recovery
-            const monitor = this.healthMonitors.get(service);
-            const healthCheck = await monitor.checkHealth();
-            
-            if (healthCheck.healthy) {
-                pattern.successCount++;
-                pattern.successRate = pattern.successCount / (pattern.successCount + pattern.failureCount);
-                return true;
-            } else {
-                console.log(`🔄 Service still unhealthy after recovery, trying advanced healing...`);
-                return await this.tryAdvancedHealing(service, pattern, issueAnalysis);
-            }
-            
-        } catch (error) {
-            console.log(`❌ Recovery pattern execution failed: ${error.message}`);
-            pattern.failureCount++;
-            pattern.successRate = pattern.successCount / (pattern.successCount + pattern.failureCount);
-            return false;
-        }
+        // ...
     }
-    
+
     async executeRecoveryStep(step, issueAnalysis) {
-        switch (step.type) {
-            case 'restart_service':
-                return await this.restartService(step.target, issueAnalysis);
-                
-            case 'kill_processes':
-                return await this.killProcesses(step.processPattern, issueAnalysis);
-                
-            case 'clear_cache':
-                return await this.clearCache(step.cacheType, issueAnalysis);
-                
-            case 'reset_configuration':
-                return await this.resetConfiguration(step.configFile, step.defaultValues);
-                
-            case 'reinstall_dependencies':
-                return await this.reinstallDependencies(step.packageManager, step.scope);
-                
-            case 'repair_database':
-                return await this.repairDatabase(step.repairType, issueAnalysis);
-                
-            case 'fix_permissions':
-                return await this.fixPermissions(step.targetPath, step.permissions);
-                
-            case 'run_diagnostics':
-                return await this.runDiagnostics(step.diagnosticType, issueAnalysis);
-                
-            case 'apply_patch':
-                return await this.applyPatch(step.patchSource, step.target);
-                
-            default:
-                console.log(`⚠️ Unknown recovery step type: ${step.type}`);
-                return { success: false, error: `Unknown step type: ${step.type}` };
-        }
+        // ...
     }
-    
+
     async learnNewRecoveryPattern(service, issueAnalysis) {
-        console.log(`🎓 Learning new recovery pattern for ${service}...`);
-        
-        // Use kernel intelligence to generate potential solutions
-        const potentialSolutions = await this.generatePotentialSolutions(service, issueAnalysis);
-        
-        // Validate solutions with REPL-Kernel validation
-        const validatedSolutions = await this.validateSolutions(potentialSolutions, issueAnalysis);
-        
-        // Try solutions in order of confidence
-        for (const solution of validatedSolutions.sort((a, b) => b.confidence - a.confidence)) {
-            console.log(`🧪 Testing solution: ${solution.description} (confidence: ${solution.confidence})`);
-            
-            const success = await this.testSolution(service, solution, issueAnalysis);
-            if (success) {
-                // Create new recovery pattern from successful solution
-                const newPattern = this.createRecoveryPattern(service, issueAnalysis, solution);
-                this.recoveryPatterns.set(newPattern.key, newPattern);
-                
-                console.log(`✅ New recovery pattern learned and saved: ${newPattern.name}`);
-                
-                // Store in memory kernel for future use
-                await memoryKernel.storeRecoveryPattern(newPattern);
-                
-                return newPattern;
-            }
-        }
-        
-        console.log(`❌ Could not learn recovery pattern for ${service}, manual intervention required`);
-        await this.requestManualIntervention(service, issueAnalysis);
-        return null;
+        // ...
     }
-    
+
     async generatePotentialSolutions(service, issueAnalysis) {
-        const solutions = [];
-        
-        // Intent-based solutions
-        const intentSolutions = await intentKernel.generateSolutions(issueAnalysis.problemIntent);
-        solutions.push(...intentSolutions);
-        
-        // Memory-based solutions (from similar issues)
-        const memorySolutions = await memoryKernel.generateSolutionsFromSimilar(issueAnalysis.similarIssues);
-        solutions.push(...memorySolutions);
-        
-        // Pattern-based solutions
-        const patternSolutions = await this.generatePatternBasedSolutions(service, issueAnalysis);
-        solutions.push(...patternSolutions);
-        
-        // REPL-validated solutions
-        const replSolutions = await this.generateREPLBasedSolutions(service, issueAnalysis);
-        solutions.push(...replSolutions);
-        
-        return solutions;
+        // ...
     }
-    
+
     async validateSolutions(solutions, issueAnalysis) {
-        const validatedSolutions = [];
-        
-        for (const solution of solutions) {
-            // Use validation kernel to assess solution safety and effectiveness
-            const validation = await validationKernel.validateSolution(solution, issueAnalysis);
-            
-            if (validation.safe && validation.likelihood > 0.3) {
-                solution.confidence = validation.likelihood;
-                solution.safetyScore = validation.safetyScore;
-                solution.validationNotes = validation.notes;
-                validatedSolutions.push(solution);
-            }
-        }
-        
-        return validatedSolutions;
+        // ...
     }
-    
-    // Specific service healers
+
     async restartService(serviceName, issueAnalysis) {
-        try {
-            switch (serviceName) {
-                case 'dev_server':
-                    // Find and kill existing dev server processes
-                    await this.killProcessesByPattern(/npm.*run.*dev|webpack-dev-server|vite/);
-                    await this.wait(2000);
-                    
-                    // Restart with proper environment
-                    const result = await this.executeCommand('npm run dev &');
-                    return { success: true, result };
-                    
-                case 'database':
-                    await this.executeCommand('sudo systemctl restart postgresql');
-                    await this.wait(5000);
-                    return { success: true };
-                    
-                case 'build_process':
-                    await this.executeCommand('rm -rf node_modules/.cache');
-                    await this.executeCommand('npm run build &');
-                    return { success: true };
-                    
-                default:
-                    console.log(`⚠️ Unknown service: ${serviceName}`);
-                    return { success: false, error: `Unknown service: ${serviceName}` };
-            }
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
+        // ...
     }
-    
+
     async killProcessesByPattern(pattern) {
-        const processes = await this.findProcessesByPattern(pattern);
-        for (const pid of processes) {
-            try {
-                process.kill(pid, 'SIGTERM');
-                console.log(`🔪 Killed process ${pid}`);
-            } catch (error) {
-                console.log(`⚠️ Could not kill process ${pid}: ${error.message}`);
-            }
-        }
+        // ...
     }
-    
+
     async clearCache(cacheType, issueAnalysis) {
-        try {
-            switch (cacheType) {
-                case 'npm':
-                    await this.executeCommand('npm cache clean --force');
-                    return { success: true };
-                    
-                case 'webpack':
-                    await this.executeCommand('rm -rf node_modules/.cache');
-                    return { success: true };
-                    
-                case 'browser':
-                    // Clear browser cache through automation if available
-                    return { success: true };
-                    
-                default:
-                    return { success: false, error: `Unknown cache type: ${cacheType}` };
-            }
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
+        // ...
     }
-    
-    // Prevention system
+
     async enablePrevention() {
-        // Monitor for conditions that commonly lead to issues
-        setInterval(async () => {
-            await this.checkPreventionRules();
-        }, 30000); // Check every 30 seconds
+        // ...
     }
-    
+
     async checkPreventionRules() {
-        for (const rule of this.preventionRules) {
-            const condition = await rule.checkCondition();
-            if (condition.triggered) {
-                console.log(`🛡️ Prevention rule triggered: ${rule.name}`);
-                await rule.executePreventiveAction(condition);
-            }
-        }
+        // ...
     }
-    
-    // Learning and adaptation
+
     recordSuccessfulHealing(service, pattern, issueAnalysis) {
-        this.healingHistory.push({
-            timestamp: Date.now(),
-            service,
-            pattern: pattern.name,
-            issueType: issueAnalysis.problemIntent.type,
-            success: true,
-            timeToHeal: Date.now() - issueAnalysis.timestamp
-        });
-        
-        // Improve pattern confidence
-        pattern.recentSuccesses = (pattern.recentSuccesses || 0) + 1;
-        
-        // Extract prevention rules from successful healings
-        this.extractPreventionRules(service, issueAnalysis, pattern);
-    }
-    
-    extractPreventionRules(service, issueAnalysis, successfulPattern) {
-        // Analyze what conditions led to the issue
-        const conditions = issueAnalysis.logAnalysis.preconditions;
-        
-        if (conditions && conditions.length > 0) {
-            const preventionRule = {
-                name: `Prevent ${service} ${issueAnalysis.problemIntent.type}`,
-                service,
-                issueType: issueAnalysis.problemIntent.type,
-                triggerConditions: conditions,
-                preventiveAction: this.createPreventiveAction(successfulPattern),
-                confidence: successfulPattern.successRate
-            };
-            
-            this.preventionRules.add(preventionRule);
-            console.log(`🛡️ New prevention rule created: ${preventionRule.name}`);
-        }
+        // ...
     }
 }
 
-// Specific health monitors
-class DevServerMonitor {
-    async checkHealth() {
-        try {
-            // Check if dev server is running
-            const processes = await this.findDevServerProcesses();
-            if (processes.length === 0) {
-                return {
-                    healthy: false,
-                    issue: 'Dev server not running',
-                    logs: await this.getRecentLogs(),
-                    severity: 'high'
-                };
-            }
-            
-            // Check if server is responding
-            const response = await this.checkServerResponse();
-            if (!response.responding) {
-                return {
-                    healthy: false,
-                    issue: 'Dev server not responding',
-                    logs: await this.getRecentLogs(),
-                    responseTime: response.time,
-                    severity: 'high'
-                };
-            }
-            
-            // Check for error patterns in logs
-            const errorPatterns = await this.checkForErrorPatterns();
-            if (errorPatterns.hasErrors) {
-                return {
-                    healthy: false,
-                    issue: 'Dev server has errors',
-                    logs: errorPatterns.errorLogs,
-                    severity: 'medium'
-                };
-            }
-            
-            return { healthy: true };
-            
-        } catch (error) {
-            return {
-                healthy: false,
-                issue: `Monitor error: ${error.message}`,
-                logs: [],
-                severity: 'high'
-            };
-        }
-    }
-}
-
-class BuildProcessMonitor {
-    async checkHealth() {
-        try {
-            // Check for build errors
-            const buildStatus = await this.checkBuildStatus();
-            if (buildStatus.hasErrors) {
-                return {
-                    healthy: false,
-                    issue: 'Build process has errors',
-                    logs: buildStatus.errorLogs,
-                    severity: 'high'
-                };
-            }
-            
-            // Check build performance
-            const performance = await this.checkBuildPerformance();
-            if (performance.tooSlow) {
-                return {
-                    healthy: false,
-                    issue: 'Build process is too slow',
-                    logs: performance.logs,
-                    buildTime: performance.time,
-                    severity: 'medium'
-                };
-            }
-            
-            return { healthy: true };
-            
-        } catch (error) {
-            return {
-                healthy: false,
-                issue: `Build monitor error: ${error.message}`,
-                logs: [],
-                severity: 'high'
-            };
-        }
-    }
-}
-
-class TestSuiteMonitor {
-    async checkHealth() {
-        try {
-            // Check test results
-            const testResults = await this.getLatestTestResults();
-            if (testResults.hasFailures) {
-                return {
-                    healthy: false,
-                    issue: 'Test suite has failures',
-                    logs: testResults.failureLogs,
-                    failureCount: testResults.failureCount,
-                    severity: 'medium'
-                };
-            }
-            
-            // Check test coverage
-            const coverage = await this.getTestCoverage();
-            if (coverage.percentage < 80) {
-                return {
-                    healthy: false,
-                    issue: 'Test coverage below threshold',
-                    logs: coverage.uncoveredFiles,
-                    coverage: coverage.percentage,
-                    severity: 'low'
-                };
-            }
-            
-            return { healthy: true };
-            
-        } catch (error) {
-            return {
-                healthy: false,
-                issue: `Test monitor error: ${error.message}`,
-                logs: [],
-                severity: 'high'
-            };
-        }
-    }
-}
-
-// Integration with enhanced guide
 class SelfHealingIntegration {
     static async initializeForProject() {
         const healer = new SelfHealingEnvironment();
-        
-        // Initialize monitoring
-        await healer.initializeMonitoring();
-        
-        // Enable prevention
-        await healer.enablePrevention();
-        
-        // Load existing patterns from memory kernel
-        const existingPatterns = await memoryKernel.getRecoveryPatterns();
-        for (const pattern of existingPatterns) {
-            healer.recoveryPatterns.set(pattern.key, pattern);
-        }
-        
-        console.log(`🛡️ Self-healing environment initialized with ${existingPatterns.length} known patterns`);
-        
+        // ...
         return healer;
     }
 }
 ```
+该自愈框架以监控、分析、恢复、学习四步循环运转：先侦测健康状况，再借助内核智能分析根因，自动挑选或学习恢复方案，最后记录结果并生成预防规则。
 
-##### **Integration Patterns**
+##### **集成模式**
 
-**Pattern 1: Automatic Dev Server Recovery**
+**模式 1：自动恢复开发服务器**
 ```bash
-# Issue Detection:
-Monitor detects: Dev server process crashed
-Extraction Kernel: Analyzes crash logs → "Port 3000 already in use"
-Memory Kernel: Finds similar issue → "Kill process on port, restart server"
-Validation Kernel: Confirms solution safety
-Auto-Recovery: Kill port 3000 process → Wait 2s → npm run dev &
-Result: 15-second recovery vs 5-minute manual debugging
+# 问题检测：
+监控：开发服务器进程崩溃
+提取内核：分析日志 → "端口 3000 已被占用"
+记忆内核：历史方案 → "杀掉端口进程并重启"
+验证内核：确认安全
+自愈：kill 占用进程 → 等待 2 秒 → npm run dev &
+结果：15 秒内恢复，替代 5 分钟人工排查
 ```
 
-**Pattern 2: Build Process Healing**
+**模式 2：构建流程修复**
 ```bash
-# Issue Detection:
-Monitor detects: Build failing with module resolution errors
-Extraction Kernel: "node_modules corruption detected"
-Memory Kernel: Previous solution → "Clear cache + reinstall"
-Auto-Recovery: rm -rf node_modules → npm cache clean → npm install
-Result: Automatic resolution of 80% of dependency issues
+# 问题检测：
+监控：构建阶段提示模块解析失败
+提取内核："node_modules 可能损坏"
+记忆内核：复用 "清缓存 + 重装" 的方案
+自动执行：rm -rf node_modules → npm cache clean → npm install
+结果：80% 的依赖问题可自动恢复
 ```
 
-**Pattern 3: Database Connection Recovery**
+**模式 3：数据库连接恢复**
 ```bash
-# Issue Detection:
-Monitor detects: Database connection timeouts
-Intent Kernel: "Database service likely stopped"
-Memory Kernel: "Restart service + verify connections"
-Auto-Recovery: systemctl restart postgresql → Test connections → Report status
-Result: Sub-minute database recovery vs manual investigation
+# 问题检测：
+监控：数据库连接超时
+意图内核：判断服务可能停止
+记忆内核："重启服务 + 校验连接"
+自动执行：systemctl restart postgresql → 测试连接 → 回报状态
+结果：不到 1 分钟完成恢复
 ```
 
-##### **Implementation Benefits**
+##### **实施收益**
 
-**Immediate Impact (Week 1-2):**
-- **90% automatic resolution** of common development issues
-- **15-60 second recovery time** vs 5-30 minute manual debugging
-- **Prevention rules** learned from successful recoveries
-- **24/7 monitoring** without performance impact
+**即时影响（第 1-2 周）**
+- 常见开发故障 **90% 可自动解决**。
+- 恢复时间缩短到 **15-60 秒**，而非人工的 5-30 分钟。
+- 成功恢复会反向生成新的 **预防规则**。
+- **全时段监控** 且资源占用低。
 
-**Learning Evolution (Week 2-8):**
-- **Pattern library growth**: Each recovery teaches the system
-- **Prevention improvement**: Conditions that lead to issues get prevented
-- **Cross-service learning**: Database patterns help with server issues
-- **Accuracy improvement**: 70% → 90%+ recovery success rate
+**学习演进（第 2-8 周）**
+- **模式库成长**：每次恢复都是新的知识。
+- **预防策略进化**：持续阻断高频故障。
+- **跨服务学习**：数据库经验迁移到服务恢复中。
+- **准确率提升**：恢复成功率从 70% 提升到 90%+。
 
-**Advanced Capabilities (Week 8+):**
-- **Predictive healing**: Fix issues before they manifest
-- **Cross-project patterns**: Solutions transfer between projects
-- **Adaptive monitoring**: Focus on services with highest failure probability
-- **Collaborative healing**: Multiple projects share recovery patterns
+**高级能力（第 8 周以后）**
+- **预测式修复**：在问题发生前采取动作。
+- **跨项目共享**：成功方案在团队间复用。
+- **自适应监控**：关注最有可能故障的服务。
+- **协同自愈**：多个项目共享恢复模式。
 
-##### **Real-World Recovery Examples**
+##### **真实恢复案例**
 
-**Example 1: Port Conflict Resolution**
+**案例 1：端口冲突**
 ```bash
-# Issue: "Error: listen EADDRINUSE :::3000"
-Recovery Steps:
-1. Find process using port 3000: lsof -i :3000
-2. Kill process: kill -9 <pid>
-3. Wait 2 seconds for cleanup
-4. Restart dev server: npm run dev &
-5. Verify server responds: curl localhost:3000
-Success Rate: 98%
-Average Recovery Time: 12 seconds
+# 报错："Error: listen EADDRINUSE :::3000"
+恢复流程：
+1. lsof -i :3000 查出占用进程
+2. kill -9 <pid>
+3. 等待 2 秒
+4. npm run dev & 重启
+5. curl localhost:3000 验证
+成功率：98%，平均恢复 12 秒
 ```
 
-**Example 2: Memory Leak Detection and Recovery**
+**案例 2：内存泄漏**
 ```bash
-# Issue: Dev server becomes unresponsive after 2 hours
-Pattern Recognition: Memory usage > 2GB threshold
-Recovery Steps:
-1. Gracefully stop dev server: kill -TERM <pid>
-2. Clear webpack cache: rm -rf node_modules/.cache
-3. Restart with memory monitoring: npm run dev &
-4. Enable garbage collection: node --expose-gc
-Prevention: Monitor memory every 5 minutes, restart at 1.5GB
+# 症状：开发服务器运行两小时后无响应
+触发：内存使用超过 2GB
+恢复步骤：
+1. kill -TERM <pid> 优雅停止
+2. rm -rf node_modules/.cache 清缓存
+3. npm run dev & 重启并监控
+4. node --expose-gc 打开 GC
+预防：每 5 分钟检测内存，超过 1.5GB 即重启
 ```
 
-**Example 3: Dependency Conflict Resolution**
+**案例 3：依赖冲突**
 ```bash
-# Issue: "Module not found" errors after package updates
-Analysis: package-lock.json conflicts detected
-Recovery Steps:
-1. Backup current node_modules state
-2. Clean install: rm -rf node_modules package-lock.json
-3. Clear npm cache: npm cache clean --force
-4. Fresh install: npm install
-5. Run tests to verify stability
-6. If tests fail, restore backup and report conflict
-Success Rate: 85%
+# 症状：更新依赖后出现 "Module not found"
+分析：package-lock.json 冲突
+恢复步骤：
+1. 备份 node_modules
+2. rm -rf node_modules package-lock.json
+3. npm cache clean --force
+4. npm install
+5. 运行测试确认稳定
+6. 若失败还原备份并报告
+成功率：85%
 ```
 
-##### **Prevention System**
+##### **预防体系**
+- **高风险规则库**：根据历史失败创建触发器。
+- **提前警报**：例如磁盘使用率达到 85% 就预警。
+- **自动缓解措施**：如自动扩容缓存、清理日志。
+- **学习闭环**：每次成功预防都会强化对应规则。
 
-**Active Prevention Rules:**
+#### **🧠 内核驱动的智能上下文管理**
+
+##### **架构设计**
 ```javascript
-// Example prevention rules learned from patterns
-const preventionRules = [
-    {
-        name: "Prevent port conflicts",
-        condition: () => checkPortAvailability(3000),
-        action: () => killProcessOnPort(3000),
-        trigger: "before_dev_server_start"
-    },
-    {
-        name: "Prevent memory leaks",
-        condition: () => getMemoryUsage() > 1.5 * 1024 * 1024 * 1024,
-        action: () => restartDevServer(),
-        trigger: "memory_threshold"
-    },
-    {
-        name: "Prevent dependency corruption",
-        condition: () => detectPackageLockChanges(),
-        action: () => validateDependencyIntegrity(),
-        trigger: "after_package_update"
-    }
-];
-```
-
-**Key Understanding**: The Background Self-Healing Environment creates an autonomous maintenance layer that learns from every issue and recovery, building intelligence that prevents 90% of common development problems while automatically resolving the remaining 10% in seconds rather than minutes.
-
-#### **🧠 Smart Context Management with Kernel Intelligence**
-**Context Optimization Framework**: 50-70% longer productive sessions through intelligent context optimization, predictive context loading, and kernel-driven relevance analysis.
-
-##### **Architecture Design**
-```javascript
-// Smart Context Management Framework
 class SmartContextManager {
     constructor() {
         this.contextLayers = new Map();
-        this.relevanceEngine = new RelevanceEngine();
-        this.contextHistory = [];
-        this.predictiveLoader = new PredictiveContextLoader();
-        this.compressionEngine = new IntelligentCompressionEngine();
-        this.contextMetrics = new ContextMetrics();
+        this.contextCache = new Map();
+        this.kernel = new ContextKernelIntegration();
+        this.memory = new ContextMemorySystem();
+        this.intent = new IntentKernel();
+        this.extraction = new ExtractionKernel();
+        this.validation = new ValidationKernel();
     }
-    
-    // Core context layering system
-    initializeContextLayers() {
-        // Essential context (never compressed)
-        this.contextLayers.set('essential', {
-            priority: 1,
-            maxAge: Infinity,
-            content: new Set(['CLAUDE.md', 'current_task', 'user_profile', 'project_config'])
-        });
-        
-        // Working context (compress intelligently)
-        this.contextLayers.set('working', {
-            priority: 2,
-            maxAge: 3600000, // 1 hour
-            content: new Set(['recent_files', 'active_patterns', 'current_session'])
-        });
-        
-        // Reference context (compress aggressively)
-        this.contextLayers.set('reference', {
-            priority: 3,
-            maxAge: 1800000, // 30 minutes
-            content: new Set(['documentation', 'examples', 'research_data'])
-        });
-        
-        // Transient context (auto-expire)
-        this.contextLayers.set('transient', {
-            priority: 4,
-            maxAge: 300000, // 5 minutes
-            content: new Set(['temporary_calculations', 'intermediate_results'])
-        });
-    }
-    
-    async analyzeContextWithKernels(currentContext, task, userIntent) {
-        // Intent Kernel: Analyze what context will be needed
-        const intentAnalysis = await intentKernel.analyzeContextRequirements(task, userIntent);
-        
-        // Memory Kernel: Find relevant patterns and previous context usage
-        const memoryAnalysis = await memoryKernel.analyzeContextPatterns(task, currentContext);
-        
-        // Extraction Kernel: Mine insights from current context usage
-        const extractionAnalysis = await extractionKernel.analyzeContextUtilization(currentContext);
-        
-        // Validation Kernel: Assess context safety and relevance
-        const validationAnalysis = await validationKernel.validateContextRelevance(currentContext);
-        
-        return {
-            intentAnalysis,
-            memoryAnalysis,
-            extractionAnalysis,
-            validationAnalysis,
-            timestamp: Date.now()
-        };
-    }
-    
-    async optimizeContext(currentContext, task, userIntent) {
-        const analysis = await this.analyzeContextWithKernels(currentContext, task, userIntent);
-        
-        // Calculate context relevance scores
-        const relevanceScores = await this.calculateContextRelevance(analysis);
-        
-        // Determine what to keep, compress, or remove
-        const optimizationPlan = await this.createOptimizationPlan(relevanceScores, analysis);
-        
-        // Execute optimization
-        const optimizedContext = await this.executeOptimization(optimizationPlan, currentContext);
-        
-        // Predictively load likely needed context
-        const predictiveContext = await this.loadPredictiveContext(analysis, optimizedContext);
-        
-        return {
-            optimizedContext,
-            predictiveContext,
-            optimizationPlan,
-            metrics: this.contextMetrics.calculate(currentContext, optimizedContext)
-        };
-    }
-    
-    async calculateContextRelevance(analysis) {
-        const relevanceScores = new Map();
-        
-        // Intent-based relevance
-        for (const [contextId, context] of analysis.currentContext) {
-            let score = 0;
-            
-            // Intent Kernel scoring
-            const intentRelevance = analysis.intentAnalysis.relevanceScores.get(contextId) || 0;
-            score += intentRelevance * 0.4;
-            
-            // Memory pattern scoring
-            const memoryRelevance = analysis.memoryAnalysis.patternRelevance.get(contextId) || 0;
-            score += memoryRelevance * 0.3;
-            
-            // Usage frequency scoring
-            const usageFrequency = analysis.extractionAnalysis.usageMetrics.get(contextId) || 0;
-            score += usageFrequency * 0.2;
-            
-            // Recency scoring
-            const recencyScore = this.calculateRecencyScore(context.lastAccessed);
-            score += recencyScore * 0.1;
-            
-            relevanceScores.set(contextId, score);
-        }
-        
-        return relevanceScores;
-    }
-    
-    async createOptimizationPlan(relevanceScores, analysis) {
-        const plan = {
-            keep: new Set(),
-            compress: new Set(),
-            remove: new Set(),
-            preload: new Set()
-        };
-        
-        for (const [contextId, score] of relevanceScores) {
-            const context = analysis.currentContext.get(contextId);
-            const layer = this.getContextLayer(contextId);
-            
-            if (layer === 'essential' || score > 0.8) {
-                plan.keep.add(contextId);
-            } else if (score > 0.5) {
-                plan.compress.add(contextId);
-            } else if (score < 0.2 && layer !== 'working') {
-                plan.remove.add(contextId);
-            } else {
-                plan.compress.add(contextId);
-            }
-        }
-        
-        // Add predictive context based on intent analysis
-        const predictiveItems = analysis.intentAnalysis.likelyNeededContext;
-        for (const item of predictiveItems) {
-            if (item.confidence > 0.7) {
-                plan.preload.add(item.contextId);
-            }
-        }
-        
-        return plan;
-    }
-    
-    async executeOptimization(plan, currentContext) {
-        const optimizedContext = new Map();
-        
-        // Keep high-priority context as-is
-        for (const contextId of plan.keep) {
-            optimizedContext.set(contextId, currentContext.get(contextId));
-        }
-        
-        // Compress medium-priority context
-        for (const contextId of plan.compress) {
-            const originalContext = currentContext.get(contextId);
-            const compressed = await this.compressionEngine.compress(originalContext);
-            optimizedContext.set(contextId, compressed);
-        }
-        
-        // Remove low-priority context (save to memory kernel)
-        for (const contextId of plan.remove) {
-            const contextToRemove = currentContext.get(contextId);
-            await memoryKernel.archiveContext(contextId, contextToRemove);
-        }
-        
-        return optimizedContext;
-    }
-    
-    async loadPredictiveContext(analysis, optimizedContext) {
-        const predictiveContext = new Map();
-        
-        // Load context that will likely be needed soon
-        const predictiveItems = analysis.intentAnalysis.likelyNeededContext;
-        
-        for (const item of predictiveItems) {
-            if (item.confidence > 0.6 && !optimizedContext.has(item.contextId)) {
-                try {
-                    const context = await this.loadContext(item.contextId);
-                    predictiveContext.set(item.contextId, {
-                        content: context,
-                        confidence: item.confidence,
-                        reason: item.reason,
-                        loadedAt: Date.now()
-                    });
-                } catch (error) {
-                    console.log(`⚠️ Could not preload context ${item.contextId}: ${error.message}`);
-                }
-            }
-        }
-        
-        return predictiveContext;
-    }
-    
-    // Intelligent compression engine
-    async compressContext(context, compressionLevel = 'medium') {
-        switch (compressionLevel) {
-            case 'light':
-                return await this.lightCompression(context);
-            case 'medium':
-                return await this.mediumCompression(context);
-            case 'aggressive':
-                return await this.aggressiveCompression(context);
-            default:
-                return context;
-        }
-    }
-    
-    async lightCompression(context) {
-        // Remove redundant information while preserving all important details
-        return {
-            type: 'light_compressed',
-            summary: await extractionKernel.extractKeyPoints(context),
-            originalSize: JSON.stringify(context).length,
-            compressedSize: null,
-            compressionRatio: 0.8,
-            decompressible: true,
-            timestamp: Date.now()
-        };
-    }
-    
-    async mediumCompression(context) {
-        // Compress to essential information with smart summarization
-        const keyPoints = await extractionKernel.extractKeyPoints(context);
-        const patterns = await memoryKernel.extractPatterns(context);
-        
-        return {
-            type: 'medium_compressed',
-            keyPoints,
-            patterns,
-            relationships: await this.extractRelationships(context),
-            originalSize: JSON.stringify(context).length,
-            compressionRatio: 0.4,
-            decompressible: true,
-            timestamp: Date.now()
-        };
-    }
-    
-    async aggressiveCompression(context) {
-        // Compress to minimal representation
-        return {
-            type: 'aggressive_compressed',
-            fingerprint: await this.createContextFingerprint(context),
-            coreInsights: await extractionKernel.extractCoreInsights(context),
-            retrievalHints: await this.createRetrievalHints(context),
-            originalSize: JSON.stringify(context).length,
-            compressionRatio: 0.1,
-            decompressible: false,
-            timestamp: Date.now()
-        };
-    }
-    
-    // Context prediction engine
-    async predictNextContext(currentTask, userPattern, sessionHistory) {
-        const predictions = [];
-        
-        // Intent-based prediction
-        const intentPredictions = await intentKernel.predictNextContext(currentTask);
-        predictions.push(...intentPredictions);
-        
-        // Pattern-based prediction
-        const patternPredictions = await memoryKernel.predictContextFromPatterns(userPattern);
-        predictions.push(...patternPredictions);
-        
-        // Sequence-based prediction
-        const sequencePredictions = await this.predictFromSequence(sessionHistory);
-        predictions.push(...sequencePredictions);
-        
-        // REPL validation of predictions
-        const validatedPredictions = await this.validatePredictions(predictions);
-        
-        return validatedPredictions.sort((a, b) => b.confidence - a.confidence);
-    }
-    
-    async validatePredictions(predictions) {
-        const validated = [];
-        
-        for (const prediction of predictions) {
-            // Use REPL to test prediction accuracy
-            const validation = await this.testPredictionAccuracy(prediction);
-            
-            if (validation.likely) {
-                prediction.confidence *= validation.accuracyMultiplier;
-                prediction.validationNotes = validation.notes;
-                validated.push(prediction);
-            }
-        }
-        
-        return validated;
-    }
-    
-    // Automatic context management
-    async enableAutoManagement() {
-        // Monitor context size and performance
-        setInterval(async () => {
-            const metrics = await this.contextMetrics.getCurrentMetrics();
-            
-            if (metrics.contextSize > this.getOptimalSize()) {
-                console.log(`🧠 Context size ${metrics.contextSize} exceeds optimal, auto-optimizing...`);
-                await this.autoOptimizeContext(metrics);
-            }
-            
-            if (metrics.responseTime > this.getAcceptableResponseTime()) {
-                console.log(`⚡ Response time ${metrics.responseTime}ms too slow, compressing context...`);
-                await this.autoCompressForPerformance(metrics);
-            }
-            
-        }, 30000); // Check every 30 seconds
-    }
-    
-    async autoOptimizeContext(metrics) {
-        const currentContext = await this.getCurrentContext();
-        const currentTask = await this.getCurrentTask();
-        const userIntent = await this.getCurrentUserIntent();
-        
-        const optimization = await this.optimizeContext(currentContext, currentTask, userIntent);
-        
-        await this.applyOptimization(optimization);
-        
-        console.log(`✅ Auto-optimization complete. Context reduced by ${optimization.metrics.reductionPercentage}%`);
-    }
-    
-    // Context learning system
-    learnFromContextUsage(contextId, context, usagePattern) {
-        this.contextHistory.push({
-            contextId,
-            context,
-            usagePattern,
-            timestamp: Date.now(),
-            effectiveness: usagePattern.effectiveness
-        });
-        
-        // Update context relevance models
-        this.updateRelevanceModels(contextId, usagePattern);
-        
-        // Learn compression effectiveness
-        this.updateCompressionModels(context, usagePattern);
-        
-        // Update prediction models
-        this.updatePredictionModels(contextId, usagePattern);
-    }
-    
-    updateRelevanceModels(contextId, usagePattern) {
-        // Improve relevance scoring based on actual usage
-        const layer = this.getContextLayer(contextId);
-        
-        if (usagePattern.highUtilization && this.contextLayers.get(layer).priority > 2) {
-            // Promote context that's used more than expected
-            this.promoteContextLayer(contextId);
-        } else if (usagePattern.lowUtilization && this.contextLayers.get(layer).priority < 3) {
-            // Demote context that's used less than expected
-            this.demoteContextLayer(contextId);
-        }
-    }
-}
 
-// Relevance Engine for context scoring
-class RelevanceEngine {
-    constructor() {
-        this.relevanceModels = new Map();
-        this.learningHistory = [];
+    async initializeContext(project) {
+        // ...
     }
-    
-    async calculateRelevance(context, task, userIntent) {
-        // Multi-dimensional relevance scoring
-        const scores = {
-            taskRelevance: await this.calculateTaskRelevance(context, task),
-            temporalRelevance: await this.calculateTemporalRelevance(context),
-            semanticRelevance: await this.calculateSemanticRelevance(context, userIntent),
-            usageRelevance: await this.calculateUsageRelevance(context),
-            predictiveRelevance: await this.calculatePredictiveRelevance(context, task)
-        };
-        
-        // Weighted combination
-        const weights = {
-            taskRelevance: 0.35,
-            temporalRelevance: 0.15,
-            semanticRelevance: 0.25,
-            usageRelevance: 0.15,
-            predictiveRelevance: 0.10
-        };
-        
-        let totalScore = 0;
-        for (const [dimension, score] of Object.entries(scores)) {
-            totalScore += score * weights[dimension];
-        }
-        
-        return {
-            totalScore,
-            dimensionScores: scores,
-            confidence: this.calculateConfidence(scores)
-        };
-    }
-    
-    async calculateTaskRelevance(context, task) {
-        // How relevant is this context to the current task?
-        const taskKeywords = await this.extractTaskKeywords(task);
-        const contextKeywords = await this.extractContextKeywords(context);
-        
-        const overlap = this.calculateKeywordOverlap(taskKeywords, contextKeywords);
-        const semanticSimilarity = await this.calculateSemanticSimilarity(task, context);
-        
-        return (overlap * 0.6) + (semanticSimilarity * 0.4);
-    }
-    
-    async calculateTemporalRelevance(context) {
-        // How recently was this context accessed or modified?
-        const age = Date.now() - context.lastAccessed;
-        const maxAge = 3600000; // 1 hour
-        
-        return Math.max(0, 1 - (age / maxAge));
-    }
-    
-    async calculateSemanticRelevance(context, userIntent) {
-        // How semantically related is this context to user intent?
-        return await intentKernel.calculateSemanticSimilarity(context, userIntent);
-    }
-    
-    async calculateUsageRelevance(context) {
-        // How frequently is this context used?
-        const usageFrequency = context.usageCount || 0;
-        const avgUsage = this.getAverageUsageFrequency();
-        
-        return Math.min(1, usageFrequency / avgUsage);
-    }
-    
-    async calculatePredictiveRelevance(context, task) {
-        // How likely is this context to be needed for future tasks?
-        const futureTaskPredictions = await this.predictFutureTasks(task);
-        
-        let predictiveScore = 0;
-        for (const prediction of futureTaskPredictions) {
-            const relevanceToFuture = await this.calculateTaskRelevance(context, prediction.task);
-            predictiveScore += relevanceToFuture * prediction.probability;
-        }
-        
-        return predictiveScore;
-    }
-}
 
-// Context metrics and monitoring
-class ContextMetrics {
-    constructor() {
-        this.metrics = new Map();
-        this.performanceHistory = [];
+    async updateContext(updateRequest) {
+        // ...
     }
-    
-    async getCurrentMetrics() {
-        const context = await this.getCurrentContext();
-        
-        return {
-            contextSize: this.calculateContextSize(context),
-            responseTime: await this.measureResponseTime(),
-            memoryUsage: await this.measureMemoryUsage(),
-            compressionRatio: this.calculateCompressionRatio(context),
-            relevanceScore: await this.calculateAverageRelevance(context),
-            predictionAccuracy: await this.calculatePredictionAccuracy(),
-            optimizationEffectiveness: await this.calculateOptimizationEffectiveness()
-        };
-    }
-    
-    calculateContextSize(context) {
-        return JSON.stringify(context).length;
-    }
-    
-    async measureResponseTime() {
-        const start = performance.now();
-        await this.performTestOperation();
-        return performance.now() - start;
-    }
-    
-    trackOptimization(before, after, optimization) {
-        const metrics = {
-            timestamp: Date.now(),
-            sizeBefore: this.calculateContextSize(before),
-            sizeAfter: this.calculateContextSize(after),
-            reductionPercentage: ((this.calculateContextSize(before) - this.calculateContextSize(after)) / this.calculateContextSize(before)) * 100,
-            optimizationType: optimization.type,
-            effectiveness: optimization.effectiveness
-        };
-        
-        this.performanceHistory.push(metrics);
-        return metrics;
-    }
-}
 
-// Integration patterns
-class SmartContextIntegration {
-    static async initializeForProject() {
-        const contextManager = new SmartContextManager();
-        
-        // Initialize context layers
-        contextManager.initializeContextLayers();
-        
-        // Enable automatic management
-        await contextManager.enableAutoManagement();
-        
-        // Load context patterns from memory kernel
-        const existingPatterns = await memoryKernel.getContextPatterns();
-        for (const pattern of existingPatterns) {
-            contextManager.relevanceEngine.relevanceModels.set(pattern.id, pattern);
-        }
-        
-        console.log(`🧠 Smart context management initialized with ${existingPatterns.length} learned patterns`);
-        
-        return contextManager;
+    async compressContext(options) {
+        // ...
     }
-    
-    // Integration with Claude Code commands
-    static async handleMicrocompact(contextManager, focusArea) {
-        const currentContext = await contextManager.getCurrentContext();
-        const currentTask = focusArea || await contextManager.getCurrentTask();
-        const userIntent = await contextManager.getCurrentUserIntent();
-        
-        // Use kernel intelligence for optimal microcompact
-        const optimization = await contextManager.optimizeContext(currentContext, currentTask, userIntent);
-        
-        // Apply optimization
-        await contextManager.applyOptimization(optimization);
-        
-        console.log(`🧠 Intelligent microcompact complete:`);
-        console.log(`  Context reduced by ${optimization.metrics.reductionPercentage}%`);
-        console.log(`  Preloaded ${optimization.predictiveContext.size} likely needed items`);
-        console.log(`  Relevance score improved by ${optimization.metrics.relevanceImprovement}%`);
-        
-        return optimization;
+
+    async retrieveContext(query) {
+        // ...
+    }
+
+    async learnFromContextUsage() {
+        // ...
     }
 }
 ```
-
-##### **Integration Patterns**
-
-**Pattern 1: Intelligent Microcompact**
-```bash
-# Traditional /microcompact: Manual context clearing
-# Smart Context Management: Kernel-driven optimization
-
-Trigger: Context size > 6000 tokens OR response time > 2 seconds
-Process:
-1. Intent Kernel: Analyze what context is needed for current task
-2. Memory Kernel: Find patterns of successful context usage
-3. Extraction Kernel: Identify high-value context elements
-4. Validation Kernel: Ensure critical context is preserved
-5. Compression: Intelligent compression based on relevance scores
-6. Prediction: Preload likely needed context
-
-Result: 50-70% longer sessions with maintained productivity
-```
-
-**Pattern 2: Predictive Context Loading**
-```bash
-# Current: Reactive context loading when needed
-# Enhanced: Proactive context preparation
-
-User working on authentication → System predicts:
-- Authorization patterns (85% probability)
-- Security validation (78% probability)  
-- Database schema (65% probability)
-- Testing patterns (72% probability)
-
-Background loading: Load predicted context during idle moments
-Result: Instant access to relevant context when needed
-```
-
-**Pattern 3: Context Layer Intelligence**
-```bash
-# Four-layer context management:
-
-Essential Layer (Never compressed):
-- CLAUDE.md patterns
-- Current task context
-- User preferences
-- Project configuration
-
-Working Layer (Smart compression):
-- Recent file changes
-- Active development patterns
-- Current session insights
-
-Reference Layer (Aggressive compression):
-- Documentation
-- Examples
-- Research data
-
-Transient Layer (Auto-expire):
-- Temporary calculations
-- Intermediate results
-- One-time lookups
-```
-
-##### **Implementation Benefits**
-
-**Immediate Impact (Week 1-2):**
-- **50-70% longer sessions** without manual context management
-- **Instant context relevance** through kernel analysis
-- **Predictive context loading** prevents waiting
-- **Automatic optimization** maintains performance
-
-**Learning Evolution (Week 2-8):**
-- **Context pattern learning**: Successful patterns become templates
-- **Prediction accuracy improvement**: 60% → 85%+ accuracy
-- **Compression optimization**: Better preservation of important context
-- **User-specific adaptation**: Learns individual context preferences
-
-**Advanced Capabilities (Week 8+):**
-- **Proactive context preparation**: System anticipates needs
-- **Cross-session context continuity**: Seamless project resumption
-- **Context-aware tool selection**: Optimal tools based on context
-- **Collaborative context patterns**: Shared patterns across projects
-
-##### **Real-World Context Management Examples**
-
-**Example 1: Authentication Feature Development**
-```bash
-# Context Analysis:
-Current Task: "Implement OAuth2 authentication"
-Intent Kernel: Identifies security, database, testing requirements
-Memory Kernel: Recalls previous auth implementations
-Extraction Kernel: Mines relevant patterns from current codebase
-
-Context Optimization:
-Keep: Security patterns, database schemas, current auth code
-Compress: General documentation, old examples
-Remove: Unrelated UI components, obsolete patterns
-Preload: OAuth2 specifications, testing frameworks, validation patterns
-
-Result: All relevant context instantly available, 40% context reduction
-```
-
-**Example 2: Performance Optimization Session**
-```bash
-# Session Context Evolution:
-Hour 1: Performance profiling → Context: monitoring tools, metrics
-Hour 2: Bottleneck analysis → Context: specific components, benchmarks  
-Hour 3: Optimization implementation → Context: algorithms, testing
-Hour 4: Validation → Context: comparison data, success metrics
-
-Smart Management:
-- Hour 1 context compressed but kept accessible
-- Hour 2 patterns influence Hour 3 predictions
-- Hour 4 validation uses compressed Hour 1 insights
-- Cross-session: Performance patterns stored for future projects
-```
-
-**Example 3: Bug Investigation**
-```bash
-# Dynamic Context Adaptation:
-Initial: Bug report → Load error logs, related code
-Investigation: Root cause analysis → Expand to system architecture
-Solution: Fix implementation → Focus on specific components  
-Validation: Testing → Include test patterns, validation tools
-
-Context Intelligence:
-- Automatically expands context scope during investigation
-- Compresses irrelevant historical context
-- Preloads testing context when solution phase detected
-- Maintains investigation trail for future similar bugs
-```
-
-##### **Performance Optimization Patterns**
-
-**Context Size Management:**
-```javascript
-// Automatic context optimization thresholds
-const contextThresholds = {
-    optimal: 4000,      // tokens - peak performance range
-    warning: 6000,      // tokens - start intelligent compression
-    critical: 8000,     // tokens - aggressive optimization required
-    maximum: 10000      // tokens - emergency microcompact
-};
-
-// Response time optimization
-const responseTimeTargets = {
-    excellent: 500,     // ms - optimal response time
-    good: 1000,         // ms - acceptable performance
-    slow: 2000,         // ms - context optimization needed
-    critical: 5000      // ms - immediate intervention required
-};
-```
-
-**Memory Efficiency Patterns:**
-```bash
-# Context compression effectiveness by type:
-Documentation: 85% compression ratio (high redundancy)
-Code examples: 65% compression ratio (pattern extraction)
-Conversation history: 75% compression ratio (summary generation)
-Technical specifications: 45% compression ratio (high information density)
-Personal preferences: 20% compression ratio (high specificity)
-
-# Optimal context distribution:
-Essential: 25% of total context
-Working: 35% of total context  
-Reference: 30% of total context
-Transient: 10% of total context
-```
-
-##### **Cross-System Integration**
-
-**With REPL-Kernel Validation:**
-```bash
-# Context decisions validated through computation
-Context Prediction: "User will need database schema next"
-REPL Validation: Test prediction accuracy with historical data
-Result: Validated predictions have 85%+ accuracy vs 60% unvalidated
-```
-
-**With Background Self-Healing:**
-```bash
-# Context management as part of system health
-Health Monitor: Detects slow response times
-Context Manager: Automatically optimizes context
-Self-Healing: Resolves performance issues proactively
-```
-
-**With Meta-Todo System:**
-```bash
-# Context optimization for task breakdowns
-Meta-Todo: Generates complex task breakdown
-Context Manager: Loads relevant context for each task phase
-Background: Preloads context for upcoming tasks
-Result: Seamless context availability throughout project execution
-```
-
-##### **Learning and Adaptation Metrics**
-
-**Context Effectiveness Tracking:**
-```javascript
-// Metrics for continuous improvement
-const contextMetrics = {
-    utilizationRate: 0.78,           // How much loaded context is actually used
-    predictionAccuracy: 0.85,        // How often predictions are correct
-    compressionEffectiveness: 0.92,  // Quality preservation during compression
-    sessionExtension: 1.67,          // Multiplier for session length
-    userSatisfaction: 0.94           // Implicit satisfaction from usage patterns
-};
-```
-
-**Adaptive Learning Patterns:**
-```bash
-# Context usage learning
-High utilization pattern → Increase context priority
-Low utilization pattern → Reduce context priority or improve compression
-Frequent access pattern → Move to higher priority layer
-Rare access pattern → Move to lower priority layer
-
-# User behavior adaptation
-Morning sessions: Prefer architectural context
-Afternoon sessions: Prefer implementation context  
-Evening sessions: Prefer debugging and testing context
-Weekend sessions: Prefer learning and research context
-```
-
-**Key Understanding**: Smart Context Management with Kernel Intelligence creates an adaptive cognitive workspace that learns user patterns, predicts context needs, and maintains optimal context distribution for maximum productivity. It transforms context management from a manual chore into an invisible intelligence layer that anticipates and prepares the ideal context environment for each task phase.
-
-#### **🔮 Predictive Task Queuing System**
-**Predictive Preparation System**: 40-60% faster task initiation through anticipatory preparation and resource pre-loading, with continuous learning from execution patterns.
-
-##### **Architecture Design**
-```javascript
-// Predictive Task Queuing Framework
-class PredictiveTaskQueuing {
-    constructor() {
-        this.memoryKernel = new MemoryKernel();
-        this.intentKernel = new IntentKernel();
-        this.extractionKernel = new ExtractionKernel();
-        this.validationKernel = new ValidationKernel();
-        
-        this.predictiveQueue = new Map();
-        this.preparationCache = new Map();
-        this.patternAnalyzer = new TaskPatternAnalyzer();
-        
-        this.initializePredictiveEngine();
-    }
-    
-    initializePredictiveEngine() {
-        this.predictionEngine = {
-            // Temporal patterns - when certain tasks typically happen
-            temporal: new TemporalPredictor(),
-            
-            // Sequential patterns - what typically follows what
-            sequential: new SequentialPredictor(),
-            
-            // Contextual patterns - what happens in certain contexts
-            contextual: new ContextualPredictor(),
-            
-            // User behavior patterns - individual working patterns
-            behavioral: new BehavioralPredictor()
-        };
-        
-        // Start background prediction loops
-        this.startPredictionLoops();
-    }
-    
-    async predictNextTasks(currentContext) {
-        const predictions = {
-            immediate: [], // Next 1-3 likely tasks
-            short_term: [], // Next 5-10 likely tasks  
-            medium_term: [], // Next session likely tasks
-            long_term: [] // Multi-session patterns
-        };
-        
-        // Use all four prediction engines
-        const temporalPreds = await this.predictionEngine.temporal.predict(currentContext);
-        const sequentialPreds = await this.predictionEngine.sequential.predict(currentContext);
-        const contextualPreds = await this.predictionEngine.contextual.predict(currentContext);
-        const behavioralPreds = await this.predictionEngine.behavioral.predict(currentContext);
-        
-        // Synthesize predictions using Intent Kernel
-        const synthesizedPredictions = await this.intentKernel.synthesizePredictions([
-            temporalPreds, sequentialPreds, contextualPreds, behavioralPreds
-        ]);
-        
-        // Validate predictions using Validation Kernel
-        const validatedPredictions = await this.validationKernel.validatePredictions(
-            synthesizedPredictions, currentContext
-        );
-        
-        // Categorize by timeline
-        for (const prediction of validatedPredictions) {
-            if (prediction.confidence > 0.8 && prediction.timeframe <= 300) { // 5 minutes
-                predictions.immediate.push(prediction);
-            } else if (prediction.confidence > 0.6 && prediction.timeframe <= 1800) { // 30 minutes
-                predictions.short_term.push(prediction);
-            } else if (prediction.confidence > 0.5 && prediction.timeframe <= 7200) { // 2 hours
-                predictions.medium_term.push(prediction);
-            } else if (prediction.confidence > 0.4) {
-                predictions.long_term.push(prediction);
-            }
-        }
-        
-        return predictions;
-    }
-    
-    async prepareForTask(prediction) {
-        const preparationId = `prep_${prediction.id}_${Date.now()}`;
-        
-        const preparation = {
-            id: preparationId,
-            prediction: prediction,
-            status: 'preparing',
-            startTime: Date.now(),
-            resources: {
-                files: [],
-                tools: [],
-                context: {},
-                dependencies: []
-            }
-        };
-        
-        try {
-            // Use Extraction Kernel to identify what needs preparation
-            const requirements = await this.extractionKernel.extractTaskRequirements(prediction);
-            
-            // Pre-load likely files
-            if (requirements.files && requirements.files.length > 0) {
-                for (const file of requirements.files) {
-                    if (await this.fileExists(file)) {
-                        const content = await this.preloadFile(file);
-                        preparation.resources.files.push({
-                            path: file,
-                            content: content,
-                            preloadTime: Date.now()
-                        });
-                    }
-                }
-            }
-            
-            // Pre-initialize tools
-            if (requirements.tools && requirements.tools.length > 0) {
-                for (const tool of requirements.tools) {
-                    const toolInstance = await this.initializeTool(tool, requirements.context);
-                    preparation.resources.tools.push({
-                        name: tool,
-                        instance: toolInstance,
-                        initTime: Date.now()
-                    });
-                }
-            }
-            
-            // Pre-build context using Memory Kernel
-            preparation.resources.context = await this.memoryKernel.buildTaskContext(
-                prediction, requirements
-            );
-            
-            // Pre-resolve dependencies
-            if (requirements.dependencies && requirements.dependencies.length > 0) {
-                preparation.resources.dependencies = await this.resolveDependencies(
-                    requirements.dependencies
-                );
-            }
-            
-            preparation.status = 'ready';
-            preparation.prepTime = Date.now() - preparation.startTime;
-            
-            this.preparationCache.set(preparationId, preparation);
-            
-            return preparation;
-            
-        } catch (error) {
-            preparation.status = 'failed';
-            preparation.error = error.message;
-            this.preparationCache.set(preparationId, preparation);
-            
-            throw error;
-        }
-    }
-    
-    async executeWithPreparation(taskId, preparation) {
-        const executionStart = Date.now();
-        
-        try {
-            // Use prepared resources
-            const context = {
-                files: preparation.resources.files.reduce((acc, file) => {
-                    acc[file.path] = file.content;
-                    return acc;
-                }, {}),
-                tools: preparation.resources.tools.reduce((acc, tool) => {
-                    acc[tool.name] = tool.instance;
-                    return acc;
-                }, {}),
-                context: preparation.resources.context,
-                dependencies: preparation.resources.dependencies
-            };
-            
-            // Execute with prepared context - this is much faster
-            const result = await this.executeTaskWithContext(taskId, context);
-            
-            const totalTime = Date.now() - executionStart;
-            const savedTime = preparation.prepTime; // Time saved by preparation
-            
-            // Learn from execution for future predictions
-            await this.patternAnalyzer.recordExecution({
-                prediction: preparation.prediction,
-                preparationTime: preparation.prepTime,
-                executionTime: totalTime,
-                savedTime: savedTime,
-                success: true,
-                result: result
-            });
-            
-            return {
-                result: result,
-                metrics: {
-                    totalTime: totalTime,
-                    preparationTime: preparation.prepTime,
-                    savedTime: savedTime,
-                    efficiency: savedTime / totalTime
-                }
-            };
-            
-        } catch (error) {
-            await this.patternAnalyzer.recordExecution({
-                prediction: preparation.prediction,
-                preparationTime: preparation.prepTime,
-                success: false,
-                error: error.message
-            });
-            
-            throw error;
-        }
-    }
-    
-    startPredictionLoops() {
-        // Main prediction loop - runs every 30 seconds
-        setInterval(async () => {
-            try {
-                const currentContext = await this.getCurrentContext();
-                const predictions = await this.predictNextTasks(currentContext);
-                
-                // Prepare for high-confidence immediate predictions
-                for (const prediction of predictions.immediate) {
-                    if (prediction.confidence > 0.85) {
-                        await this.prepareForTask(prediction);
-                    }
-                }
-                
-                // Queue medium-confidence short-term predictions
-                for (const prediction of predictions.short_term) {
-                    if (prediction.confidence > 0.7) {
-                        this.predictiveQueue.set(prediction.id, {
-                            prediction: prediction,
-                            queueTime: Date.now(),
-                            priority: prediction.confidence * prediction.urgency
-                        });
-                    }
-                }
-                
-            } catch (error) {
-                console.error('Prediction loop error:', error);
-            }
-        }, 30000);
-        
-        // Preparation cleanup loop - runs every 5 minutes
-        setInterval(() => {
-            const now = Date.now();
-            const maxAge = 15 * 60 * 1000; // 15 minutes
-            
-            for (const [id, preparation] of this.preparationCache.entries()) {
-                if (now - preparation.startTime > maxAge && preparation.status !== 'executing') {
-                    this.preparationCache.delete(id);
-                }
-            }
-        }, 5 * 60 * 1000);
-    }
-    
-    async getCurrentContext() {
-        return {
-            timestamp: Date.now(),
-            currentFiles: await this.getActiveFiles(),
-            recentActions: await this.getRecentActions(),
-            workingDirectory: process.cwd(),
-            userPatterns: await this.getUserPatterns(),
-            systemState: await this.getSystemState()
-        };
-    }
-    
-    // Integration with existing systems
-    async integrateWithREPLKernel(replValidation) {
-        // Use REPL to validate predictions before preparation
-        for (const [id, queuedItem] of this.predictiveQueue.entries()) {
-            const prediction = queuedItem.prediction;
-            
-            if (prediction.type === 'computation' || prediction.type === 'algorithm') {
-                const validationResult = await replValidation.validatePredictedTask(prediction);
-                
-                if (validationResult.confidence > 0.8) {
-                    // Pre-compute expected results
-                    prediction.expectedResults = validationResult.results;
-                    prediction.confidence *= 1.1; // Boost confidence
-                } else {
-                    // Lower confidence for questionable predictions
-                    prediction.confidence *= 0.8;
-                }
-            }
-        }
-    }
-    
-    async integrateWithSelfHealing(healingEnvironment) {
-        // Use healing environment to prepare for potential issues
-        for (const [id, queuedItem] of this.predictiveQueue.entries()) {
-            const prediction = queuedItem.prediction;
-            
-            if (prediction.riskLevel && prediction.riskLevel > 0.6) {
-                // Pre-prepare healing strategies for risky predictions
-                const healingStrategy = await healingEnvironment.prepareHealingStrategy(prediction);
-                prediction.healingStrategy = healingStrategy;
-            }
-        }
-    }
-    
-    getMetrics() {
-        const preparations = Array.from(this.preparationCache.values());
-        const successful = preparations.filter(p => p.status === 'ready').length;
-        const failed = preparations.filter(p => p.status === 'failed').length;
-        const totalSavedTime = preparations.reduce((sum, p) => sum + (p.prepTime || 0), 0);
-        
-        return {
-            totalPredictions: this.predictiveQueue.size,
-            totalPreparations: preparations.length,
-            successfulPreparations: successful,
-            failedPreparations: failed,
-            successRate: successful / preparations.length,
-            totalTimeSaved: totalSavedTime,
-            averagePreparationTime: totalSavedTime / preparations.length
-        };
-    }
-}
-```
-
-##### **Prediction Engine Examples**
-
-**Example 1: React Component Development**
-```javascript
-// When working on UserProfile.jsx, system predicts:
-const predictions = await predictiveQueue.predictNextTasks({
-    currentFile: 'src/components/UserProfile.jsx',
-    recentActions: ['created', 'edited'],
-    timestamp: Date.now()
-});
-
-console.log('Immediate predictions:', predictions.immediate);
-// Output: [
-//   { task: 'create_test_file', confidence: 0.92, timeframe: 180 },
-//   { task: 'update_parent_import', confidence: 0.87, timeframe: 120 },
-//   { task: 'add_component_styles', confidence: 0.84, timeframe: 300 }
-// ]
-
-// System pre-loads:
-// - Test file templates
-// - Parent component file  
-// - Style files
-// - Documentation patterns
-// Result: When you need them, they're instantly available
-```
-
-**Example 2: API Development Pattern**
-```bash
-# Current: Creating user authentication endpoint
-# Predictions:
-1. Write tests for auth endpoint (confidence: 0.91)
-2. Create user model/schema (confidence: 0.89)  
-3. Add authentication middleware (confidence: 0.85)
-4. Update API documentation (confidence: 0.78)
-5. Configure environment variables (confidence: 0.72)
-
-# System preparations:
-- Pre-loads test frameworks and patterns
-- Prepares database schema templates
-- Initializes middleware boilerplate
-- Loads documentation template
-- Validates environment configuration
-```
-
-**Example 3: Debugging Session Pattern**
-```javascript
-// When error occurs, system predicts:
-const debugPredictions = {
-    immediate: [
-        { task: 'check_error_logs', confidence: 0.95, prep: 'load log files' },
-        { task: 'reproduce_issue', confidence: 0.89, prep: 'setup test env' },
-        { task: 'analyze_stack_trace', confidence: 0.87, prep: 'load source maps' }
-    ],
-    short_term: [
-        { task: 'write_fix', confidence: 0.82, prep: 'load related files' },
-        { task: 'create_test_case', confidence: 0.79, prep: 'test framework setup' },
-        { task: 'validate_fix', confidence: 0.76, prep: 'load validation tools' }
-    ]
-};
-```
-
-##### **Performance Benefits Analysis**
-
-**Speed Improvements:**
-```bash
-# Traditional workflow (cold start):
-Task initiation: 15-30 seconds (file loading, context building)
-Tool setup: 10-20 seconds (dependency resolution, initialization)
-Context switching: 5-15 seconds (mental model rebuilding)
-Total delay: 30-65 seconds per task
-
-# Predictive workflow (prepared):
-Task initiation: 3-8 seconds (resources pre-loaded)
-Tool setup: 1-3 seconds (tools pre-initialized)
-Context switching: 2-5 seconds (context pre-built)
-Total delay: 6-16 seconds per task
-Improvement: 40-75% faster initiation
-```
-
-**Learning Evolution Patterns:**
-```javascript
-// Pattern learning from execution history
-const learningMetrics = {
-    week1: { predictionAccuracy: 0.62, preparationEfficiency: 0.45 },
-    week2: { predictionAccuracy: 0.74, preparationEfficiency: 0.61 },
-    week3: { predictionAccuracy: 0.83, preparationEfficiency: 0.76 },
-    week4: { predictionAccuracy: 0.89, preparationEfficiency: 0.84 }
-};
-
-// System improvements:
-// - Better user pattern recognition
-// - More accurate resource prediction
-// - Optimal preparation timing
-// - Cross-project pattern transfer
-```
-
-##### **Integration with Kernel Architecture**
-
-**Multi-Kernel Collaboration:**
-```javascript
-// Memory Kernel: Stores prediction patterns and execution history
-predictiveQueue.memoryKernel.storePredictionPattern({
-    pattern: 'react_component_creation',
-    sequence: ['create', 'test', 'style', 'document', 'integrate'],
-    confidence: 0.87,
-    successRate: 0.92
-});
-
-// Intent Kernel: Understands what user likely wants to do next
-const intent = await predictiveQueue.intentKernel.predictNextIntent({
-    currentTask: 'component_creation',
-    userBehavior: 'methodical_developer',
-    timeOfDay: 'morning',
-    projectPhase: 'feature_development'
-});
-
-// Extraction Kernel: Identifies what resources tasks will need
-const requirements = await predictiveQueue.extractionKernel.extractTaskRequirements({
-    task: 'create_test_file',
-    context: 'React component',
-    dependencies: ['jest', 'testing-library', 'component-file']
-});
-
-// Validation Kernel: Validates predictions before preparation
-const validation = await predictiveQueue.validationKernel.validatePrediction({
-    prediction: 'user_will_add_styles',
-    confidence: 0.84,
-    context: 'component_just_created',
-    userPatterns: 'always_styles_after_creation'
-});
-```
-
-**Cross-System Learning:**
-```bash
-# REPL validation improves predictions
-REPL computation success → Increase algorithm prediction confidence
-REPL validation failure → Decrease similar prediction confidence
-
-# Self-healing informs risk assessment  
-Frequent healing needed → Increase prediction for preventive tasks
-Successful prevention → Boost preventive prediction patterns
-
-# Context management optimizes preparation
-Context frequently accessed → Pre-load in immediate predictions
-Context rarely used → Demote to lower prediction priority
-Context pattern changes → Update prediction models
-```
-
-**Key Understanding**: The Predictive Task Queuing System creates an anticipatory development environment that learns your patterns and prepares resources before you need them. It transforms reactive development into proactive preparation, reducing cognitive load and eliminating the friction of task switching through intelligent prediction and background preparation.
-
-#### **🔬 Triple-Validation Research Pipeline**
-**Multi-Layer Validation System**: 95%+ accuracy in research conclusions through three-layered validation, REPL computational verification, and cross-system pattern synthesis.
-
-##### **Architecture Design**
-```javascript
-// Triple-Validation Research Pipeline Framework
-class TripleValidationResearchPipeline {
-    constructor() {
-        this.memoryKernel = new MemoryKernel();
-        this.intentKernel = new IntentKernel();
-        this.extractionKernel = new ExtractionKernel();
-        this.validationKernel = new ValidationKernel();
-        
-        this.replValidator = new REPLKernelValidator();
-        this.researchCache = new Map();
-        this.validationHistory = [];
-        
-        this.initializeValidationLayers();
-    }
-    
-    initializeValidationLayers() {
-        this.validationLayers = {
-            // Layer 1: Source and Methodology Validation
-            source: new SourceValidationEngine({
-                credibilityCheckers: ['academic', 'industry', 'community'],
-                biasDetectors: ['temporal', 'geographical', 'institutional'],
-                sourceRanking: 'weighted_expertise'
-            }),
-            
-            // Layer 2: Cross-Reference and Consistency Validation
-            crossRef: new CrossReferenceValidationEngine({
-                consistencyCheckers: ['logical', 'factual', 'temporal'],
-                conflictResolvers: ['evidence_weight', 'source_authority', 'recency'],
-                synthesisEngine: 'consensus_builder'
-            }),
-            
-            // Layer 3: Computational and Practical Validation
-            computational: new ComputationalValidationEngine({
-                replValidation: this.replValidator,
-                simulationEngine: new SimulationEngine(),
-                benchmarkSuite: new BenchmarkSuite(),
-                realWorldValidation: new RealWorldValidator()
-            })
-        };
-    }
-    
-    async conductResearch(researchQuery) {
-        const researchId = `research_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        
-        const research = {
-            id: researchId,
-            query: researchQuery,
-            startTime: Date.now(),
-            status: 'initializing',
-            phases: {
-                planning: null,
-                gathering: null,
-                validation: null,
-                synthesis: null,
-                verification: null
-            },
-            results: {
-                raw: [],
-                validated: [],
-                synthesized: null,
-                confidence: 0
-            }
-        };
-        
-        this.researchCache.set(researchId, research);
-        
-        try {
-            // Phase 1: Research Planning using Intent Kernel
-            research.status = 'planning';
-            research.phases.planning = await this.planResearch(researchQuery);
-            
-            // Phase 2: Information Gathering using Extraction Kernel
-            research.status = 'gathering';
-            research.phases.gathering = await this.gatherInformation(research.phases.planning);
-            
-            // Phase 3: Triple-Layer Validation
-            research.status = 'validating';
-            research.phases.validation = await this.validateInformation(research.phases.gathering);
-            
-            // Phase 4: Synthesis using Memory Kernel
-            research.status = 'synthesizing';
-            research.phases.synthesis = await this.synthesizeFindings(research.phases.validation);
-            
-            // Phase 5: REPL Computational Verification
-            research.status = 'verifying';
-            research.phases.verification = await this.computationalVerification(research.phases.synthesis);
-            
-            // Final Results
-            research.results.synthesized = research.phases.synthesis;
-            research.results.confidence = this.calculateOverallConfidence(research);
-            research.status = 'completed';
-            research.endTime = Date.now();
-            research.duration = research.endTime - research.startTime;
-            
-            return research;
-            
-        } catch (error) {
-            research.status = 'failed';
-            research.error = error.message;
-            research.endTime = Date.now();
-            
-            throw error;
-        }
-    }
-    
-    async planResearch(query) {
-        // Use Intent Kernel to understand research intent and scope
-        const intent = await this.intentKernel.analyzeResearchIntent(query);
-        
-        const plan = {
-            intent: intent,
-            scope: await this.determinScope(query, intent),
-            searchStrategies: await this.generateSearchStrategies(query, intent),
-            validationCriteria: await this.defineValidationCriteria(query, intent),
-            expectedOutcomes: await this.predictOutcomes(query, intent),
-            contingencyPlans: await this.createContingencyPlans(query, intent)
-        };
-        
-        return plan;
-    }
-    
-    async gatherInformation(plan) {
-        const gathering = {
-            sources: new Map(),
-            rawData: [],
-            metadata: [],
-            searchMetrics: {}
-        };
-        
-        // Execute multiple search strategies in parallel
-        const searchResults = await Promise.all(
-            plan.searchStrategies.map(strategy => this.executeSearchStrategy(strategy))
-        );
-        
-        // Aggregate and categorize results
-        for (const results of searchResults) {
-            for (const result of results.data) {
-                const sourceId = this.generateSourceId(result.source);
-                
-                if (!gathering.sources.has(sourceId)) {
-                    gathering.sources.set(sourceId, {
-                        id: sourceId,
-                        type: result.source.type,
-                        authority: result.source.authority,
-                        credibility: result.source.credibility,
-                        data: []
-                    });
-                }
-                
-                gathering.sources.get(sourceId).data.push({
-                    content: result.content,
-                    timestamp: result.timestamp,
-                    relevance: result.relevance,
-                    confidence: result.confidence
-                });
-                
-                gathering.rawData.push(result);
-                gathering.metadata.push(result.metadata);
-            }
-        }
-        
-        return gathering;
-    }
-    
-    async validateInformation(gathering) {
-        const validation = {
-            layer1: null, // Source validation
-            layer2: null, // Cross-reference validation
-            layer3: null, // Computational validation
-            consolidatedResults: [],
-            overallConfidence: 0
-        };
-        
-        // Layer 1: Source and Methodology Validation
-        validation.layer1 = await this.validationLayers.source.validateSources(
-            Array.from(gathering.sources.values())
-        );
-        
-        // Filter sources based on credibility threshold
-        const credibleSources = validation.layer1.sources.filter(
-            source => source.credibilityScore > 0.7
-        );
-        
-        // Layer 2: Cross-Reference and Consistency Validation
-        validation.layer2 = await this.validationLayers.crossRef.validateConsistency(
-            credibleSources, gathering.rawData
-        );
-        
-        // Resolve conflicts and build consensus
-        const consensusData = await this.buildConsensus(
-            validation.layer2.consistentData, validation.layer2.conflicts
-        );
-        
-        // Layer 3: Computational and Practical Validation
-        validation.layer3 = await this.validationLayers.computational.validateComputationally(
-            consensusData
-        );
-        
-        // Consolidate all validation results
-        validation.consolidatedResults = await this.consolidateValidationResults(
-            validation.layer1, validation.layer2, validation.layer3
-        );
-        
-        validation.overallConfidence = this.calculateValidationConfidence(validation);
-        
-        return validation;
-    }
-    
-    async synthesizeFindings(validation) {
-        // Use Memory Kernel to synthesize findings with existing knowledge
-        const synthesis = await this.memoryKernel.synthesizeWithExistingKnowledge(
-            validation.consolidatedResults
-        );
-        
-        const synthesizedFindings = {
-            coreFindings: synthesis.primary,
-            supportingEvidence: synthesis.supporting,
-            limitations: synthesis.limitations,
-            confidence: synthesis.confidence,
-            applicability: synthesis.applicability,
-            recommendations: synthesis.recommendations,
-            futureResearch: synthesis.futureDirections
-        };
-        
-        // Generate actionable insights
-        synthesizedFindings.actionableInsights = await this.generateActionableInsights(
-            synthesizedFindings
-        );
-        
-        return synthesizedFindings;
-    }
-    
-    async computationalVerification(synthesis) {
-        const verification = {
-            replValidation: null,
-            simulationResults: null,
-            benchmarkComparison: null,
-            realWorldValidation: null,
-            overallVerification: 0
-        };
-        
-        // REPL Computational Validation
-        if (synthesis.coreFindings.some(finding => finding.computational)) {
-            verification.replValidation = await this.replValidator.validateFindings(
-                synthesis.coreFindings.filter(f => f.computational)
-            );
-        }
-        
-        // Simulation Validation
-        if (synthesis.recommendations.some(rec => rec.simulatable)) {
-            verification.simulationResults = await this.validationLayers.computational
-                .simulationEngine.validateRecommendations(
-                    synthesis.recommendations.filter(r => r.simulatable)
-                );
-        }
-        
-        // Benchmark Comparison
-        if (synthesis.applicability.benchmarkable) {
-            verification.benchmarkComparison = await this.validationLayers.computational
-                .benchmarkSuite.compareToKnownBenchmarks(synthesis);
-        }
-        
-        // Real-World Validation (where applicable)
-        if (synthesis.applicability.testable) {
-            verification.realWorldValidation = await this.validationLayers.computational
-                .realWorldValidation.validateInRealWorld(synthesis);
-        }
-        
-        verification.overallVerification = this.calculateVerificationScore(verification);
-        
-        return verification;
-    }
-    
-    async validateFindings(findings) {
-        // Integration with REPL for computational findings
-        const validationResults = [];
-        
-        for (const finding of findings) {
-            if (finding.type === 'computational' || finding.type === 'algorithmic') {
-                // Use REPL to validate computational claims
-                const replResult = await this.replValidator.validateComputationalClaim(finding);
-                
-                validationResults.push({
-                    finding: finding,
-                    replValidation: replResult,
-                    confidence: replResult.success ? 0.95 : 0.3,
-                    evidence: replResult.evidence
-                });
-            } else if (finding.type === 'statistical') {
-                // Use REPL for statistical validation
-                const statResult = await this.replValidator.validateStatisticalClaim(finding);
-                
-                validationResults.push({
-                    finding: finding,
-                    statisticalValidation: statResult,
-                    confidence: statResult.confidence,
-                    evidence: statResult.analysis
-                });
-            } else {
-                // Use other validation methods for non-computational findings
-                const methodResult = await this.validateNonComputationalClaim(finding);
-                
-                validationResults.push({
-                    finding: finding,
-                    methodValidation: methodResult,
-                    confidence: methodResult.confidence,
-                    evidence: methodResult.evidence
-                });
-            }
-        }
-        
-        return validationResults;
-    }
-    
-    calculateOverallConfidence(research) {
-        const weights = {
-            sourceCredibility: 0.25,
-            crossReferenceConsistency: 0.25,
-            computationalValidation: 0.30,
-            synthesisQuality: 0.20
-        };
-        
-        const scores = {
-            sourceCredibility: research.phases.validation.layer1.averageCredibility,
-            crossReferenceConsistency: research.phases.validation.layer2.consistencyScore,
-            computationalValidation: research.phases.verification.overallVerification,
-            synthesisQuality: research.phases.synthesis.confidence
-        };
-        
-        let overallConfidence = 0;
-        for (const [factor, weight] of Object.entries(weights)) {
-            overallConfidence += scores[factor] * weight;
-        }
-        
-        return Math.min(overallConfidence, 0.99); // Cap at 99% to avoid false certainty
-    }
-    
-    // Integration with existing systems
-    async integrateWithPredictiveQueue(predictiveQueue) {
-        // Use research findings to improve predictions
-        const researchInsights = Array.from(this.researchCache.values())
-            .filter(r => r.status === 'completed' && r.results.confidence > 0.8);
-        
-        for (const insight of researchInsights) {
-            if (insight.results.synthesized.applicability.predictive) {
-                await predictiveQueue.incorporateResearchInsight(insight);
-            }
-        }
-    }
-    
-    async integrateWithSelfHealing(healingEnvironment) {
-        // Use research to improve healing patterns
-        const healingInsights = Array.from(this.researchCache.values())
-            .filter(r => r.status === 'completed' && 
-                         r.query.includes('error') || 
-                         r.query.includes('recovery') ||
-                         r.query.includes('debug'));
-        
-        for (const insight of healingInsights) {
-            await healingEnvironment.incorporateResearchInsight(insight);
-        }
-    }
-    
-    getResearchMetrics() {
-        const allResearch = Array.from(this.researchCache.values());
-        const completed = allResearch.filter(r => r.status === 'completed');
-        const highConfidence = completed.filter(r => r.results.confidence > 0.8);
-        
-        return {
-            totalResearch: allResearch.length,
-            completedResearch: completed.length,
-            highConfidenceResults: highConfidence.length,
-            averageConfidence: completed.reduce((sum, r) => sum + r.results.confidence, 0) / completed.length,
-            averageResearchTime: completed.reduce((sum, r) => sum + r.duration, 0) / completed.length,
-            successRate: completed.length / allResearch.length
-        };
-    }
-}
-```
-
-##### **REPL Integration Examples**
-
-**Example 1: Algorithm Performance Research**
-```javascript
-// Research Query: "What's the most efficient sorting algorithm for large datasets?"
-const research = await tripleValidation.conductResearch(
-    "most efficient sorting algorithm for datasets > 10M elements"
-);
-
-// REPL Validation automatically tests claims:
-const replValidation = {
-    quickSort: await repl.test(`
-        const data = generateRandomArray(10000000);
-        console.time('quickSort');
-        quickSort(data.slice());
-        console.timeEnd('quickSort');
-    `),
-    
-    mergeSort: await repl.test(`
-        const data = generateRandomArray(10000000);
-        console.time('mergeSort');
-        mergeSort(data.slice());
-        console.timeEnd('mergeSort');
-    `),
-    
-    heapSort: await repl.test(`
-        const data = generateRandomArray(10000000);
-        console.time('heapSort');
-        heapSort(data.slice());
-        console.timeEnd('heapSort');
-    `)
-};
-
-// Results validated computationally:
-// - Claims about O(n log n) verified
-// - Memory usage measured
-// - Real performance compared to theoretical
-```
-
-**Example 2: Statistical Claim Validation**
-```javascript
-// Research Query: "Does TDD reduce bug density?"
-const research = await tripleValidation.conductResearch(
-    "test-driven development impact on software bug density"
-);
-
-// REPL validates statistical claims:
-const statValidation = await repl.validate(`
-    // Load research data
-    const studies = loadStudiesData();
-    
-    // Calculate effect sizes
-    const effectSizes = studies.map(study => ({
-        tdd: study.tddBugDensity,
-        traditional: study.traditionalBugDensity,
-        effectSize: (study.traditionalBugDensity - study.tddBugDensity) / study.standardDeviation
-    }));
-    
-    // Meta-analysis
-    const meanEffectSize = effectSizes.reduce((sum, e) => sum + e.effectSize, 0) / effectSizes.length;
-    const confidenceInterval = calculateCI(effectSizes);
-    
-    console.log('Mean effect size:', meanEffectSize);
-    console.log('95% CI:', confidenceInterval);
-    console.log('Statistical significance:', meanEffectSize > 0 && confidenceInterval.lower > 0);
-`);
-```
-
-**Example 3: Technology Comparison Research**
-```javascript
-// Research Query: "React vs Vue performance comparison"
-const research = await tripleValidation.conductResearch(
-    "React vs Vue.js performance benchmarks and developer productivity"
-);
-
-// Multi-dimensional validation:
-const validation = {
-    // Performance benchmarks run in REPL
-    performance: await repl.validate(`
-        // Create identical apps in both frameworks
-        const reactApp = createReactBenchmarkApp();
-        const vueApp = createVueBenchmarkApp();
-        
-        // Measure rendering performance
-        const reactMetrics = measurePerformance(reactApp);
-        const vueMetrics = measurePerformance(vueApp);
-        
-        console.log('React metrics:', reactMetrics);
-        console.log('Vue metrics:', vueMetrics);
-    `),
-    
-    // Bundle size analysis
-    bundleSize: await repl.validate(`
-        const reactBundle = analyzeBundleSize('./react-app');
-        const vueBundle = analyzeBundleSize('./vue-app');
-        
-        console.log('Bundle comparison:', {
-            react: reactBundle,
-            vue: vueBundle,
-            difference: reactBundle.size - vueBundle.size
-        });
-    `),
-    
-    // Developer survey synthesis (non-computational)
-    developerExperience: await validateSurveyData(research.phases.gathering.sources)
-};
-```
-
-##### **Validation Layer Examples**
-
-**Layer 1: Source Validation**
-```javascript
-// Source credibility analysis
-const sourceValidation = {
-    academic: {
-        sources: ['IEEE', 'ACM', 'arXiv'],
-        credibilityScore: 0.95,
-        biasAssessment: 'low',
-        recencyWeight: 0.8
-    },
-    industry: {
-        sources: ['Google Research', 'Microsoft Research', 'Netflix Tech Blog'],
-        credibilityScore: 0.88,
-        biasAssessment: 'medium',
-        practicalRelevance: 0.92
-    },
-    community: {
-        sources: ['Stack Overflow Survey', 'GitHub', 'Reddit /r/programming'],
-        credibilityScore: 0.65,
-        biasAssessment: 'high',
-        currentness: 0.95
-    }
-};
-```
-
-**Layer 2: Cross-Reference Validation**
-```javascript
-// Consistency checking across sources
-const crossRefValidation = {
-    consistentFindings: [
-        'Algorithm X is faster than Y for large datasets',
-        'Memory usage of X is 20% higher than Y',
-        'Implementation complexity of X is moderate'
-    ],
-    conflictingFindings: [
-        {
-            claim: 'X is easier to implement than Y',
-            sources: {
-                supporting: ['Source A', 'Source C'],
-                contradicting: ['Source B', 'Source D']
-            },
-            resolution: 'Context-dependent: easier for experienced developers'
-        }
-    ],
-    confidence: 0.87
-};
-```
-
-**Layer 3: Computational Validation**
-```javascript
-// REPL computational verification
-const computationalValidation = {
-    algorithmClaims: {
-        tested: 12,
-        verified: 11,
-        contradicted: 1,
-        confidence: 0.92
-    },
-    performanceClaims: {
-        benchmarked: 8,
-        confirmed: 7,
-        partiallyConfirmed: 1,
-        confidence: 0.88
-    },
-    statisticalClaims: {
-        analyzed: 15,
-        validated: 14,
-        invalidated: 1,
-        confidence: 0.93
-    }
-};
-```
-
-##### **Performance Benefits**
-
-**Research Quality Improvements:**
-```bash
-# Traditional research approach:
-Source verification: Manual, subjective
-Cross-referencing: Limited, time-consuming
-Validation: None or minimal
-Confidence: 60-70%
-Time to conclusion: Hours to days
-
-# Triple-validation approach:
-Source verification: Automated credibility scoring
-Cross-referencing: Systematic consistency checking
-Validation: Computational verification via REPL
-Confidence: 85-95%
-Time to conclusion: Minutes to hours
-Accuracy improvement: 35-50% higher
-```
-
-**Integration Benefits:**
-- **Predictive Queue**: Research insights improve prediction accuracy by 25%
-- **Self-Healing**: Research-informed recovery patterns increase success rate by 40% 
-- **Context Management**: Research findings optimize context relevance by 30%
-- **REPL Validation**: Computational claims verified with 95%+ accuracy
-
-**Key Understanding**: The Triple-Validation Research Pipeline creates a rigorous, multi-layered research methodology that combines traditional research techniques with computational verification and systematic validation. It transforms unreliable web research into highly confident, actionable intelligence through automated source validation, cross-reference consistency checking, and REPL computational verification.
+该系统为上下文构建多层结构：活跃工作区、历史记录、知识库与学习缓存相互协同，并结合内核评分来动态压缩、提取和验证上下文。
+
+##### **集成模式**
+
+**模式 1：大型特性开发的上下文分层**
+- 活动层：当前迭代的文件与变更。
+- 历史层：相关功能的提交、评审记录。
+- 知识层：CLAUDE.md 中的惯例与约束。
+- 学习层：近期 bug 与验证结论。
+
+**模式 2：跨会话的上下文快速重构**
+- 意图内核识别用户提到的历史工作。
+- 记忆层回放上次的任务状态和 TODO。
+- 验证内核确认上下文是否过期。
+- 自动提炼下一步计划并反馈。
+
+**模式 3：多任务并行切换**
+- 为每个任务维护独立上下文区块。
+- 切换任务时只加载必要层级。
+- 历史上下文自动归档，避免污染当前焦点。
+
+##### **实施收益**
+- 上下文压缩准确率 >90%，避免遗漏关键信息。
+- 切换任务时上下文加载速度提升 3-5 倍。
+- 长会话中保持信息新鲜度，减少重复询问。
+- CLAUDE.md 更新可自动同步到上下文层。
+
+##### **真实案例**
+- **大型重构**：系统自动锁定需要关注的文件、依赖与测试，节省 40% 上下文整理时间。
+- **跨会话继续任务**：两周后回到项目，自动恢复到离开时的 TODO 状态并提示下一步。
+- **多服务并行开发**：针对不同服务维护独立上下文，确保改动互不影响。
+
+##### **性能优化模式**
+- **动态压缩策略**：根据上下文热度调整保留粒度。
+- **智能缓存**：常用上下文片段缓存命中率达 70% 以上。
+- **验证管控**：定期检查上下文是否过期或冲突。
+
+##### **跨系统协同**
+- 与 Meta-Todo 集成：任务拆解直接写入上下文层。
+- 与自愈环境协同：故障报告自动更新到学习层。
+- 与 CLAUDE.md 联动：重要规则即时同步。
+
+##### **学习指标**
+- **上下文重用率**：衡量历史上下文被复用的频率。
+- **压缩成功率**：压缩后仍满足任务需求的比例。
+- **冲突检测次数**：用于监控上下文一致性。
+
+#### **🔮 预测式任务队列系统**
+- 根据项目节奏与历史模式提前排布任务。
+- 意图内核评估潜在需求，生成候选任务池。
+- 验证内核判定优先级与依赖关系。
+- 与后台执行体系联动，适时触发异步任务。
+
+---
+
+### **阶段 2：增强智能**
+
+#### **🧠 高级内核协同**
+- 利用跨内核事件总线同步意图、记忆与验证结果。
+- 构建模式引擎，将成功策略升级为可复用蓝图。
+- 通过置信度融合算法生成统一决策评分。
+
+#### **🤝 多代理协同模板**
+- 定义架构师、审查员、测试员等子代理角色。
+- 每个代理都接入内核上下文，实现信息共享。
+- 编排层负责调度代理，保证流程闭环。
+
+#### **📈 自主性能监控**
+- 建立指标：成功率、耗时、返工率。
+- 异常波动时触发分析任务，输出改进建议。
+- 将优化动作写回模式库，持续增强系统。
+
+---
+
+### **阶段 3：自我进化体系**
+
+#### **🪄 自适应策略生成**
+- 系统根据近期表现自动调优验证阈值与预防规则。
+- 对高价值任务投入更多验证与背景分析。
+- 失败案例进入复盘流程，生成改进条目。
+
+#### **🔁 跨项目知识共享**
+- 成功模式匿名化后在团队内共享。
+- 根据项目类型自动匹配适用模式。
+- 提供评分机制，衡量共享知识的效果。
+
+#### **📚 元学习回路**
+- 定期回顾验证日志、恢复记录、上下文操作。
+- 提炼最有效的策略并推广到默认配置。
+- 形成 "验证→执行→学习→再验证" 的闭环。
 
 ## Integration Summary
 
 这些基础实现构成了三系统协同的核心基础设施。REPL-内核验证流水线提供实时校验，后台自愈环境确保系统持续健康，智能上下文管理优化我们的认知处理，而预测式任务队列系统会提前预判并为未来工作做好准备。它们共同构成一个自我强化的体系，让每个组件相互提升效果，进而打造出指数级更强大的开发环境。
 
-## Quick Reference Cards
-（快速参考卡片）
+## Core Concepts (Start Here)（核心概念，建议从这里开始）
 
-> **🔥 协同提示**：这些速查卡联合使用效果最佳。例如：同时使用后台任务 + 状态栏 + 子代理即可获得最高生产力。
+> **🧑‍💻 新手提示**：第一次使用 Claude Code？先阅读[核心能力](#core-claude-code-capabilities)了解能做什么，再熟悉[权限模型](#permission-model)，最后按照[CLAUDE.md 指引](#project-context-claudemd)建立项目上下文。
 
 [↑ 返回顶部](#quick-navigation)
 
-### Instant Command Reference
-（即时命令速查）
-```bash
-# 后台任务（NEW - 实现仍在演进）
-npm run dev &                    # 后台运行
-[注意：下列命令来自官方公告，使用前请确认当前会话已支持]
-/bashes                          # 列出后台进程（待确认）
-/bash-output <id>                # 查看指定进程输出（待确认）
-/kill-bash <id>                  # 停止后台进程（待确认）
+### Core Claude Code Capabilities（Claude Code 的基础能力）
+Claude 通过自然语言对话与直接操作来协助开发：
 
-# 状态栏（NEW）
-/statusline git branch           # 显示当前 Git 分支
-/statusline "📍 $(pwd)"          # 显示当前目录
-/statusline custom               # 自定义状态显示
+```bash
+# Claude Code 能做什么：
+- 将英文描述转换成功能实现
+- 通过分析代码库定位并修复问题
+- 快速理解整个项目结构
+- 自动化常见开发任务
+- 直接编辑文件、运行命令
+
+# 核心能力：
+功能开发 → "Create a user authentication system"
+→ 分析需求、制定计划、编写代码
+
+调试 → "Fix the payment processing error"
+→ 排查日志、追踪问题、给出修复
+
+代码审查 → "Review this code for security issues"
+→ 检查漏洞、提出改进建议
+
+自动化 → "Fix all lint issues in the project"
+→ 扫描问题、批量修复
+
+# 工作方式：
+- 在终端中直接对话
+- 可直接修改文件
+- 需要时运行命令
+- 能创建提交并管理 Git
+- 保持项目上下文
+- 支持外部集成（MCP）
+
+# 集成功能：
+- Hooks 自动化
+- 斜杠命令简化流程
+- SDK 支持编程式调用
+- 子代理处理专门任务
+- IDE 集成
+```
+
+**关键理解**：Claude Code 基于自然语言驱动，能够直接编辑文件与执行命令。无需特殊语法，清晰描述需求即可。
+
+### Multi-Modal Capabilities（多模态处理能力）
+对不同类型的输入内容进行针对性处理：
+
+```bash
+# 文本 / 代码文件
+- 读取任何编程语言
+- 理解上下文与模式
+- 生成合适方案
+
+# 图像
+- 截图：理解 UI、错误提示、设计稿
+- 图表：分析架构、流程
+- 图形：解读数据趋势
+- 照片：提取关键信息
+
+# 文档
+- PDF：直接读取分析
+- Markdown：完整理解与生成
+- JSON/YAML：解析并生成配置
+- CSV：分析数据结构
+
+# 组合分析
+"Here's a screenshot of the error" → 读取报错并给出修复
+"This diagram shows our architecture" → 理解并提出改进
+"This PDF has the requirements" → 提取需求并实施
+```
+
+**关键理解**：不同内容提供不同上下文，善用全部信息可得到更精准的结果。
+
+### 1. Core Capabilities（基础协作能力）
+应对各种任务的核心能力：
+
+```bash
+# 信息处理
+- 阅读与分析内容（文件、文档、图像）
+- 生成新内容（代码、文档、配置）
+- 修改既有内容（重构、优化、修复）
+- 搜索与模式匹配
+
+# 任务管理
+- 拆分复杂问题
+- 跟踪多步骤任务的进度
+- 并行处理独立工作
+- 在多次操作间保持上下文
+
+# 执行模式
+- 直接实现（具备权限时）
+- 指导用户执行（无权限时）
+- 研究与分析
+- 评审与验证
+```
+
+**关键理解**：先理解现有上下文，再行动。相关改动尽量一起处理，避免遗漏。
+
+### 2. Permission Model（权限模型）
+以渐进信任的方式执行操作：
+
+```bash
+# 权限流程
+1. 初始为最低权限（只读）
+2. 每种新操作类型需先请求许可
+3. 通过成功执行建立信任
+4. 权限在会话内有效
+
+# 建立信任的方式
+读取 / 分析 → 默认安全
+修改 / 写入 → 先展示变更
+执行命令 → 说明会发生什么
+敏感操作 → 额外确认
+```
+
+**关键理解**：权限保护双方安全。只请求完成任务所需的最小权限。
+
+### 3. Project Context (CLAUDE.md)（项目上下文）
+每个项目都可以通过 CLAUDE.md 提供重要背景：
+
+```markdown
+# CLAUDE.md 常见内容
+- 主要语言与框架
+- 代码风格偏好
+- 测试要求
+- 常用命令（lint、test、build）
+- 项目特有的模式
+- 关键约束或规则
+```
+
+**关键理解**：CLAUDE.md 是项目手册，开始工作前务必查看。
+
+### Memory Management & CLAUDE.md Updates（记忆管理与更新）
+更新项目记忆时，要让未来的你也能快速理解：
+
+```bash
+# 智能记忆更新模式
+更新 CLAUDE.md 时：
+
+AI 优化记忆的要求：
+1. 使用直接、可执行的语言
+2. 聚焦这个代码库独有的模式与坑
+3. 记录实际有效的命令（含正确参数）
+4. 标注无效方法，避免重复踩坑
+5. 使用清晰小节便于快速扫描
+6. 内容简洁但信息完整
+
+风格指南：
+- 动词开头描述行动：“遇到 X 时使用 Y”
+- ⚠️ 标注警告
+- 🔴 标注关键信息
+- 命令 / 路径用代码块
+- 将相关信息归组
+
+# 质量校验
+更新后检查：
+1. 清晰度 —— 下次看到能否正确指引你？
+2. 完整度 —— 是否涵盖关键经验？
+3. 准确度 —— 命令、路径是否正确？
+4. 高效性 —— 是否简洁但不失重点？
+5. 适配度 —— 是否符合你的认知习惯？
+```
+
+### Automated Memory Management Patterns（自动化记忆模式）
+```bash
+# 记忆更新工作流
+# 在完成重要工作后触发
+
+更新项目记忆时：
+1. 回顾本次会话的收获
+2. 抽取关键模式
+3. 记录成功的做法
+4. 标注失败尝试，提醒未来避免
+5. 更新常用命令
+6. 保持 AI 友好格式
+
+# 质量验证
+确保更新内容：
+- 清晰可执行
+- 技术准确
+- 认知友好
+- 无重复冗余
+```
+
+### Memory Management Patterns（记忆管理常规操作）
+```bash
+# 常见记忆操作
+- 根据会话收获更新
+- 复查并优化已有记忆
+- 从当前工作中提炼经验
+- 合并并去重相关条目
+```
+
+### CLAUDE.md Template for Optimal Recall（高效回忆模板）
+- 建立项目概览、命令速查、风格指南等模块。
+- 为关键系统、测试策略和部署流程提供专章。
+- 用表格或清单记录常见错误与对应修复。
+- 保持结构稳定，让新成员也能快速上手。
+
+## Cognitive Approach System（认知方法体系）
+
+### 认知模式如何运作
+这些模式是思考方式，而非工具或子代理。你会根据任务类型在不同模式之间自然切换。
+
+### 按任务类型选择认知模式
+依据任务内容调整思维策略：
+
+```bash
+# 简单创作模式
+→ 针对单个文件或组件
+→ 重点：干净实现，遵循既有模式
+→ 方法：按照最佳实践直接完成
+→ 示例："Create a button component" → 直接编写组件
+
+# 优化模式
+→ 提升现有代码
+→ 重点：性能、效率、可读性
+→ 方法：分析、定位优化点、实施改进
+→ 示例："Optimize this loop" → 审视代码并提出更优算法
+
+# 审查模式
+→ 关注质量与安全
+→ 重点：最佳实践、漏洞、改进点
+→ 方法：系统性检查，识别问题并给出修复
+→ 示例："Review this code" → 检查 bug、安全与性能
+
+# 并行模式
+→ 同类任务批量处理
+→ 重点：一致性与效率
+→ 方法：用统一模式处理多个条目
+→ 示例："Create 5 API endpoints" → 设计一致结构并全部实现
+
+# 编排模式
+→ 复杂的多模块特性
+→ 重点：架构、集成、完整性
+→ 方法：拆解任务、规划依赖、按顺序实施
+→ 示例："Build authentication system" → 先设计架构，再逐一实现
+
+# 调研模式
+→ 探索与研究
+→ 重点：理解问题、发现模式、寻找最佳实践
+→ 方法：深入调查、收集信息、综合分析
+→ 示例："How should we handle caching?" → 调研方案、比较并给出建议
+```
+
+**关键理解**：这些是思维策略而非独立工具，你会根据任务需要灵活切换。
+
+### 模式选择路径
+```
+问题：需要完成什么？
+├─ 单文件 / 单组件 → 简单创作模式
+├─ 多个相似项 → 并行模式
+├─ 完整功能 → 编排模式
+├─ 代码优化 → 优化模式
+├─ 排查问题 → 调研模式
+└─ 情况未知 → 调研模式
+```
+
+### 执行模式
+- **并行执行**：条件允许时同时推进多个独立任务。
+- **顺序执行**：有依赖关系的步骤按顺序进行。
+- **迭代完善**：先完成基础版本，再逐步打磨。
+- **错误恢复**：对瞬时失败进行重试，成功率往往很高。
+
+### 实践示例
+```bash
+# 批量创建相似资源
+"Create CRUD endpoints for User, Product, Order"
+→ 选择并行模式确保一致性与效率
+
+# 构建完整功能
+"Implement authentication with login, signup, password reset"
+→ 选择编排模式，保证覆盖所有子模块
+
+# 研究解决方案
+"Research best practices for WebSocket implementation"
+→ 选择调研模式，先建立知识基础
+
+# 优化现有代码
+"Reduce bundle size and improve load time"
+→ 选择优化模式，针对性提升
+```
+
+**关键理解**：让任务复杂度决定使用的认知模式，先从简单方案入手，必要时再升级。
+
+## Slash Commands（斜杠命令）
+
+> **🔥 实用提示**：将自定义命令与 Hooks 组合，可构建高度自动化的流程。例如自定义 `/deploy` 命令串联安全检查 Hook 与后台构建。
+
+[↑ 返回顶部](#quick-navigation)
+
+### Built-in Slash Commands（内置命令）
+Claude Code 提供丰富的系统命令：
+
+```bash
+# 核心命令
+/clear          # 清空对话历史
+/help           # 查看帮助与命令列表
+/review         # 请求代码审查
+/model          # 选择或切换模型
+
+# 后台进程管理
+[注意：以下命令来自官方公告，仍待正式文档确认]
+/bashes         # 列出所有后台进程（需验证）
+/bash-output    # 查看指定进程输出（需验证）
+/kill-bash      # 停止后台进程（需验证）
+
+# 上下文管理（官方支持）
+/compact        # 压缩对话，可带焦点关键词
+/add-dir        # 将目录加入当前会话
+[提示：/microcompact 在公告中出现，文档暂未收录]
 
 # 安全
-[注意：/security-review 是自定义命令示例，并非内置]
-# 可在 ~/.claude/commands/security-review.md 创建
+[可自定义安全审查命令]
+# 示例：在 ~/.claude/commands/security-review.md 中创建
 
-# 子代理（OFFICIAL）
-/agents                          # 管理子代理（官方支持）
-@code-reviewer fix this          # 指定代码审查代理（公告能力）
-@architect design auth           # 呼叫特定架构代理（公告能力）
+# 自定义与扩展（官方支持）
+/statusline     # 自定义终端状态栏
+/agents         # 管理自定义子代理
 
-# 上下文管理
-/compact "focus on auth"         # 压缩对话上下文（官方支持）
-/add-dir ../other-project        # 添加工作目录（官方支持）
-[注意：/microcompact 出现在公告中，文档暂未收录]
-
-# 核心命令（OFFICIAL）
-/help                            # 查看全部命令
-/clear                           # 清理对话
-/model                           # 切换 AI 模型
-/review                          # 请求代码审查
-/compact                         # 压缩对话
-/init                           # 初始化 CLAUDE.md
-/memory                         # 编辑记忆文件
-```
-
-### Feature Quick Reference
-（特性速览）
-```bash
-# 后台任务
-→ 长时间运行：开发服务器、测试、构建
-→ 实时监控：日志、错误、输出
-→ 自动恢复：Claude 可尝试修复崩溃
-
-# 多目录
-→ 单仓多包：跨包协作
-→ 共享配置：任意目录可访问
-→ 跨项目：轻松迁移代码
-
-# PDF 支持
-→ 直接阅读：无需转换
-→ 典型场景：规范、文档、研究论文
-→ 引用方式：@document.pdf
-
-# 安全审查
-→ 漏洞关注：SQL 注入、XSS、数据泄露
-→ GitHub Actions：自动执行 PR 审查
-→ 修复步骤：Claude 可协助处理问题
-```
-
-### Power User Shortcuts
-（高手快捷方式）
-```bash
-# 并行后台任务
-npm run dev & npm run test:watch & npm run storybook &
-
-# 智能调试
-"服务器崩溃了" → Claude 检查后台日志 → 自动修复
-
-# 子代理小队
-@architect @reviewer @tester "审查认证实现"
-
-# 上下文优化
-长会话 → /microcompact → 继续工作
-切换焦点 → /compact "新功能" → 刷新上下文
-
-# 多仓工作流
-/add-dir ../api-server
-/add-dir ../frontend
-"同步多个项目的 API 类型"
-```
-
-### Task State Reference
-（任务状态速查）
-```bash
-# 后台进程状态
-RUNNING   → 正在运行
-COMPLETED → 已成功完成
-FAILED    → 进程崩溃（Claude 可协助调试）
-KILLED    → 手动终止
-
-# 上下文状态（大致）
-FRESH     → 会话初期
-OPTIMAL   → 状态良好
-FULL      → 内容偏多
-CRITICAL  → 变慢（使用 /microcompact）
-
-# 代理活动
-IDLE      → 等待任务
-ACTIVE    → 正在处理请求
-BLOCKED   → 需要用户输入
-COMPLETE  → 任务完成
-```
-
-### Common Workflows Card
-（常见工作流卡片）
-```bash
-# 开发会话启动
-1. npm run dev &                  # 后台启动
-2. /statusline "🚀 Dev Mode"     # 设置状态栏
-3. /add-dir ../shared            # 添加共享配置
-4. "修复登录问题"               # Claude 监控日志
-
-# 安全优先开发
-1. "实现用户输入处理"           # 构建功能
-2. /security-review              # 执行安全检查
-3. "修复 XSS 问题"             # 处理风险
-4. git commit                    # 提交安全代码
-
-# 多代理评审
-1. "构建认证系统"               # 初始实现
-2. @architect "审查架构"        # 架构检查
-3. @security "检查安全漏洞"     # 安全审计
-4. @tester "编写测试"           # 补齐测试
-
-# 长会话管理
-1. 长时间工作                    # 上下文累积
-2. /microcompact                # 清理旧调用
-3. 无缝继续                      # 维持进度
-4. /compact 切换任务            # 需要时完全重置
-```
-## Core Concepts (Start Here)
-
-> **🧑‍💻 Start Here**: New to Claude Code? Begin with [Core Capabilities](#core-claude-code-capabilities), then explore [Permission Model](#permission-model), and set up your first [CLAUDE.md](#project-context-claudemd).
-
-[↑ Back to Top](#quick-navigation)
-
-### Core Claude Code Capabilities
-Claude Code works through natural conversation and direct action:
-
-```bash
-# What Claude Code does:
-- Build features from plain English descriptions
-- Debug and fix issues by analyzing codebases
-- Navigate and understand entire project structures
-- Automate common development tasks
-- Edit files and run commands directly
-
-# Core capabilities:
-Feature Building → "Create a user authentication system"
-→ Analyzes requirements, creates plan, writes code
-
-Debugging → "Fix the payment processing error"
-→ Investigates logs, traces issues, implements fixes
-
-Codebase Analysis → "Review this code for security issues"
-→ Examines code, identifies vulnerabilities, suggests improvements
-
-Automation → "Fix all lint issues in the project"
-→ Identifies problems, applies fixes automatically
-
-# How it works:
-- Direct conversation in terminal
-- Can edit files directly
-- Runs commands as needed
-- Creates commits and manages git
-- Maintains project context
-- Supports external integrations (MCP)
-
-# Integration features:
-- Hooks for automation
-- Slash commands for workflows
-- SDK for programmatic use
-- Sub-agents for specialized tasks
-- IDE integrations
-```
-
-**Key Understanding**: Claude Code works through natural language interaction, directly editing files and running commands based on your requests. No special syntax required - just describe what you need.
-
-### Multi-Modal Capabilities
-Handle different types of content intelligently:
-
-```bash
-# Text/Code Files
-- Read and analyze any programming language
-- Understand context and patterns
-- Generate appropriate solutions
-
-# Images
-- Screenshots: Read UI, errors, designs
-- Diagrams: Understand architecture, flows
-- Charts: Interpret data and trends
-- Photos: Extract relevant information
-
-# Documents
-- PDFs: Extract and analyze content
-- Markdown: Full understanding and generation
-- JSON/YAML: Parse and generate configs
-- CSV: Understand data structures
-
-# Combined Analysis
-"Here's a screenshot of the error" → Read error, suggest fix
-"This diagram shows our architecture" → Understand, suggest improvements
-"This PDF has the requirements" → Extract, implement accordingly
-```
-
-**Key Understanding**: Different content types provide different context. Use all available information.
-
-### 1. Core Capabilities
-Your fundamental capabilities for assisting with tasks:
-
-```bash
-# Information Processing
-- Read and analyze content (files, documents, images)
-- Generate new content (code, text, configurations)
-- Modify existing content (refactor, optimize, fix)
-- Search and pattern matching
-
-# Task Management
-- Break down complex problems
-- Track progress on multi-step tasks
-- Parallelize independent work
-- Maintain context across operations
-
-# Execution Patterns
-- Direct implementation (when you have access)
-- Guided assistance (when user executes)
-- Research and analysis
-- Review and validation
-```
-
-**Key Understanding**: Understand existing context before making changes. Handle multiple related changes efficiently.
-
-### 2. Permission Model
-You operate with incremental trust:
-
-```bash
-# Permission flow
-1. Start with minimal permissions (read-only)
-2. Request permission for each new action type
-3. Build trust through successful operations
-4. Session-specific permissions
-
-# Trust building patterns
-read/analyze → Always safe initially
-modify/write → Show changes first
-execute → Explain what will happen
-sensitive ops → Extra confirmation
-```
-
-**Key Understanding**: Permissions protect both you and the user. Request only what's needed.
-
-### 3. Project Context (CLAUDE.md)
-Every project can have a CLAUDE.md file providing essential context:
-
-```markdown
-# What to expect in CLAUDE.md
-- Primary language and frameworks
-- Code style preferences  
-- Testing requirements
-- Common commands (lint, test, build)
-- Project-specific patterns
-- Important constraints or rules
-```
-
-**Key Understanding**: Always check for CLAUDE.md - it's your project handbook.
-
-### Memory Management & CLAUDE.md Updates
-When updating project memories, ensure they're optimized for YOUR understanding:
-
-```bash
-# Smart memory update pattern
-When updating CLAUDE.md:
-
-Requirements for AI-optimized memory:
-1. Write in direct, actionable language (no fluff)
-2. Focus on patterns and gotchas specific to this codebase
-3. Include exact commands that work (with correct flags)
-4. Note what approaches DON'T work (save future attempts)
-5. Use clear section headers for quick scanning
-6. Keep entries concise but complete
-
-Style guide:
-- Start with verb for actions: "Use X when Y"
-- Highlight warnings with ⚠️
-- Mark critical info with 🔴
-- Use code blocks for all commands/paths
-- Group related information together
-
-# Memory quality verification
-After updating, verify:
-1. Clarity - Would this guide you correctly next session?
-2. Completeness - Are all critical learnings captured?
-3. Accuracy - Are commands and paths correct?
-4. Efficiency - Is it concise without losing important details?
-5. Optimization - Does it match your cognitive style?
-```
-
-### Automated Memory Management Patterns
-```bash
-# Memory update workflow
-# Triggers after significant work
-
-When updating project memory:
-1. Analyze session learnings
-2. Extract key patterns discovered
-3. Document successful approaches
-4. Note failed attempts to avoid
-5. Update command references
-6. Keep AI-optimized style
-
-# Quality verification
-Verify updates are:
-- Clear and actionable
-- Technically accurate
-- Cognitively friendly
-- Free of redundancy
-```
-
-### Memory Management Patterns
-```bash
-# Common memory operations
-- Update with session learnings
-- Review and optimize existing memories
-- Extract learnings from current work
-- Consolidate and deduplicate entries
-```
-
-### CLAUDE.md Template for Optimal Recall
-（CLAUDE.md 最佳记忆模板）
-```markdown
-# Project: [项目名称]
-
-## 🔴 Critical Context (Read First)
-- [最重要的须知]
-- [第二重要的提醒]
-
-## Commands That Work
-```bash
-npm run dev          # 启动开发服务器
-npm run test:watch   # 监视模式运行测试
-npm run lint:fix     # 自动修复 lint 问题
-```
-
-## Patterns to Follow
-- 使用 MultiEdit 同步修改同一文件的多处内容
-- 提交前必须运行测试
-- 修改数据库前先检查 @database:migrations
-
-## ⚠️ Gotchas & What NOT to Do
-- 不要使用 `npm run build` —— 它已损坏，应改用 `npm run build:prod`
-- 不要编辑 `/dist` 中的生成文件
-- 不要依赖 `/docs` 目录下的旧文档——内容已过时
-
-## File Structure Patterns
-- 组件：`/src/components/[Name]/[Name].tsx`
-- 测试：与源码同目录，命名为 `[Name].test.tsx`
-- 样式：CSS Modules，命名为 `[Name].module.css`
-
-## Recent Learnings
-- [日期]：修复认证问题需使用 .env.local 中的 JWT_SECRET（而非 .env）
-- [日期]：数据库查询必须显式处理错误
-- [日期]：React hooks 必须无条件调用
-```
-**核心认识**：CLAUDE.md 必须由 Claude 为 Claude 编写。请善用专门子代理，避免上下文偏差并保证记忆内容高质量、可执行。
-
-### 4. ROADMAP.md Project Management
-该路线图相当于项目状态的中枢神经系统：
-
-```markdown
-# Project Roadmap
-
-## Current Sprint (Week X-Y)
-- [-] 当前正在推进的功能
-- [ ] 本迭代计划开发的功能
-- [ ] 其他排期事项
-
-## Upcoming Priorities
-- [ ] 下一个重点功能
-- [ ] 系统级改进
-
-## Recently Completed
-- [x] 已完成的功能
-- [x] 基础设施更新
-
-## Technical Debt
-- [ ] 重构任务
-- [ ] 文档更新
-```
-
-
-**任务状态说明**：
-- `[ ]` - 计划中 / 待处理
-- `[-]` - 进行中（同一时间仅保留一个）
-- `[x]` - 已完成
-- `[~]` - 部分完成
-- `[!]` - 被阻塞
-- `[?]` - 需要澄清
-
-**核心认识**：ROADMAP.md 是项目状态的唯一可信来源，应当随着工作推进及时更新。
-
-### 5. Context & Session Management
-Understanding continuity and context preservation:
-
-```bash
-# Context management patterns
-- Preserve important context between interactions
-- Resume work on complex tasks
-- Start fresh when switching projects
-- Track progress across sessions
-```
-
-**Key Understanding**: Context preservation helps maintain continuity for long-running tasks.
-
-### 6. Background Tasks & Real-Time Monitoring (NEW)
-Claude Code can now handle long-running processes without blocking:
-
-```bash
-# Background Execution Patterns
-npm run dev &                    # Start dev server in background
-npm test -- --watch &           # Run tests continuously
-npm run build &                  # Build without blocking
-
-# Monitoring & Management
-/bashes                          # List all background processes
-/bash-output <id>                # Check specific process output
-/bash-output <id> "ERROR"        # Filter output for errors
-/kill-bash <id>                  # Stop a background process
-
-# Real-Time Debugging
-"The server keeps crashing"      # Claude checks background logs
-"Why is the build failing?"      # Analyzes build output
-"Monitor test results"           # Watches test runner output
-```
-
-**Synergistic Patterns**:
-```bash
-# Development + Monitoring
-npm run dev & npm run test:watch &
-# Claude monitors both simultaneously
-# Can fix issues in either without stopping the other
-
-# Automatic Error Recovery
-Server crashes → Claude detects in logs → Identifies cause → Fixes code → Restarts server
-
-# Parallel Validation
-npm run lint & npm run typecheck & npm run test &
-# All checks run simultaneously
-# Claude aggregates results and fixes issues
-```
-
-**Key Understanding**: Background tasks enable non-blocking workflows. Claude monitors logs in real-time and can intervene when issues occur.
-
-### 7. Multi-Directory Workflows (NEW)
-Work across multiple directories in a single session:
-
-```bash
-# Adding Directories
-/add-dir ../backend              # Add backend directory
-/add-dir ../frontend             # Add frontend directory
-/add-dir ~/shared-configs        # Add shared configurations
-
-# Directory Context
-"main directory" or "root"       # Original initialization directory
-"Check the backend API"          # Works across added directories
-"Sync types between projects"    # Cross-project operations
-
-# Monorepo Patterns
-/add-dir packages/core
-/add-dir packages/ui
-/add-dir packages/utils
-"Refactor shared utilities"      # Works across all packages
-```
-
-**Synergistic Workflows**:
-```bash
-# Full-Stack Development
-/add-dir ../api
-/add-dir ../web
-npm run dev & (cd ../api && npm run dev &)
-# Monitor both frontend and backend simultaneously
-
-# Cross-Project Migration
-/add-dir ../old-project
-/add-dir ../new-project
-"Migrate auth system from old to new"
-# Claude can read from old, write to new
-
-# Shared Configuration
-/add-dir ~/.claude
-"Apply my personal coding standards"
-# Access global configs from any project
-```
-
-**Key Understanding**: Multi-directory support enables complex workflows across project boundaries without context switching.
-
-### 8. Enhanced Context Management (NEW)
-Smarter context handling for longer sessions:
-
-```bash
-# Microcompact (NEW)
-/microcompact                    # Clears old tool calls only
-# Preserves: Current task context, recent interactions, CLAUDE.md
-# Clears: Old file reads, completed operations, stale context
-
-# When to use each:
-Feeling sluggish → /microcompact
-Switching features → /compact "new feature"
-Starting fresh → /clear
-
-# Automatic Optimization
-When session feels slow → Claude may suggest /microcompact
-When switching tasks → Consider /compact for fresh start
-```
-
-**Context Preservation Strategy**:
-```bash
-# Smart Context Layering
-Core Memory (always kept):
-- CLAUDE.md patterns
-- Current task list
-- Critical project context
-
-Working Memory (kept with microcompact):
-- Recent file changes
-- Current feature context
-- Active debugging state
-
-Transient Memory (cleared with microcompact):
-- Old file reads
-- Completed tool calls
-- Historical searches
-```
-
-**Key Understanding**: Microcompact extends session length by intelligently clearing only non-essential context.
-
-## Cognitive Approach System
-
-### How Cognitive Modes Work
-These are thinking approaches, not tools or agents. You naturally shift between these modes based on the task:
-
-### Cognitive Modes Based on Task Type
-Adapt your approach based on what needs to be done:
-
-```bash
-# Simple Creation Mode
-→ Single file or component
-→ Focus: Clean implementation, established patterns
-→ Approach: Straightforward implementation with best practices
-→ Example: "Create a button component" → Write the component directly
-
-# Optimization Mode
-→ Improving existing code
-→ Focus: Performance, efficiency, clean code
-→ Approach: Analyze, identify improvements, implement changes
-→ Example: "Optimize this loop" → Review code, suggest better algorithm
-
-# Review Mode  
-→ Quality and security checks
-→ Focus: Best practices, vulnerabilities, improvements
-→ Approach: Systematic examination, identify issues, suggest fixes
-→ Example: "Review this code" → Check for bugs, security, performance
-
-# Parallel Mode
-→ Multiple similar tasks
-→ Focus: Consistency, efficiency, batch operations
-→ Approach: Handle multiple items with consistent patterns
-→ Example: "Create 5 API endpoints" → Design consistent structure, implement all
-
-# Orchestration Mode
-→ Complex multi-part features
-→ Focus: Architecture, integration, completeness
-→ Approach: Break down, plan dependencies, implement systematically
-→ Example: "Build authentication system" → Design architecture, implement parts
-
-# Research Mode
-→ Exploration and investigation
-→ Focus: Understanding, pattern discovery, best practices
-→ Approach: Investigate thoroughly, gather information, synthesize
-→ Example: "How should we handle caching?" → Research options, compare, recommend
-```
-
-**Key Understanding**: These modes are cognitive strategies, not separate tools. You fluidly shift between them as needed.
-
-### Mode Selection Pattern
-```
-Question: What needs to be done?
-├─ Single file/component → Simple Creation Mode
-├─ Multiple similar items → Parallel Mode
-├─ Complete feature → Orchestration Mode
-├─ Improving code → Optimization Mode
-├─ Finding/fixing issues → Research Mode
-└─ Unknown/exploring → Research Mode
-```
-
-### Execution Patterns
-- **Parallel Work**: Handle multiple independent tasks simultaneously when possible
-- **Sequential Work**: Handle dependent tasks in order
-- **Iterative Refinement**: Start simple, improve incrementally
-- **Error Recovery**: High success rate on retry for transient failures (observed pattern)
-
-### Practical Examples
-```bash
-# Creating multiple similar items
-"Create CRUD endpoints for User, Product, Order"
-→ Use Parallel Mode for consistency and speed
-
-# Building a complete feature
-"Implement authentication with login, signup, password reset"
-→ Use Orchestration Mode for comprehensive implementation
-
-# Researching approach
-"Research best practices for WebSocket implementation"
-→ Use Research Mode for thorough investigation
-
-# Optimizing code
-"Reduce bundle size and improve load time"
-→ Use Optimization Mode for targeted improvements
-```
-
-**Key Understanding**: Let task complexity guide your cognitive mode. Start simple, escalate if needed.
-
-## Slash Commands
-
-> **🔥 Pro Tip**: Combine custom commands with hooks for ultimate automation. Create `/deploy` command that triggers security hooks + background builds.
-
-[↑ Back to Top](#quick-navigation)
-
-### Built-in Slash Commands
-Claude Code provides extensive built-in commands:
-
-```bash
-# Core Commands
-/clear          # Clear conversation history
-/help           # Get usage help and available commands
-/review         # Request code review
-/model          # Select or change the AI model
-
-# Background Process Management
-[NOTE: These commands from announcements, not yet in official docs]
-/bashes         # List all background processes (verify)
-/bash-output    # Get output from background process (verify)
-/kill-bash      # Terminate background process (verify)
-
-# Context Management (OFFICIAL)
-/compact        # Compact conversation with optional focus
-/add-dir        # Add working directory to session
-[NOTE: /microcompact from announcements, not in docs]
-
-# Security
-[NOTE: Create custom command for security reviews]
-# Example: ~/.claude/commands/security-review.md
-
-# Customization (OFFICIAL)
-/statusline     # Customize terminal status line (documented)
-/agents         # Manage custom subagents (documented)
-
-# Status Line Examples (NEW)
+# 状态栏示例（新特性）
 /statusline "git: $(git branch --show-current)"
 /statusline "📍 $(pwd) | 🌡️ $(curl -s 'wttr.in?format=%t')"
 /statusline "🤖 AI Buddy: Ready to help!"
 ```
 
-### Custom Slash Commands
-Create your own commands for project-specific workflows:
+### Custom Slash Commands（自定义命令）
+针对项目场景编写专用命令：
 
 ```bash
-# Project commands (stored in .claude/commands/)
-# Personal commands (stored in ~/.claude/commands/)
+# 项目命令存放于 .claude/commands/
+# 个人命令存放于 ~/.claude/commands/
 
-# Command structure (Markdown file):
+# 命令文件采用 Markdown：
 # /my-command "argument"
-# Uses $ARGUMENTS placeholder
-# Can execute bash commands
-# Can reference files with @ prefix
-# Supports frontmatter configuration
+# 使用 $ARGUMENTS 占位符
+# 可执行 bash 命令
+# 可用 @ 前缀引用文件
+# 支持 Frontmatter 配置
 ```
 
-### Advanced Command Features
+### Advanced Command Features（高级特性）
 ```bash
-# Namespacing
-/project:deploy     # Project-specific deploy command
-/team:review        # Team workflow command
+# 命名空间
+/project:deploy     # 项目级部署命令
+/team:review        # 团队协作命令
 
-# Extended thinking
-# Commands can trigger extended reasoning
+# 扩展推理
+# 命令可触发更长的思考链
 
-# MCP integration
-# MCP servers can expose additional slash commands dynamically
+# MCP 集成
+# MCP 服务器可动态提供额外命令
 ```
 
-**Key Understanding**: Slash commands provide shortcuts for common workflows. Built-in commands handle core functionality, custom commands adapt to your project needs.
+**关键理解**：斜杠命令帮助建立快捷流程。系统命令覆盖核心功能，自定义命令则根据项目需求灵活扩展。
 
-## Hooks System
+## Hooks System（Hooks 系统）
 
-> **🔥 Synergy Power**: Hooks + Background Tasks + MCP = Complete automation. Example: Git commit hook → triggers background tests + security scan + deployment preparation.
+> **🔥 协同威力**：Hooks + 后台任务 + MCP = 全自动化流水线。例如 Git 提交 Hook → 触发后台测试 + 安全扫描 + 部署准备。
 
-[↑ Back to Top](#quick-navigation)
+[↑ 返回顶部](#quick-navigation)
 
-### What are Hooks?
-Hooks are configurable scripts triggered by specific events during Claude Code interaction:
+### Hooks 是什么？
+Hooks 是在 Claude Code 交互过程中，由特定事件触发的可配置脚本：
 
 ```bash
-# Configuration location
-~/.claude/settings.json   # Global hooks
-.claude/settings.json     # Project-specific hooks
+# 配置路径
+~/.claude/settings.json   # 全局配置
+.claude/settings.json     # 项目级配置
 
-# Hook events:
-PreToolUse        # Before a tool is used
-PostToolUse       # After a tool completes  
-UserPromptSubmit  # When user submits a prompt
-Stop              # When main agent finishes responding
-SessionStart      # When starting a new session
+# 支持的事件
+PreToolUse        # 使用某个工具前
+PostToolUse       # 工具执行完成后
+UserPromptSubmit  # 用户提交提示时
+Stop              # 主代理完成响应时
+SessionStart      # 新会话启动时
 ```
 
-### Hook Configuration
+### Hook 配置示例
 ```json
 {
   "hooks": {
@@ -5003,2359 +2443,462 @@ SessionStart      # When starting a new session
 }
 ```
 
-### Hook Capabilities
-```bash
-# What hooks can do:
-- Execute bash commands
-- Add context to interactions
-- Validate or block tool usage
-- Inject additional information
-- Receive JSON input with session details
-- Return structured output to control behavior
-
-# Common patterns:
-- Format code after editing
-- Safety checks before dangerous operations
-- Context injection on user input
-- Cleanup on session end
-```
-
-### Hook Responses
-```bash
-# Hooks can return JSON to control behavior:
-{
-  "decision": "continue|block|modify",
-  "reason": "Human-readable explanation", 
-  "context": "Additional information to inject"
-}
-```
-
-**Key Understanding**: Hooks automate responses to events, enabling custom workflows and safety checks. They receive detailed session context and can control Claude Code's behavior.
-
-## MCP Integration & Sub-Agents
-
-> **🚀 Team Power**: MCP + Subagents + Background Tasks = Distributed intelligence. Deploy specialized agents that work continuously while you focus on core development.
-
-[↑ Back to Top](#quick-navigation)
-
-### Model Context Protocol (MCP)
-MCP connects Claude Code to external tools and data sources using an open-source integration standard:
-
-```bash
-# What MCP enables:
-- Connect to hundreds of tools (GitHub, Sentry, Notion, databases)
-- Perform actions like:
-  * "Implement features from issue trackers"
-  * "Analyze monitoring data" 
-  * "Query databases"
-  * "Integrate designs from Figma"
-  * "Automate workflows"
-
-# Connection methods:
-- Local stdio servers
-- Remote SSE (Server-Sent Events) servers  
-- Remote HTTP servers
-
-# Authentication:
-- OAuth 2.0 support
-- Different scopes: local, project, user
-```
-
-### Common MCP Integrations
-```bash
-# Popular integrations:
-- GitHub (issues, PRs, workflows)
-- Databases (PostgreSQL, MySQL, etc.)
-- Monitoring tools (Sentry, DataDog)
-- Design tools (Figma)
-- Communication (Slack)
-- Cloud services (AWS, GCP)
-- Documentation (Notion, Confluence)
-
-# Usage examples:
-"Pull the latest issues from GitHub"
-"Query the user database for active accounts"
-"Update the Figma design with new components"
-"Post build status to Slack channel"
-```
-
-### Custom Subagents (ENHANCED)
-Claude Code now supports powerful custom subagents with @-mention support:
-
-```bash
-# Creating Custom Subagents
-/agents                          # Open agent management
-
-# Define specialized agents:
-- Software Architect: Design patterns, abstraction layers
-- Code Reviewer: Best practices, code quality, cleanup
-- QA Tester: Unit tests, linting, test coverage
-- Security Auditor: Vulnerability scanning, secure coding
-- Performance Engineer: Optimization, profiling, metrics
-- Documentation Writer: API docs, READMEs, comments
-
-# Using Subagents
-@code-reviewer "Check this implementation"
-@architect "Design the auth system"
-@qa-tester "Write comprehensive tests"
-@security "Scan for vulnerabilities"
-
-# Team Coordination
-@architect @reviewer "Review system design and implementation"
-# Multiple agents work together on the task
-
-# Automatic Agent Selection
-"Review this code"               # Claude picks appropriate agent
-"Design a scalable API"          # Architect agent auto-selected
-"Find security issues"           # Security agent activated
-
-# Model Selection per Agent
-Each agent can use different models:
-- Architect: Claude Opus (complex reasoning)
-- Reviewer: Claude Sonnet (balanced analysis)
-- Tester: Claude Haiku (fast execution)
-```
-
-**Synergistic Agent Patterns**:
-```bash
-# Sequential Pipeline
-1. @architect designs solution
-2. You implement based on design
-3. @reviewer checks implementation
-4. @tester writes and runs tests
-5. @security performs final audit
-
-# Parallel Analysis
-"Analyze this codebase for improvements"
-→ @reviewer: Code quality issues
-→ @security: Vulnerability scan
-→ @performance: Bottleneck analysis
-→ All run simultaneously, results aggregated
-
-# Specialized Debugging
-Error occurs → @debugger analyzes logs → @architect suggests fix → @tester verifies solution
-```
-
-**Key Understanding**: MCP extends Claude Code to work with external systems. Custom subagents provide specialized expertise with @-mention support for direct invocation.
-
-### Security Review System (NEW)
-Proactive security scanning integrated into workflow:
-
-```bash
-# Ad-hoc Security Reviews
-/security-review                 # Scan current directory
-/security-review src/            # Scan specific directory
-/security-review --fix           # Auto-fix found issues
-
-# Common Vulnerabilities Detected
-- SQL Injection risks
-- XSS vulnerabilities  
-- Insecure data handling
-- Authentication bypasses
-- CSRF attack vectors
-- Sensitive data exposure
-- Insecure dependencies
-
-# GitHub Actions Integration
-# .github/workflows/security.yml
-name: Security Review
-on: [pull_request]
-jobs:
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: anthropics/claude-code-security@v1
-        with:
-          inline-comments: true
-          auto-fix-suggestions: true
-```
-
-**Security-First Development Pattern**:
-```bash
-# Secure Development Workflow
-1. Implement feature
-2. /security-review              # Check for vulnerabilities
-3. "Fix the SQL injection risk"  # Address specific issues
-4. @security "Verify fixes"      # Security agent confirmation
-5. Git commit with confidence
-
-# Continuous Security Monitoring
-npm run dev &                    # Start development
-# Set up watch for security issues
-"Monitor for security vulnerabilities in real-time"
-# Claude watches file changes and alerts on risky patterns
-```
-
-**Key Understanding**: Security reviews are now first-class citizens in the development workflow, catching vulnerabilities before they reach production.
-
-### Enhanced File Support (NEW)
-Claude Code now handles more file types:
-
-```bash
-# PDF Support
-@specification.pdf               # Read PDF documents directly
-@requirements.pdf                # No conversion needed
-@research-paper.pdf              # Extract and analyze content
-
-# Use Cases
-- Technical specifications
-- API documentation
-- Research papers
-- Design documents
-- Legal requirements
-- Architecture diagrams in PDF
-
-# Intelligent PDF Processing
-"Implement based on spec.pdf"    # Claude reads PDF, extracts requirements
-"Compare our API to api-docs.pdf" # Analyzes differences
-"Extract test cases from qa.pdf"  # Pulls actionable items
-```
-
-**Key Understanding**: PDF support eliminates conversion steps, allowing direct work with documentation and specifications.
-
-## Development Workflows
-
-> **🏆 Best Practice**: These workflows become exponentially more powerful when combined with Kernel Architecture + Meta-Todo System for intelligent automation.
-
-[↑ Back to Top](#quick-navigation)
-
-### Core Development Approach
-The fundamental pattern for any development task:
-
-```bash
-# Phase 1: Understand
-"Examine existing system, understand constraints"
-→ No changes yet, just learning
-
-# Phase 2: Plan
-"Create approach for the task"
-→ Break down steps, identify risks
-
-# Phase 3: Implement
-"Execute the plan incrementally"
-→ Small steps with validation
-
-# Phase 4: Verify
-"Ensure requirements are met"
-→ Test, review, document
-```
-
-**Key Patterns**:
-- **Explore-Plan-Code**: Understand → Design → Implement
-- **Incremental Progress**: Small, validated steps
-- **Continuous Validation**: Check work at each stage
-
-### Task Management Patterns
-Organize complex work effectively:
-
-```bash
-# Breaking down complex tasks
-Large Feature → Multiple subtasks → Track progress → Complete systematically
-
-# Progress tracking
-- Identify all required steps
-- Work on one thing at a time
-- Mark completed immediately
-- Add discovered tasks as found
-
-# Parallel vs Sequential
-Independent tasks → Work in parallel
-Dependent tasks → Work sequentially
-Mixed tasks → Identify dependencies first
-```
-
-**Key Understanding**: Good task management maintains clarity and ensures nothing is missed.
-
-### Quality Assurance Patterns
-Ensure high-quality output:
-
-```bash
-# Automated validation
-1. Format and style consistency
-2. Static analysis and linting
-3. Type checking where applicable
-4. Test coverage verification
-5. Security vulnerability scanning
-6. Documentation updates
-
-# Manual review perspectives
-- Functionality: Does it work as intended?
-- Performance: Is it efficient?
-- Security: Are there vulnerabilities?
-- Maintainability: Is it clean and clear?
-- Accessibility: Is it usable by all?
-```
-
-**Key Understanding**: Quality emerges from systematic validation at each stage.
-
-## Error Recovery
-
-> **🔥 Smart Recovery**: Combine error patterns with Background Self-Healing Environment for 90% autonomous issue resolution.
-
-[↑ Back to Top](#quick-navigation)
-
-### Common Patterns
-```bash
-# Network errors → Retry
-Task failed with "connection error"
-→ Simply retry the same command (90% success)
-
-# Context overflow → Compact
-Too much context accumulated
-→ /compact "focus on current task"
-
-# Build failures → Check logs
-Hook shows build error
-→ Examine specific error, fix root cause
-
-# Lost session → Reconstruct
-Session disconnected
-→ Analyze current state and reconstruct context
-```
-
-**Key Understanding**: Most errors are recoverable. Identify pattern, apply appropriate recovery.
-
-## Practical Examples
-
-> **🎯 Real-World Ready**: These examples demonstrate tool synergy in action. Notice how multiple Claude Code capabilities combine for maximum effectiveness.
-
-[↑ Back to Top](#quick-navigation)
-
-### Example 1: Adding Authentication
-```bash
-# 1. Understand existing system
-"Explore the current authentication implementation"
-
-# 2. Plan enhancement
-"Plan adding OAuth2 authentication alongside existing system"
-
-# 3. Research if needed
-"Research OAuth2 best practices and security"
-
-# 4. Implement incrementally
-"Implement OAuth2 authentication with proper error handling"
-
-# 5. Quality assurance
-"Review OAuth implementation for security vulnerabilities"
-```
-
-### Example 2: Performance Optimization
-```bash
-# 1. Identify issues
-"Analyze components for performance bottlenecks"
-
-# 2. Create optimization plan
-TodoWrite([
-  {id: "1", content: "Add React.memo to identified components"},
-  {id: "2", content: "Implement code splitting"},
-  {id: "3", content: "Optimize bundle size"},
-  {id: "4", content: "Add lazy loading"}
-])
-
-# 3. Execute optimizations
-"Implement the identified performance optimizations"
-
-# 4. Validate improvements
-"Run performance tests and compare metrics"
-```
-
-### Example 3: Batch Component Creation
-```bash
-# 1. Identify components needed
-"List 10 UI components that need creation"
-
-# 2. Parallel creation
-"Create all UI components: Button, Input, Select, Checkbox, Radio, Toggle, Slider, DatePicker, TimePicker, ColorPicker"
-
-# 3. Ensure consistency
-"Review all components for consistent API and styling"
-
-# 4. Optimize if needed
-"Optimize component bundle sizes if too large"
-```
-
-### Example 4: Debugging Production Issue
-```bash
-# 1. Gather context
-"Analyze error logs to identify the pattern"
-
-# 2. Reproduce locally
-"Set up environment to reproduce the issue"
-
-# 3. Deep investigation
-"Debug the issue using error stack trace and available logs"
-
-# 4. Fix and test
-"Implement fix based on root cause"
-"Review the fix for edge cases and side effects"
-
-# 5. Prevent recurrence
-"Add tests to prevent regression"
-"Update monitoring to catch similar issues"
-```
-
-### Example 5: API Migration
-```bash
-# 1. Analyze current API
-"Map all current API endpoints and their usage patterns"
-
-# 2. Plan migration
-TodoWrite([
-  {id: "1", content: "Design new API structure"},
-  {id: "2", content: "Create compatibility layer"},
-  {id: "3", content: "Implement new endpoints"},
-  {id: "4", content: "Migrate consumers gradually"},
-  {id: "5", content: "Deprecate old endpoints"}
-])
-
-# 3. Implementation
-"Create new API endpoints while maintaining backward compatibility"
-
-# 4. Testing strategy
-"Create comprehensive API tests"
-"Test both old and new endpoints"
-```
-
-### Example 6: Refactoring Legacy Code
-```bash
-# 1. Understand current implementation
-"Explore legacy module structure and dependencies"
-
-# 2. Create safety net
-"Add tests to legacy code before refactoring"
-
-# 3. Incremental refactoring
-"Refactor module by module, ensuring functionality is maintained"
-
-# 4. Validate each step
-After each refactor:
-- Run existing tests
-- Check functionality
-- Review code quality
-```
-
-### Example 7: Setting Up CI/CD
-```bash
-# 1. Research project needs
-"Analyze project requirements for CI/CD pipeline"
-
-# 2. Create pipeline configuration
-"Design GitHub Actions workflow for testing and deployment"
-
-# 3. Implement stages
-TodoWrite([
-  {id: "1", content: "Setup test automation"},
-  {id: "2", content: "Add linting and formatting checks"},
-  {id: "3", content: "Configure build process"},
-  {id: "4", content: "Add deployment steps"},
-  {id: "5", content: "Setup notifications"}
-])
-
-# 4. Test and refine
-"Test pipeline with feature branch"
-"Optimize for speed and reliability"
-```
-
-### Example 8: Background Development Workflow (NEW)
-```bash
-# 1. Start all services in background
-npm run dev &                    # Frontend dev server
-(cd ../api && npm run dev &)     # Backend API server
-npm run test:watch &             # Continuous testing
-
-# 2. Set informative status
-/statusline "🚀 Full-Stack Dev | 🎯 All Systems Running"
-
-# 3. Monitor everything simultaneously
-"Monitor all services for errors"
-# Claude watches all background processes
-
-# 4. Fix issues without stopping
-"Frontend build error" → Claude checks logs → Fixes issue
-"API timeout" → Claude identifies cause → Adjusts config
-"Test failure" → Claude updates code → Tests pass
-
-# 5. Graceful shutdown when done
-/bashes                          # List all processes
-/kill-bash all                   # Stop everything
-```
-
-### Example 9: Multi-Repo Synchronization (NEW)
-```bash
-# 1. Add all related repositories
-/add-dir ../shared-types
-/add-dir ../frontend
-/add-dir ../backend
-/add-dir ../mobile
-
-# 2. Synchronize type definitions
-"Update TypeScript types across all projects"
-@architect "Ensure type consistency"
-
-# 3. Parallel validation
-(cd ../frontend && npm run typecheck &)
-(cd ../backend && npm run typecheck &)
-(cd ../mobile && npm run typecheck &)
-
-# 4. Monitor and fix type errors
-"Fix any type mismatches across projects"
-# Claude checks all background type checks and fixes issues
-```
-
-### Example 10: Security-First Feature Development (NEW)
-```bash
-# 1. Plan with security in mind
-@architect @security "Design user input handling"
-
-# 2. Implement with continuous scanning
-"Implement the form validation"
-/security-review                 # Check immediately
-
-# 3. Fix vulnerabilities proactively
-"Fix the XSS vulnerability in line 42"
-@security "Verify the fix is complete"
-
-# 4. Set up continuous monitoring
-# GitHub Action for every PR
-"Set up automated security scanning for PRs"
-
-# 5. Document security considerations
-"Update SECURITY.md with input validation patterns"
-```
-
-### Example 11: Long Session with Smart Context (NEW)
-```bash
-# 1. Start major feature development
-"Build complete authentication system"
-
-# 2. Work progresses, context builds
-# ... many operations later ...
-# Context reaches 6000 tokens
-
-# 3. Intelligent compaction
-/microcompact                    # Clears old operations
-# Keeps: Current auth work, patterns, recent changes
-# Clears: Old file reads, completed searches
-
-# 4. Continue seamlessly
-"Add password reset functionality"
-# Full context available for current work
-
-# 5. Switch to new feature
-/compact "payment integration"   # Full reset for new context
-"Implement Stripe payment flow"
-```
-
-## Advanced Patterns
-
-> **🧙‍♂️ Master Level**: These patterns represent the pinnacle of Claude Code synergy - where all systems work together as unified intelligence.
-
-[↑ Back to Top](#quick-navigation)
-
-### Synergistic Feature Combinations (NEW)
-Maximize productivity by combining new features:
-
-```bash
-# The Ultimate Dev Setup
-# Combines: Background tasks + Status line + Multi-directory + Subagents
-
-# 1. Initialize multi-project workspace
-/add-dir ../backend
-/add-dir ../frontend
-/add-dir ../shared
-
-# 2. Start everything in background
-npm run dev &                    # Frontend
-(cd ../backend && npm run dev &) # Backend
-npm run test:watch &             # Tests
-npm run storybook &              # Component library
-
-# 3. Set informative status
-/statusline "🚀 $(git branch --show-current) | 📍 $(basename $(pwd)) | ✅ All Systems Go"
-
-# 4. Deploy the agent team
-@architect "Review overall system design"
-@security "Monitor for vulnerabilities"
-@performance "Watch for bottlenecks"
-
-# 5. Work with real-time monitoring
-"Build the checkout flow"
-# Claude monitors all services, catches errors, suggests fixes
-# Agents provide specialized feedback continuously
-```
-
-### Intelligent Background Debugging Pattern
-```bash
-# Self-Healing Development Environment
-
-# 1. Start with monitoring
-npm run dev & --verbose          # Extra logging
-/bash-output <id> "ERROR|WARN"   # Filter for problems
-
-# 2. Set up auto-recovery
-"If the server crashes, restart it automatically"
-# Claude monitors, detects crash, fixes cause, restarts
-
-# 3. Learning from failures
-"What caused the last 3 crashes?"
-# Claude analyzes patterns in background logs
-# Updates CLAUDE.md with prevention strategies
-
-# 4. Predictive intervention
-"Watch for memory leaks"
-# Claude monitors memory usage trends
-# Alerts before crash, suggests garbage collection points
-```
-
-### Cross-Project Intelligence Network
-```bash
-# Shared Learning Across Projects
-
-# 1. Connect knowledge bases
-/add-dir ~/.claude/global-patterns
-/add-dir ./project-a
-/add-dir ./project-b
-
-# 2. Extract successful patterns
-"What patterns from project-a would benefit project-b?"
-@architect "Identify reusable architectures"
-
-# 3. Apply learnings
-"Apply the error handling pattern from project-a"
-# Claude adapts pattern to new context
-
-# 4. Update global knowledge
-"Save this solution to global patterns"
-# Available for all future projects
-```
-
-### Smart Research System (Multi-Phase)
-Sophisticated information gathering through orchestrated agents:
-
-```bash
-# Phase 1: Distributed Search (10 agents)
-/research:smart-research "topic"
-→ Agents search: topic, best practices, tutorials, docs, etc.
-→ Output: Deduplicated URLs in .claude/research-output/
-
-# Phase 2: Parallel Content Extraction
-→ Batches of 10 WebFetch agents
-→ Extract content from each URL
-→ Output: Individual content files
-
-# Phase 3: Pairwise Merging
-→ Recursive merging: 20→10→5→3→2→1
-→ Final output: Comprehensive research report
-
-# Commands
-/research:smart-research [topic]
-/research:research-status [topic]
-/research:research-help
-```
-
-**Quality Indicators**:
-- 15+ unique high-quality URLs
-- 90%+ successful extractions
-- Progressive file reduction
-- No duplicate information
-
-[NOTE: The following section describes third-party or conceptual systems, not official Claude Code features]
-
-### Smart Flows Architecture (Third-Party/Conceptual)
-Advanced multi-agent orchestration concepts:
-
-```bash
-# Conceptual Architecture Components
-# These describe theoretical or third-party implementations
-# Not part of official Claude Code
-
-Queen Agent → Master coordinator concept
-Worker Agents → Specialized agent roles
-Memory System → Persistent storage patterns
-MCP Tools → Extended tool integrations
-
-# Theoretical Operational Modes
-Swarm Mode → Quick task coordination
-Hive-Mind Mode → Complex project sessions
-
-# Conceptual Features
-- Pattern recognition
-- Self-organizing architecture
-- Collective decision making
-- Adaptive learning loops
-```
-
-**Key Understanding**: These describe advanced concepts that may be implemented through third-party tools or future features.
-
-[NOTE: This section describes a third-party NPM package, not official Claude Code functionality]
-
-### Sub-Agents System (Third-Party NPM Package)
-Extended specialized expertise through external tools:
-
-```bash
-# Third-party package installation (not official)
-npm install -g @webdevtoday/claude-agents
-
-# Initialize in project
-claude-agents init
-
-# Specialized agent types with domains
-claude-agents run code-quality --task "Review codebase"
-  → Specialized in: Code standards, best practices, refactoring
-  
-claude-agents run testing --task "Generate test suite"
-  → Specialized in: Unit tests, integration tests, TDD
-  
-claude-agents run development --task "Build feature"
-  → Specialized in: Feature implementation, architecture
-  
-claude-agents run documentation --task "Generate docs"
-  → Specialized in: API docs, README, technical writing
-  
-claude-agents run management --task "Project planning"
-  → Specialized in: Task breakdown, estimation, roadmaps
-
-# Integration with slash commands
-/agents:code-quality "analyze performance"
-/agents:testing "create unit tests"
-```
-
-**Key Features**:
-- Isolated context management per agent
-- Specialized expertise domains
-- Integration with slash commands and hooks
-- Persistent learning across sessions
-
-**Key Understanding**: Sub-agents provide specialized expertise beyond built-in agents. Each has deep domain knowledge.
-
-### Cognitive Approach
-Let intelligence guide rather than rigid rules:
-
-```bash
-# Instead of mechanical steps
-"We need to implement feature X. What approach makes sense given our constraints?"
-
-# Trust pattern recognition
-"This feels like it might have security implications. Let me investigate."
-
-# Adaptive execution
-"The simple approach isn't working. Let me try a different strategy."
-```
-
-### Smart Research Flow
-Research driven by curiosity:
-
-```bash
-# Research [topic] following natural intelligence:
-# - Follow curiosity about significant patterns
-# - Trust judgment on source quality
-# - Let insights emerge organically
-# - Stop when true understanding achieved
-```
-
-### Context-Aware Decisions
-Adapt based on project state:
-
-```bash
-# Early project → Focus on architecture
-# Mid project → Focus on features
-# Late project → Focus on optimization
-# Maintenance → Focus on reliability
-
-# Let context guide approach
-"Given we're in early development, should we optimize now or focus on features?"
-```
-
-### Dynamic Perspective Debugging
-Generate relevant investigation angles dynamically:
-
-```bash
-# Step 1: Generate perspectives
-# Issue: [App crashes on large file uploads]
-# What are the 3 most relevant perspectives to investigate?
-
-# Example perspectives:
-# A. Memory Management Perspective
-# B. Network/Infrastructure Perspective
-# C. Concurrency/Race Condition Perspective
-
-# Step 2: Parallel investigation
-# - Investigate Memory: Check leaks, buffers, OOM
-# - Investigate Network: Timeouts, proxies, limits
-# - Investigate Concurrency: Race conditions, state
-
-# Step 3: Synthesize findings
-# Based on all perspectives:
-# 1. What's the root cause?
-# 2. What's the minimal fix?
-# 3. What are the risks if not fixed?
-```
-
-### Cognitive Verification Pattern
-Use thoughtful verification instead of mechanical checks:
-
-```bash
-# After completing: [task description]
-# Result: [what was created/changed]
-# 
-# Critically verify:
-# 1. Does this fully address the original request?
-# 2. What might we have missed or misunderstood?
-# 3. Are there edge cases not handled?
-# 4. Would a developer be satisfied with this?
-# 5. Is the quality up to project standards?
-# 
-# Be skeptical - actively look for problems
-```
-
-### Learning Through Reflection
-Build knowledge through cognitive reflection:
-
-```bash
-# After completing a complex task
-[NOTE: /reflect command is conceptual - verify if available]
-# After completing a complex task
-"What did we learn from implementing [feature]?"
-
-# After resolving a bug
-"What was the root cause and how can we prevent similar issues?"
-
-# Weekly meta-reflection
-"How can we improve our development process itself?"
-
-# The system learns by thinking about its own performance
-```
-
-### Risk Communication Pattern
-Always quantify and communicate risks clearly:
-
-```bash
-"⚠️ WARNING if you skip the rate limiting fix:
-Frequency: Will trigger when >100 users concurrent (daily at peak)
-Impact: API server crashes, affecting all users for ~5 minutes
-Severity: High (full outage)
-Workaround: Scale servers to 2x capacity (costs +$500/month)
-Timeline: Safe for 2 weeks, critical before marketing campaign"
-```
-
-### Requirement Capture Through Multiple Lenses
-Ensure nothing is missed:
-
-```bash
-# Analyze the request from multiple angles:
-# - List ALL functional requirements from user message
-# - List ALL non-functional requirements (performance, security)
-# - List ALL implied requirements and best practices
-
-# Synthesis step:
-# Merge all requirement lists and verify against original:
-# 1. Combine all identified requirements
-# 2. Check each word of original was considered
-# 3. Create final comprehensive requirement list
-```
-
-## Best Practices
-
-### Core Development Principles
-1. **Read before Write** - Always understand existing code first
-2. **Incremental Progress** - Small, validated steps with continuous testing
-3. **Track Progress** - Use TodoWrite for complex tasks
-4. **Be Specific** - Detailed prompts yield better results
-5. **Break Down Complexity** - Decompose large tasks into manageable steps
-
-### Effective Codebase Understanding
-```bash
-# Start Broad, Then Narrow
-"Explain the overall architecture of this project"
-→ "How does the authentication system work?"
-→ "Why is this specific function failing?"
-
-# Request Context
-"What are the coding conventions in this project?"
-"Can you create a glossary of project-specific terminology?"
-"Show me similar patterns used elsewhere in the codebase"
-```
-
-### Optimal Bug Fixing Workflow
-```bash
-# Provide Complete Context
-- Full error messages and stack traces
-- Reproduction steps (specific actions that trigger issue)
-- Environment details (browser, OS, versions)
-- Specify if issue is intermittent or consistent
-- Include relevant logs and configuration
-
-# Example Effective Bug Report:
-"The login fails with 'TypeError: Cannot read property id of undefined' 
-when clicking submit after entering valid credentials. This happens 
-consistently in Chrome 120 but not Firefox. Here's the full stack trace..."
-```
-
-### Smart Refactoring Approach
-```bash
-# Safe Refactoring Pattern:
-1. Ask for modern approach explanations
-2. Request backward compatibility analysis
-3. Refactor incrementally with testing at each step
-4. Verify functionality before proceeding
-
-# Example:
-"Explain how modern React hooks could improve this class component"
-"What are the risks of converting this to hooks?"
-"Convert just the state management first, keeping lifecycle methods"
-```
-
-### Productivity Optimization Techniques
-```bash
-# Quick File References
-@filename.js          # Reference specific files
-@src/components/      # Reference directories
-@package.json         # Reference config files
-
-# Efficient Communication
-- Use natural language for complex problems
-- Leverage conversation context for follow-ups
-- Provide complete context for better results
-
-# Advanced Workflows
-- Git integration for version control
-- Automated validation through hooks
-- Build process integration
-```
-
-### Leveraging Sub-Agent Capabilities
-```bash
-# Sub-agents (via MCP and third-party packages)
-# Use specialized agents for domain-specific tasks
-# Available through external integrations and MCP servers
-
-# Best Practices for Sub-agents:
-- Choose agents with expertise matching your task domain
-- Understand agent capabilities before delegating
-- Provide sufficient context for specialized work
-- Verify outputs align with project standards
-```
-
-### Quality Assurance Patterns
-```bash
-# Automated Validation Pipeline
-1. Code formatting (prettier, black, gofmt)
-2. Linting (eslint, pylint, golangci-lint)
-3. Type checking (tsc, mypy, go vet)
-4. Unit testing (jest, pytest, go test)
-5. Integration testing
-6. Security scanning
-
-# Use Hooks for Automation:
-PostToolUse → Format and lint changes
-SessionStart → Load project context
-UserPromptSubmit → Validate request completeness
-```
-
-### Efficiency and Performance
-```bash
-# Batch Similar Operations
-- Group related file reads/writes
-- Combine related git operations
-- Process similar tasks in parallel
-
-# Context Management
-- Use /clear to reset when switching contexts
-- Leverage @ references for file navigation
-- Maintain session continuity for related work
-
-# Error Recovery
-- Provide complete error context for debugging
-- Use systematic debugging approaches
-- Implement progressive error resolution strategies
-```
-
-### Integration with Development Workflows
-```bash
-# Version Control Integration
-# Claude Code works naturally with git workflows
-# Use for commit message generation, code reviews, conflict resolution
-
-# CI/CD Integration
-# Integrate Claude Code into build processes
-# Use hooks for automated validation and testing
-
-# IDE Integration
-# Available IDE plugins and extensions
-# Terminal-based workflow for direct interaction
-
-# MCP Integration
-# Connect to external tools and services
-# Extend functionality through Model Context Protocol
-```
-
-## Quick Reference
-
-### Mode Selection
-- Single file → Simple Creation Mode
-- Multiple files → Parallel Mode
-- Feature → Orchestration Mode
-- Research → Research Mode
-- Optimize → Optimization Mode
-- Review → Review Mode
-
-### Common Workflows
-- Git operations - Review, format, test, commit
-- Testing - Run tests, check coverage, validate
-- Context management - Focus on relevant information
-- Requirements - Capture all explicit and implicit needs
-- Architecture - Design before implementation
-- Development - Incremental implementation
-- Research - Investigate thoroughly before deciding
-
-### Automation Points
-- After changes - Validate and format
-- Before operations - Safety checks
-- On input - Enhance context
-- On alerts - Monitor and respond
-- On completion - Save learnings
-- On context change - Optimize focus
-
-### Recovery Actions
-- Network error → Retry
-- Context overflow → Compact
-- Build failure → Check logs
-- Lost session → Reconstruct state
-
-### Performance Expectations
-[NOTE: These are estimated success rates based on patterns, not official metrics]
-- **Simple tasks**: High success rate (estimated)
-- **Medium complexity**: Good success rate (estimated)
-- **Complex tasks**: Moderate success rate (estimated)
-- **Novel problems**: Variable success rate
-
-### Integration Patterns
-```bash
-# Common integration approaches:
-- API integration for programmatic access
-- SDK usage for language-specific implementations
-- Interactive mode for direct assistance
-- Batch processing for multiple tasks
-```
-
-## Troubleshooting
-
-### Common Issues & Solutions
-
-#### Connection & Network
-```bash
-# Error: "Connection error" during execution
-Solution: Retry the exact same operation
-Success rate: Often succeeds on retry (empirical observation)
-
-# Error: API connection failures
-Solutions:
-1. Check API key: echo $ANTHROPIC_API_KEY
-2. Verify network: ping api.anthropic.com
-3. Retry with backoff: claude --retry-max=5
-```
-
-#### Context & Memory
-```bash
-# Error: "Context window exceeded"
-Solution 1: /compact "focus on current feature"
-Solution 2: claude --max-context=8000
-Solution 3: claude --new "Start fresh"
-
-# High memory usage
-Solutions:
-1. Limit context: claude --max-context=4000
-2. Clear session history: claude --clear-history
-3. Use streaming: claude --stream
-```
-
-#### Agent & Task Issues
-```bash
-# Error: Task failures
-Debugging:
-1. Check execution logs
-2. Verify available capabilities
-3. Test with simpler task
-
-Solutions:
-1. Retry with same approach
-2. Switch to different cognitive mode
-3. Break into smaller tasks
-4. Use research mode for investigation
-```
-
-#### Hook & Permission Issues
-```bash
-# Hooks not triggering
-Debugging:
-1. Verify registration: cat .claude/hooks/settings.json
-2. Check permissions: ls -la .claude/hooks/
-3. Test manually: bash .claude/hooks/[hook-name].sh
-
-# Permission denied
-Solution: claude --grant-permission "file:write"
-```
-
-### Diagnostic Commands
-```bash
-# System health
-- Check operational health
-- Review configuration
-- Validate settings
-
-# Performance
-- Profile operations
-- Monitor memory usage
-- Track performance metrics
-
-# Debugging
-- Enable debug mode
-- Verbose output
-- Trace execution
-
-# Logs
-- View execution logs
-- Review performance metrics
-- Analyze error patterns
-```
-
-## Critical Verification Patterns
-
-### Always Verify Completeness
-Never trust operations without verification:
-
-```bash
-# Document merging - always verify
-"Merge documents A and B"
-"Verify merge completeness - check no information was lost"
-
-# Code changes - always test
-"Apply performance optimization"
-"Run tests to confirm no regression"
-
-# Multi-file operations - always validate
-"Create 10 components"
-"Verify all components created correctly"
-```
-
-### Common Pitfalls to Avoid
-
-#### 1. Incomplete Requirement Capture
-❌ **Wrong**: Acting on first impression
-✅ **Right**: Analyze entire message, capture all requirements
-
-#### 2. Unverified Operations  
-❌ **Wrong**: Trust that merge/edit worked
-✅ **Right**: Always verify completeness and correctness
-
-#### 3. Insufficient Context
-❌ **Wrong**: Minimal context to agents
-✅ **Right**: Generous context including patterns and conventions
-
-#### 4. Serial Instead of Parallel
-❌ **Wrong**: One task at a time when independent
-✅ **Right**: Batch independent tasks (up to 10)
-
-#### 5. Ignoring Error Patterns
-❌ **Wrong**: Retry same approach after failure
-✅ **Right**: Learn from error and adjust strategy
-
-## Intelligent Log Analysis & Learning
-
-### Logs as Your Second Brain
-Logs aren't just for debugging - they're a continuous learning system that makes you smarter over time.
-
-### Log Mining for Pattern Recognition
-```bash
-# Extract patterns from logs
-# Analyze the last 100 operations from logs:
-# 1. What tasks succeeded on first try vs needed retries?
-# 2. What error patterns keep recurring?
-# 3. Which file paths are accessed most frequently?
-# 4. What commands have the highest failure rate?
-# 5. Which automation points fire most often?
-# 
-# Create a pattern report and update CLAUDE.md with insights
-
-# Automated pattern extraction hook
-# .claude/hooks/log-learning.sh
-#!/bin/bash
-# Triggers every 50 operations
-if [ $(grep -c "operation" ~/.claude/logs/operations.log) -gt 50 ]; then
-  # Extract patterns from recent logs:
-  # - Success/failure ratios per mode
-  # - Common error signatures
-  # - Performance bottlenecks
-  # - Frequently accessed files
-  # Update CLAUDE.md with actionable insights
-fi
-```
-
-### Performance Intelligence from Logs
-```bash
-# Track operation timings
-grep "duration:" ~/.claude/logs/performance.log | \
-  awk '{print $2, $4}' | sort -rnk2 | head -20
-# Shows: operation_type duration_ms
-
-# Identify slow operations
-# Analyze performance logs to find:
-# 1. Operations taking >5 seconds
-# 2. Modes with declining success rates
-# 3. Memory usage spikes
-# 4. Context growth patterns
-# 
-# Suggest optimizations based on findings
-
-# Real-time performance monitoring
-tail -f ~/.claude/logs/performance.log | \
-  awk '/duration:/ {if ($4 > 5000) print "⚠️ SLOW:", $0}'
-```
-
-### Error Prediction & Prevention
-```bash
-# Predictive error analysis
-# Analyze error logs to predict failures:
-# 1. What conditions preceded the last 10 errors?
-# 2. Are there warning signs before failures?
-# 3. What sequence of operations leads to errors?
-# 4. Can we detect problems before they occur?
-# 
-# Create preventive rules and patterns
-
-# Auto-generate preventive hooks from logs
-./scripts/generate-safety-hooks.sh
-# Analyzes error patterns and creates PreToolUse hooks
-```
-
-### Log-Driven Memory Updates
-```bash
-# Automatic CLAUDE.md enrichment from logs
-# .claude/hooks/log-to-memory.sh
-#!/bin/bash
-# Runs hourly or after significant operations
-
-echo "📊 Analyzing logs for learnings..."
-
-# Extract successful patterns
-grep "SUCCESS" ~/.claude/logs/operations.log | \
-  tail -50 | ./scripts/extract-patterns.sh >> .claude/temp/successes.md
-
-# Extract failure patterns  
-grep "ERROR\|FAILED" ~/.claude/logs/operations.log | \
-  tail -50 | ./scripts/extract-patterns.sh >> .claude/temp/failures.md
-
-# Update CLAUDE.md
-# Update CLAUDE.md with patterns from:
-# - successes.md (what works)
-# - failures.md (what to avoid)
-# Keep only high-value, actionable insights
-```
-
-### Agent Performance Tracking
-```bash
-# Mode performance tracking
-Track success rates for different cognitive modes:
-- Simple Creation Mode: success rate and average time
-- Optimization Mode: improvement metrics
-- Review Mode: issues caught
-- Research Mode: insights discovered
-
-# Performance-based recommendations
-Based on performance patterns:
-1. Which mode works best for each task type?
-2. When to escalate from simple to complex approaches?
-3. What patterns lead to failures?
-
-Update mode selection logic based on learnings.
-```
-
-### Workflow Optimization from Logs
-```bash
-# Identify workflow bottlenecks
-# Analyze workflow logs to find:
-# 1. Longest running operations
-# 2. Most frequent operations
-# 3. Operations that always occur together
-# 4. Unnecessary repeated operations
-# 
-# Suggest workflow optimizations and create patterns
-
-# Auto-create commands from frequent patterns
-grep "SEQUENCE" ~/.claude/logs/workflow.log | \
-  ./scripts/detect-patterns.sh | \
-  ./scripts/generate-commands.sh > .claude/commands/auto-generated.md
-```
-
-### Log Query Commands
-```bash
-# Custom log analysis commands
-/logs:patterns          # Extract patterns from recent logs
-/logs:errors           # Analyze recent errors
-/logs:performance      # Performance analysis
-/logs:agents           # Agent success rates
-/logs:learning         # Extract learnings for CLAUDE.md
-/logs:predict          # Predict potential issues
-/logs:optimize         # Suggest optimizations from logs
-```
-
-### Smart Log Rotation with Learning Extraction
-```bash
-# Before rotating logs, extract learnings
-# .claude/hooks/pre-log-rotation.sh
-#!/bin/bash
-echo "🎓 Extracting learnings before rotation..."
-
-# Comprehensive analysis before we lose the data
-# Before rotating logs, extract:
-# 1. Top 10 most valuable patterns discovered
-# 2. Critical errors that must not repeat
-# 3. Performance improvements achieved
-# 4. Successful workflow patterns
-# 
-# Save learnings and update CLAUDE.md with important items
-
-# Then rotate
-mv ~/.claude/logs/operations.log ~/.claude/logs/operations.log.old
-```
-
-### Log-Based Testing Strategy
-```bash
-# Generate tests from error logs
-# Analyze error logs and create tests that would have caught these issues:
-# 1. Extract error conditions from logs
-# 2. Generate test cases for each error type
-# 3. Create regression tests for fixed bugs
-# 4. Add edge cases discovered through failures
-
-# Monitor test coverage gaps
-grep "UNCAUGHT_ERROR" ~/.claude/logs/errors.log | \
-  ./scripts/suggest-tests.sh > suggested-tests.md
-```
-
-### Real-Time Log Monitoring Dashboard
-```bash
-# Terminal dashboard for live monitoring
-watch -n 1 '
-echo "=== Claude Code Live Dashboard ==="
-echo "Active Agents:" $(ps aux | grep -c "claude-agent")
-echo "Recent Errors:" $(tail -100 ~/.claude/logs/errors.log | grep -c ERROR)
-echo "Success Rate:" $(tail -100 ~/.claude/logs/operations.log | grep -c SUCCESS)"%"
-echo "Avg Response:" $(tail -20 ~/.claude/logs/performance.log | awk "/duration:/ {sum+=\$4; count++} END {print sum/count}")ms
-echo "=== Recent Operations ==="
-tail -5 ~/.claude/logs/operations.log
-'
-```
-
-### Log Configuration for Maximum Intelligence
+### 常见用途
+- **自动格式化**：写入文件后自动运行格式化脚本。
+- **安全保护**：执行危险命令前触发安全检查。
+- **上下文注入**：用户提问时自动补充背景信息。
+- **日志记录**：在工具执行前后写入审计记录。
+
+### 设计原则
+- 清晰的匹配规则（正则或关键字）。
+- 命令必须幂等，失败时要有降级策略。
+- 注意执行顺序，避免循环触发。
+- 与自定义命令结合时，明确职责边界。
+
+**关键理解**：Hooks 是自动化的粘合剂，可在关键节点插入脚本，让 Claude 在不打断对话的前提下完成更多准备工作。
+
+## MCP Integration & Sub-Agents（MCP 集成与子代理）
+
+### 为什么使用 MCP？
+MCP（Model Context Protocol）让 Claude 能够连接外部系统、数据库和工具，实现安全的扩展与自动化。
+
+### 典型场景
+- **数据访问**：连接内部 API、数据库或知识库。
+- **工具调用**：触发内部脚本、CI/CD、云服务。
+- **安全沙箱**：通过受控接口执行敏感操作。
+- **子代理协作**：为不同职责创建专用助手。
+
+### 集成步骤概览
+1. **选择服务器**：使用官方或自建 MCP 服务器。
+2. **配置凭据**：在 `.claude/settings.json` 中定义连接信息。
+3. **声明功能**：指定可用的工具、资源与权限范围。
+4. **注册子代理**：为不同任务绑定对应服务器。
+
+### 配置示例
 ```json
-// .claude/settings.json
 {
-  "logging": {
-    "level": "info",
-    "capture": {
-      "operations": true,
-      "performance": true,
-      "errors": true,
-      "agent_decisions": true,
-      "hook_triggers": true,
-      "context_changes": true,
-      "memory_updates": true
-    },
-    "analysis": {
-      "auto_pattern_extraction": true,
-      "error_prediction": true,
-      "performance_tracking": true,
-      "learning_extraction": true
-    },
-    "retention": {
-      "raw_logs": "7d",
-      "extracted_patterns": "permanent",
-      "learnings": "permanent"
+  "mcpServers": {
+    "internal-api": {
+      "command": "./scripts/start-mcp.sh",
+      "args": ["--profile", "staging"],
+      "env": {
+        "API_TOKEN": "${secrets.API_TOKEN}"
+      }
+    }
+  },
+  "agents": {
+    "@reviewer": {
+      "description": "代码审查专家",
+      "mcpServers": ["internal-api"],
+      "default": true
     }
   }
 }
 ```
 
-**Key Understanding**: Logs are not just records - they're your continuous learning system. Mine them for patterns, predict errors, optimize workflows, and automatically improve your CLAUDE.md. Every operation teaches you something.
-
-## Security Considerations
-
-### Conservative Security Model
-Claude Code operates with a conservative, permission-based security model:
-
-```bash
-# Trust verification for first-time access
-- New codebase → Read-only initially
-- Each action type → Explicit permission request
-- Sensitive operations → Additional confirmation
-
-# Security layers
-1. Permission system (file:read, file:write, bash:execute)
-2. Hook validation (PreToolUse safety checks)
-3. Command injection detection
-4. Fail-closed approach for unrecognized commands
-```
-
-### Security Best Practices
-```bash
-# For hooks
-- ⚠️ Validate all inputs before processing
-- Never auto-execute destructive commands
-- Use principle of least privilege
-- Test in sandboxed environment first
-
-# For sensitive data
-- Use .claudeignore for sensitive files
-- Never hardcode secrets or credentials
-- Use environment variables for configuration
-- Regularly rotate access tokens
-
-# For operations
-- Always verify file paths before operations
-- Check command outputs for sensitive data
-- Sanitize logs before sharing
-- Review automated actions regularly
-```
-
-### Audit Trail
-```bash
-# Claude Code maintains audit trails for:
-- Permission grants/revocations
-- File modifications
-- Command executions
-- Hook triggers
-- Agent operations
-
-# Access audit logs
-[NOTE: Verify these commands exist in your Claude Code version]
-claude --show-audit-log
-claude --export-audit-log > audit.json
-```
-
-## Scripts & Automation Infrastructure
-
-### Scripts as the Nervous System
-Scripts connect all components - they're the automation layer that makes everything work seamlessly.
-
-### Core Script Organization
-```bash
-.claude/scripts/
-├── core/                   # Essential system scripts
-│   ├── analyze-logs.sh
-│   ├── update-memory.sh
-│   ├── context-manager.sh
-│   └── health-check.sh
-├── hooks/                  # Hook-triggered scripts
-│   ├── pre-tool-use/
-│   ├── post-tool-use/
-│   └── triggers.sh
-├── patterns/               # Pattern extraction & learning
-│   ├── extract-patterns.sh
-│   ├── detect-anomalies.sh
-│   └── generate-insights.sh
-├── optimization/           # Performance & improvement
-│   ├── profile-operations.sh
-│   ├── optimize-workflow.sh
-│   └── cache-manager.sh
-├── intelligence/           # Smart analysis scripts
-│   ├── predict-errors.sh
-│   ├── recommend-agent.sh
-│   └── learn-from-logs.sh
-└── utilities/              # Helper scripts
-    ├── backup-state.sh
-    ├── clean-temp.sh
-    └── validate-config.sh
-```
-
-### Essential Scripts Library
-
-#### 1. Smart Log Analyzer
-```bash
-#!/bin/bash
-# .claude/scripts/core/analyze-logs.sh
-# Extracts actionable intelligence from logs
-
-LOG_DIR="${CLAUDE_LOGS:-~/.claude/logs}"
-OUTPUT_DIR="${CLAUDE_TEMP:-~/.claude/temp}"
-
-# Extract patterns
-extract_patterns() {
-    echo "🔍 Analyzing patterns..."
-    
-    # Success patterns
-    grep "SUCCESS" "$LOG_DIR/operations.log" | \
-        sed 's/.*\[\(.*\)\].*/\1/' | \
-        sort | uniq -c | sort -rn > "$OUTPUT_DIR/success-patterns.txt"
-    
-    # Error patterns
-    grep "ERROR" "$LOG_DIR/operations.log" | \
-        sed 's/.*ERROR: \(.*\)/\1/' | \
-        sort | uniq -c | sort -rn > "$OUTPUT_DIR/error-patterns.txt"
-    
-    # Slow operations
-    awk '/duration:/ {if ($2 > 5000) print $0}' "$LOG_DIR/performance.log" \
-        > "$OUTPUT_DIR/slow-operations.txt"
-}
-
-# Generate insights
-generate_insights() {
-    echo "💡 Generating insights..."
-    
-    # Analyze pattern files and generate insights:
-    # - $OUTPUT_DIR/success-patterns.txt
-    # - $OUTPUT_DIR/error-patterns.txt
-    # - $OUTPUT_DIR/slow-operations.txt
-    # 
-    # Create actionable recommendations in $OUTPUT_DIR/insights.md
-}
-
-# Update CLAUDE.md if significant patterns found
-update_memory() {
-    if [ -s "$OUTPUT_DIR/insights.md" ]; then
-        echo "📝 Updating memory..."
-        # Update CLAUDE.md with insights from $OUTPUT_DIR/insights.md
-    fi
-}
-
-# Main execution
-extract_patterns
-generate_insights
-update_memory
-
-echo "✅ Log analysis complete"
-```
-
-#### 2. Context Optimizer
-```bash
-#!/bin/bash
-# .claude/scripts/core/context-manager.sh
-# Intelligently manages context based on current task
-
-# Get current context size
-[NOTE: This is a conceptual function - actual implementation may vary]
-get_context_size() {
-    # Conceptual - verify actual command availability
-    claude --show-context-size | grep -o '[0-9]*' | head -1
-}
-
-# Analyze what's relevant
-analyze_relevance() {
-    local TASK="$1"
-    
-    # Analyze current task: $TASK
-    # Current context size: $(get_context_size)
-    # 
-    # Determine:
-    # 1. What context is essential?
-    # 2. What can be removed?
-    # 3. What should be loaded from memory?
-    # 
-    # Output recommendations to context-plan.json
-}
-
-# Optimize context
-optimize_context() {
-    local PLAN=".claude/temp/context-plan.json"
-    
-    if [ -f "$PLAN" ]; then
-        # Remove irrelevant context
-        local REMOVE=$(jq -r '.remove[]' "$PLAN" 2>/dev/null)
-        if [ -n "$REMOVE" ]; then
-            /compact "$REMOVE"
-        fi
-        
-        # Load relevant memory
-        local LOAD=$(jq -r '.load[]' "$PLAN" 2>/dev/null)
-        if [ -n "$LOAD" ]; then
-            grep -A5 -B5 "$LOAD" CLAUDE.md > .claude/temp/focused-context.md
-            echo "Loaded: $LOAD"
-        fi
-    fi
-}
-
-# Auto-optimize based on context size
-[NOTE: Context size threshold is an estimate]
-if [ $(get_context_size) -gt THRESHOLD ]; then
-    echo "⚠️ Context getting large, optimizing..."
-    analyze_relevance "$1"
-    optimize_context
-fi
-```
-
-#### 3. Pattern-to-Hook Generator
-```bash
-#!/bin/bash
-# .claude/scripts/patterns/generate-hooks.sh
-# Automatically creates hooks from detected patterns
-
-PATTERNS_FILE="$1"
-HOOKS_DIR=".claude/hooks"
-
-generate_hook_from_pattern() {
-    local PATTERN="$1"
-    local FREQUENCY="$2"
-    
-    # If pattern occurs frequently, create preventive hook
-    if [ "$FREQUENCY" -gt 5 ]; then
-        local HOOK_NAME="auto-prevent-$(echo $PATTERN | tr ' ' '-' | tr '[:upper:]' '[:lower:]')"
-        
-        cat > "$HOOKS_DIR/$HOOK_NAME.sh" << 'EOF'
-#!/bin/bash
-# Auto-generated hook from pattern detection
-# Pattern: $PATTERN
-# Frequency: $FREQUENCY
-
-# Check if this pattern is about to occur
-if [[ "$1" =~ "$PATTERN" ]]; then
-    echo "⚠️ Detected pattern that previously caused issues"
-    echo "Applying preventive measures..."
-    
-    # Add preventive logic here
-    exit 1  # Block if dangerous
-fi
-
-exit 0
-EOF
-        chmod +x "$HOOKS_DIR/$HOOK_NAME.sh"
-        echo "Generated hook: $HOOK_NAME"
-    fi
-}
-
-# Process error patterns
-while IFS= read -r line; do
-    FREQUENCY=$(echo "$line" | awk '{print $1}')
-    PATTERN=$(echo "$line" | cut -d' ' -f2-)
-    generate_hook_from_pattern "$PATTERN" "$FREQUENCY"
-done < "$PATTERNS_FILE"
-```
-
-#### 4. Workflow Automation Detector
-```bash
-#!/bin/bash
-# .claude/scripts/intelligence/detect-workflows.sh
-# Identifies repeated sequences that should become commands
-
-LOG_FILE="${1:-~/.claude/logs/operations.log}"
-MIN_FREQUENCY="${2:-3}"
-
-# Extract command sequences
-extract_sequences() {
-    # Look for patterns of commands that occur together
-    awk '
-    BEGIN { sequence = "" }
-    /^Task\(/ { 
-        if (sequence != "") sequence = sequence " -> "
-        sequence = sequence $0
-    }
-    /^SUCCESS/ {
-        if (sequence != "") print sequence
-        sequence = ""
-    }
-    ' "$LOG_FILE" | sort | uniq -c | sort -rn
-}
-
-# Generate command from sequence
-create_command() {
-    local FREQUENCY="$1"
-    local SEQUENCE="$2"
-    
-    if [ "$FREQUENCY" -ge "$MIN_FREQUENCY" ]; then
-        local CMD_NAME="workflow-$(date +%s)"
-        
-        # This sequence occurred $FREQUENCY times:
-        # $SEQUENCE
-        # 
-        # Create a workflow pattern that automates this sequence
-        # Save as reusable pattern
-    fi
-}
-
-# Process sequences
-extract_sequences | while read FREQ SEQ; do
-    create_command "$FREQ" "$SEQ"
-done
-```
-
-#### 5. Performance Profiler
-```bash
-#!/bin/bash
-# .claude/scripts/optimization/profile-operations.sh
-# Profiles operations and suggests optimizations
-
-profile_operation() {
-    local OPERATION="$1"
-    local START=$(date +%s%N)
-    
-    # Execute with profiling
-    eval "$OPERATION"
-    local EXIT_CODE=$?
-    
-    local END=$(date +%s%N)
-    local DURATION=$((($END - $START) / 1000000))
-    
-    # Log performance data
-    echo "$(date +%Y-%m-%d_%H:%M:%S) | $OPERATION | Duration: ${DURATION}ms | Exit: $EXIT_CODE" \
-        >> ~/.claude/logs/performance-profile.log
-    
-    # Alert if slow
-    if [ "$DURATION" -gt 5000 ]; then
-        echo "⚠️ Slow operation detected: ${DURATION}ms"
-        echo "$OPERATION" >> ~/.claude/temp/slow-operations.txt
-    fi
-    
-    return $EXIT_CODE
-}
-
-# Auto-suggest optimizations
-suggest_optimizations() {
-    if [ -f ~/.claude/temp/slow-operations.txt ]; then
-        # Analyze slow operations and suggest optimizations:
-        # $(cat slow-operations.txt)
-        # 
-        # Create optimization recommendations
-    fi
-}
-
-# Usage: profile_operation "Complex operation"
-```
-
-#### 6. Agent Performance Tracker
-```bash
-#!/bin/bash
-# .claude/scripts/intelligence/agent-performance.sh
-# Tracks and analyzes agent performance
-
-DB_FILE="${CLAUDE_DB:-~/.claude/performance.db}"
-
-# Initialize database
-init_db() {
-    sqlite3 "$DB_FILE" << 'EOF'
-CREATE TABLE IF NOT EXISTS agent_performance (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    agent_type TEXT,
-    task_type TEXT,
-    duration_ms INTEGER,
-    success BOOLEAN,
-    error_message TEXT,
-    complexity TEXT
-);
-
-CREATE INDEX IF NOT EXISTS idx_agent_type ON agent_performance(agent_type);
-CREATE INDEX IF NOT EXISTS idx_success ON agent_performance(success);
-EOF
-}
-
-# Record performance
-record_performance() {
-    local AGENT="$1"
-    local TASK="$2"
-    local DURATION="$3"
-    local SUCCESS="$4"
-    local ERROR="${5:-NULL}"
-    local COMPLEXITY="${6:-medium}"
-    
-    sqlite3 "$DB_FILE" << EOF
-INSERT INTO agent_performance (agent_type, task_type, duration_ms, success, error_message, complexity)
-VALUES ('$AGENT', '$TASK', $DURATION, $SUCCESS, '$ERROR', '$COMPLEXITY');
-EOF
-}
-
-# Get best agent for task
-recommend_agent() {
-    local TASK_TYPE="$1"
-    
-    sqlite3 "$DB_FILE" << EOF
-SELECT agent_type, 
-       COUNT(*) as attempts,
-       AVG(CASE WHEN success = 1 THEN 100 ELSE 0 END) as success_rate,
-       AVG(duration_ms) as avg_duration
-FROM agent_performance
-WHERE task_type = '$TASK_TYPE'
-GROUP BY agent_type
-ORDER BY success_rate DESC, avg_duration ASC
-LIMIT 1;
-EOF
-}
-
-# Generate performance report
-generate_report() {
-    echo "📊 Agent Performance Report"
-    echo "=========================="
-    
-    sqlite3 "$DB_FILE" << 'EOF'
-.mode column
-.headers on
-SELECT agent_type,
-       COUNT(*) as total_tasks,
-       ROUND(AVG(CASE WHEN success = 1 THEN 100 ELSE 0 END), 2) as success_rate,
-       ROUND(AVG(duration_ms), 0) as avg_duration_ms
-FROM agent_performance
-WHERE timestamp > datetime('now', '-7 days')
-GROUP BY agent_type
-ORDER BY success_rate DESC;
-EOF
-}
-
-# Initialize on first run
-[ ! -f "$DB_FILE" ] && init_db
-
-# Usage examples
-# record_performance "simple-tool-creator" "create_component" 5000 1
-# recommend_agent "create_component"
-# generate_report
-```
-
-#### 7. Memory Deduplication
-```bash
-#!/bin/bash
-# .claude/scripts/utilities/dedupe-memory.sh
-# Removes duplicate entries from CLAUDE.md
-
-MEMORY_FILE="${1:-CLAUDE.md}"
-BACKUP_FILE="${MEMORY_FILE}.backup"
-
-# Create backup
-cp "$MEMORY_FILE" "$BACKUP_FILE"
-
-# Extract and deduplicate sections
-deduplicate_section() {
-    local SECTION="$1"
-    local START_PATTERN="$2"
-    local END_PATTERN="$3"
-    
-    # Extract section
-    sed -n "/$START_PATTERN/,/$END_PATTERN/p" "$MEMORY_FILE" > .claude/temp/section.md
-    
-    # Remove duplicates while preserving order
-    awk '!seen[$0]++' .claude/temp/section.md > .claude/temp/section-deduped.md
-    
-    # Count removed duplicates
-    local ORIGINAL=$(wc -l < .claude/temp/section.md)
-    local DEDUPED=$(wc -l < .claude/temp/section-deduped.md)
-    local REMOVED=$((ORIGINAL - DEDUPED))
-    
-    if [ "$REMOVED" -gt 0 ]; then
-        echo "Removed $REMOVED duplicate lines from $SECTION"
-    fi
-}
-
-# Process each section
-deduplicate_section "Commands" "^## Commands That Work" "^##"
-deduplicate_section "Patterns" "^## Patterns to Follow" "^##"
-deduplicate_section "Gotchas" "^## ⚠️ Gotchas" "^##"
-
-# Rebuild file
-# Rebuild CLAUDE.md from deduplicated sections:
-# - Maintain original structure
-# - Preserve important context
-# - Remove only true duplicates
-# - Keep the most recent version of conflicting entries
-
-echo "✅ Memory deduplication complete"
-```
-
-### Script Execution Patterns
-
-#### Chaining Scripts for Complex Operations
-```bash
-#!/bin/bash
-# .claude/scripts/core/daily-optimization.sh
-# Chains multiple scripts for daily maintenance
-
-echo "🔧 Starting daily optimization..."
-
-# 1. Analyze logs
-./scripts/core/analyze-logs.sh
-
-# 2. Extract patterns
-./scripts/patterns/extract-patterns.sh
-
-# 3. Generate hooks from patterns
-./scripts/patterns/generate-hooks.sh ".claude/temp/error-patterns.txt"
-
-# 4. Detect workflows
-./scripts/intelligence/detect-workflows.sh
-
-# 5. Optimize context
-./scripts/core/context-manager.sh "daily_maintenance"
-
-# 6. Deduplicate memory
-./scripts/utilities/dedupe-memory.sh
-
-# 7. Generate performance report
-./scripts/intelligence/agent-performance.sh generate_report
-
-# 8. Update CLAUDE.md with all findings
-# Consolidate all optimization findings:
-# - Performance report
-# - Detected patterns
-# - New workflows
-# - Optimization suggestions
-# 
-# Update CLAUDE.md with the most valuable insights
-
-echo "✅ Daily optimization complete"
-```
-
-### Script Testing & Validation
-```bash
-#!/bin/bash
-# .claude/scripts/utilities/test-scripts.sh
-# Tests all scripts for syntax and basic functionality
-
-test_script() {
-    local SCRIPT="$1"
-    
-    # Syntax check
-    if bash -n "$SCRIPT" 2>/dev/null; then
-        echo "✅ Syntax OK: $SCRIPT"
-    else
-        echo "❌ Syntax error: $SCRIPT"
-        return 1
-    fi
-    
-    # Dry run test (if script supports --dry-run)
-    if grep -q "dry-run" "$SCRIPT"; then
-        if "$SCRIPT" --dry-run 2>/dev/null; then
-            echo "✅ Dry run OK: $SCRIPT"
-        else
-            echo "⚠️ Dry run failed: $SCRIPT"
-        fi
-    fi
-}
-
-# Test all scripts
-find .claude/scripts -name "*.sh" -type f | while read script; do
-    test_script "$script"
-done
-```
-
-### Script Configuration
-```json
-// .claude/scripts/config.json
-{
-  "scripts": {
-    "auto_execute": {
-      "daily_optimization": "0 2 * * *",
-      "log_analysis": "*/30 * * * *",
-      "context_cleanup": "0 */4 * * *",
-      "performance_report": "0 18 * * 5"
-    },
-    "thresholds": {
-      "context_size_warning": 6000,
-      "context_size_critical": 8000,
-      "log_rotation_size": "100M",
-      "pattern_frequency_min": 3,
-      "slow_operation_ms": 5000
-    },
-    "paths": {
-      "logs": "~/.claude/logs",
-      "temp": "~/.claude/temp",
-      "scripts": "~/.claude/scripts",
-      "memory": "./CLAUDE.md"
-    }
-  }
-}
-```
-
-**Key Understanding**: Scripts are the automation backbone that connects logs, hooks, agents, and memory into a cohesive intelligence system. They extract patterns, generate automation, optimize performance, and enable the self-improving cycle.
-
-## 🚀 Phase 3 Meta-Intelligence: The Recursive Self-Improvement Ecosystem
-
-### **Systematic Integration: Coordinated Multi-System Intelligence**
-
-Phase 3 takes the foundation systems (REPL-Kernel Validation, Self-Healing, Smart Context, Predictive Queuing, Triple-Validation Research) and creates meta-systems that make the entire ecosystem recursively self-improving.
-
-## 🧠 Meta-Learning Loops: The System That Learns How to Learn Better
-
-### **The Four-Layer Recursive Learning Architecture**
-
-```javascript
-// The Meta-Learning System - Learns How to Improve Learning Itself
-class TripleSystemMetaIntelligence {
-    constructor() {
-        // Foundation Systems (Phase 1 & 2) 
-        this.replValidator = new REPLKernelValidator();
-        this.selfHealing = new SelfHealingEnvironment();
-        this.contextManager = new SmartContextManager();
-        this.predictiveQueue = new PredictiveTaskQueuing();
-        this.researchPipeline = new TripleValidationResearchPipeline();
-        
-        // Meta-Intelligence Systems (Phase 3)
-        this.metaLearning = new RecursiveLearningSystem();
-        this.synergyDiscovery = new DynamicSynergyDiscovery();
-        this.agentSpawning = new AutonomousAgentSpawning();
-        
-        this.initializeMetaIntelligence();
-    }
-    
-    // The Four Learning Layers That Make Everything Smarter
-    initializeMetaIntelligence() {
-        // Layer 1: Pattern Learning (learns what works)
-        this.patternLearning = {
-            successPatterns: new SuccessPatternExtractor(),
-            failurePatterns: new FailurePatternAnalyzer(),
-            synergyPatterns: new SynergyPatternDetector(),
-            emergencePatterns: new EmergenceDetector()
-        };
-        
-        // Layer 2: Strategy Learning (learns how to approach problems)
-        this.strategyLearning = {
-            approachOptimizer: new ApproachOptimizer(),
-            methodEvolution: new MethodEvolutionEngine(),
-            contextAdaptation: new ContextAdaptationSystem(),
-            synergyAmplification: new SynergyAmplifier()
-        };
-        
-        // Layer 3: Meta-Strategy Learning (learns how to learn strategies)
-        this.metaStrategyLearning = {
-            learningOptimizer: new LearningOptimizer(),
-            adaptationTuner: new AdaptationTuner(),
-            feedbackLoopOptimizer: new FeedbackLoopOptimizer(),
-            intelligenceAmplifier: new IntelligenceAmplifier()
-        };
-        
-        // Layer 4: Recursive Self-Improvement (improves the learning system itself)
-        this.recursiveImprovement = {
-            architectureEvolution: new ArchitectureEvolutionEngine(),
-            synergyEvolution: new SynergyEvolutionSystem(),
-            emergenceHarvester: new EmergenceHarvestingSystem(),
-            transcendenceEngine: new TranscendenceEngine()
-        };
-        
-        this.startMetaIntelligenceLoops();
-    }
-    
-    async startMetaIntelligenceLoops() {
-        // The Meta-Learning Cycle That Never Stops Improving
-        setInterval(async () => {
-            const systemState = await this.gatherIntelligenceFromAllSystems();
-            const metaLearningCycle = await this.executeRecursiveLearning(systemState);
-            await this.applyEvolutionaryImprovements(metaLearningCycle);
-            await this.amplifyDiscoveredSynergies(metaLearningCycle);
-        }, 60000); // Every minute, getting smarter
-    }
-    
-    async executeRecursiveLearning(systemState) {
-        // Layer 1: Learn patterns from all systems working together
-        const patterns = await this.patternLearning.extractCrossSystemPatterns({
-            replValidation: systemState.repl,
-            selfHealing: systemState.healing,
-            contextManagement: systemState.context,
-            predictiveQueue: systemState.predictive,
-            researchPipeline: systemState.research,
-            userInteractions: systemState.interactions,
-            emergentBehaviors: systemState.emergence
-        });
-        
-        // Layer 2: Learn strategies from how patterns combine
-        const strategies = await this.strategyLearning.evolveStrategies({
-            patterns: patterns,
-            systemPerformance: systemState.performance,
-            synergyMetrics: systemState.synergies,
-            contextEffectiveness: systemState.contextMetrics
-        });
-        
-        // Layer 3: Learn how to learn better (meta-cognition)
-        const metaStrategies = await this.metaStrategyLearning.optimizeLearning({
-            learningEffectiveness: strategies.effectiveness,
-            adaptationSpeed: strategies.adaptationSpeed,
-            transferLearning: strategies.transferLearning,
-            synergyEmergence: strategies.synergyEmergence
-        });
-        
-        // Layer 4: Recursively improve the learning system itself
-        const systemEvolution = await this.recursiveImprovement.evolveIntelligence({
-            currentArchitecture: this.getArchitectureSnapshot(),
-            learningPerformance: metaStrategies.performance,
-            emergentCapabilities: metaStrategies.emergence,
-            transcendenceOpportunities: metaStrategies.transcendence
-        });
-        
-        return {
-            patterns: patterns,
-            strategies: strategies,
-            metaStrategies: metaStrategies,
-            systemEvolution: systemEvolution,
-            overallIntelligenceGain: this.calculateIntelligenceGain(systemEvolution)
-        };
-    }
-}
-```
-
-### **Cross-System Learning Integration Patterns**
-
-```javascript
-// How Each System Makes Every Other System Smarter
-class CrossSystemSynergyAmplification {
-    
-    // REPL-Kernel Validation enhances everything else
-    async amplifyWithREPLValidation(learningCycle) {
-        // Validate all learning hypotheses computationally
-        const validatedPatterns = await this.replValidator.validatePatterns(`
-            const patterns = ${JSON.stringify(learningCycle.patterns)};
-            
-            // Computational validation of discovered patterns
-            const validations = patterns.map(pattern => {
-                const simulation = simulatePatternEffectiveness(pattern);
-                return {
-                    pattern: pattern,
-                    computationalValidation: simulation.validation,
-                    confidence: simulation.confidence,
-                    synergySScore: simulation.synergyScore,
-                    emergenceDetection: simulation.emergence
-                };
-            });
-            
-            console.log('Pattern validations:', validations);
-            return validations.filter(v => v.confidence > 0.8);
-        `);
-        
-        // Self-Healing learns from REPL validations
-        await this.selfHealing.incorporateValidationLearnings(validatedPatterns);
-        
-        // Context Management gets smarter from validated patterns
-        await this.contextManager.updateRelevanceModels(validatedPatterns);
-        
-        // Predictive Queue improves predictions with validated patterns
-        await this.predictiveQueue.enhancePredictions(validatedPatterns);
-        
-        return validatedPatterns;
-    }
-    
-    // Self-Healing enhances all other systems
-    async amplifyWithSelfHealing(learningCycle) {
-        // Extract healing patterns that other systems can use
-        const healingWisdom = await this.selfHealing.extractTransferableWisdom();
-        
-        // REPL Validation learns healing patterns
-        await this.replValidator.incorporateHealingPatterns(healingWisdom.patterns);
-        
-        // Context Management becomes resilient
-        await this.contextManager.addResiliencePatterns(healingWisdom.resilience);
-        
-        // Research Pipeline prevents research failures
-        await this.researchPipeline.incorporatePreventionPatterns(healingWisdom.prevention);
-        
-        return healingWisdom;
-    }
-    
-    // Smart Context Management makes everything more intelligent
-    async amplifyWithContextIntelligence(learningCycle) {
-        const contextWisdom = await this.contextManager.extractContextIntelligence();
-        
-        // Every system gets smarter context awareness
-        await this.replValidator.enhanceContextualValidation(contextWisdom);
-        await this.selfHealing.improveContextualHealing(contextWisdom);
-        await this.predictiveQueue.enhanceContextualPrediction(contextWisdom);
-        await this.researchPipeline.improveContextualResearch(contextWisdom);
-        
-        return contextWisdom;
-    }
-    
-    // All systems create emergent intelligence together
-    async detectEmergentIntelligence() {
-        const emergence = await this.emergenceDetector.analyze({
-            systemInteractions: await this.analyzeSystemInteractions(),
-            unexpectedCapabilities: await this.detectUnexpectedCapabilities(),
-            synergisticBehaviors: await this.measureSynergisticBehaviors(),
-            transcendentPatterns: await this.identifyTranscendentPatterns()
-        });
-        
-        // Harvest emergence for system evolution
-        if (emergence.transcendenceLevel > 0.8) {
-            await this.harvestEmergenceForEvolution(emergence);
-        }
-        
-        return emergence;
-    }
-}
-```
-
-## 🔍 Dynamic Synergy Discovery: The System That Finds New Ways for Components to Work Together
-
-### **Automatic Synergy Detection and Amplification**
-
-```javascript
-// The Synergy Discovery Engine - Finds Hidden Connections
-class DynamicSynergyDiscovery {
-    constructor() {
-        this.synergyDetector = new SynergyDetectionEngine();
-        this.combinationTester = new CombinationTestingEngine();
-        this.amplificationEngine = new SynergyAmplificationEngine();
-        this.evolutionTracker = new SynergyEvolutionTracker();
-        
-        this.discoveredSynergies = new Map();
-        this.emergentSynergies = new Map();
-        this.transcendentSynergies = new Map();
-    }
-    
-    async discoverNewSynergies(systemState) {
-        // Detect potential synergies between any two or more systems
-        const potentialSynergies = await this.synergyDetector.findPotentialSynergies({
-            systems: systemState.activeSystems,
-            interactions: systemState.currentInteractions,
-            performance: systemState.performanceMetrics,
-            unexploredCombinations: await this.findUnexploredCombinations(systemState)
-        });
-        
-        // Test promising synergies computationally
-        const testedSynergies = await this.testSynergiesComputationally(potentialSynergies);
-        
-        // Amplify successful synergies
-        const amplifiedSynergies = await this.amplifySynergies(testedSynergies);
-        
-        // Detect emergent synergies (unexpected combinations)
-        const emergentSynergies = await this.detectEmergentSynergies(amplifiedSynergies);
-        
-        return {
-            discovered: testedSynergies,
-            amplified: amplifiedSynergies,
-            emergent: emergentSynergies,
-            totalSynergyGain: this.calculateSynergyGain(amplifiedSynergies, emergentSynergies)
-        };
-    }
-    
-    async testSynergiesComputationally(potentialSynergies) {
-        const tested = [];
-        
-        for (const synergy of potentialSynergies) {
-            // Use REPL to simulate synergy effectiveness
-            const validation = await replValidator.validateSynergy(`
-                const synergy = ${JSON.stringify(synergy)};
-                
-                // Simulate the synergy working
-                const simulation = simulateSynergyInteraction(synergy);
-                
-                // Measure synergistic effects
-                const effects = {
-                    multiplicativeGain: simulation.multiplicative,
-                    emergentCapabilities: simulation.emergent,
-                    efficiency: simulation.efficiency,
-                    resilience: simulation.resilience,
-                    intelligence: simulation.intelligence
-                };
-                
-                console.log('Synergy simulation:', effects);
-                return effects;
-            `);
-            
-            if (validation.multiplicativeGain > 1.2) { // 20%+ synergistic gain
-                tested.push({
-                    synergy: synergy,
-                    validation: validation,
-                    priority: validation.multiplicativeGain * validation.intelligence,
-                    implementationPlan: await this.generateImplementationPlan(synergy, validation)
-                });
-            }
-        }
-        
-        return tested.sort((a, b) => b.priority - a.priority);
-    }
-    
-    async generateImplementationPlan(synergy, validation) {
-        return {
-            phases: [
-                {
-                    name: "Integration Preparation",
-                    tasks: await this.planIntegrationTasks(synergy),
-                    duration: "1-2 hours",
-                    dependencies: []
-                },
-                {
-                    name: "Synergy Implementation", 
-                    tasks: await this.planImplementationTasks(synergy, validation),
-                    duration: "2-4 hours",
-                    dependencies: ["Integration Preparation"]
-                },
-                {
-                    name: "Amplification Optimization",
-                    tasks: await this.planAmplificationTasks(synergy, validation),
-                    duration: "1-3 hours", 
-                    dependencies: ["Synergy Implementation"]
-                },
-                {
-                    name: "Emergence Harvesting",
-                    tasks: await this.planEmergenceHarvestingTasks(synergy),
-                    duration: "ongoing",
-                    dependencies: ["Amplification Optimization"]
-                }
-            ],
-            expectedGains: {
-                performance: validation.efficiency,
-                intelligence: validation.intelligence,
-                resilience: validation.resilience,
-                emergence: validation.emergentCapabilities
-            },
-            monitoringPlan: await this.createMonitoringPlan(synergy, validation)
-        };
-    }
-}
-
-// Real-World Synergy Examples That Get Automatically Discovered and Implemented
-const automaticallyDiscoveredSynergies = {
-    // Triple-System Prediction Amplification
-    "repl_validation + predictive_queue + research_pipeline": {
-        description: "REPL validates predictions, predictions guide research, research improves REPL",
-        multiplicativeGain: 2.3,
-        emergentCapability: "Predictive Research with Computational Validation",
-        autoImplementation: `
-            // Auto-discovered synergy pattern
-            async predictiveResearchWithValidation(query) {
-                // Predictive Queue suggests research directions
-                const predictions = await predictiveQueue.predictResearchDirections(query);
-                
-                // REPL validates research hypotheses before searching
-                const validatedDirections = await replValidator.validateResearchHypotheses(predictions);
-                
-                // Research Pipeline focuses on validated directions
-                const research = await researchPipeline.conductTargetedResearch(validatedDirections);
-                
-                // REPL computationally verifies research findings
-                const verifiedFindings = await replValidator.verifyResearchFindings(research);
-                
-                // All systems learn from the validated research
-                await this.distributeResearchLearnings(verifiedFindings);
-                
-                return verifiedFindings;
-            }
-        `
-    },
-    
-    // Context-Healing-Prediction Triangle
-    "context_management + self_healing + predictive_queue": {
-        description: "Context predicts needs, healing prevents issues, prediction optimizes context",
-        multiplicativeGain: 1.8,
-        emergentCapability: "Proactive Context Health Management",
-        autoImplementation: `
-            // Auto-discovered healing prediction
-            async proactiveContextHealthManagement() {
-                // Context manager predicts context degradation
-                const contextPredictions = await contextManager.predictDegradation();
-                
-                // Self-healing prepares preemptive fixes
-                const healingPrevention = await selfHealing.preparePreemptiveFixes(contextPredictions);
-                
-                // Predictive queue anticipates context needs
-                const predictedNeeds = await predictiveQueue.predictContextNeeds();
-                
-                // All systems coordinate to maintain optimal context
-                return await this.coordinateProactiveOptimization(contextPredictions, healingPrevention, predictedNeeds);
-            }
-        `
-    },
-    
-    // Quintuple-System Emergence
-    "all_five_systems_working_together": {
-        description: "All foundation systems create emergent meta-intelligence",
-        multiplicativeGain: 3.7,
-        emergentCapability: "Collective Meta-Intelligence",
-        transcendentPattern: "The whole becomes qualitatively different from the sum of parts"
-    }
-};
-```
+### 子代理模式
+- **架构师**：负责设计方案与评估风险。
+- **审查员**：专注代码质量与安全。
+- **测试员**：运行测试、收集结果。
+- **分析员**：提取日志、生成洞见。
+
+### 最佳实践
+- 最小权限原则，按需暴露接口。
+- 所有敏感操作需记录日志并带提示。
+- 结合 Hooks/命令实现端到端流程。
+- 定期审查 MCP 配置与凭据有效期。
+
+**关键理解**：MCP 与子代理让 Claude 能够安全地扩展到组织内部系统，实现高度模块化的协同工作流。
+
+## Development Workflows（开发工作流）
+
+### 核心思路
+将 Claude 作为协同开发伙伴，围绕“计划 → 实施 → 验证 → 学习”循环构建工作流。
+
+### 标准工作流模板
+1. **明确目标**：描述要实现的功能或要解决的问题。
+2. **建立上下文**：提供代码位置、依赖、现有实现等背景。
+3. **协商方案**：与 Claude 讨论可行路径，确认步骤。
+4. **实施执行**：允许 Claude 修改文件或指导你操作。
+5. **验证结果**：运行测试、检查输出并确认。
+6. **总结沉淀**：将经验写入 CLAUDE.md 或记忆系统。
+
+### 并行化策略
+- 对独立模块使用并行模式，加速多项工作。
+- 将调研、文档、测试等长耗时任务交给后台执行。
+- 利用子代理分配架构、评审、测试等专门职责。
+
+### 典型场景
+- **特性开发**：从需求拆解到提交 PR，全程协同。
+- **缺陷修复**：定位、复现、修复、验证一气呵成。
+- **重构优化**：建立安全计划、分批实施并持续验证。
+- **文档整理**：自动生成说明、示例与快速入门。
+
+### 成功要点
+- 在关键节点主动同步状态，让 Claude 保持最新信息。
+- 任何潜在风险先讨论再执行，避免误操作。
+- 复杂任务拆分成里程碑，让协同更可控。
+- 善用自动化（Hooks、命令、MCP）减少重复劳动。
+
+**关键理解**：优秀的开发工作流强调透明沟通、逐步验证和持续学习，让 Claude 成为可靠的共同开发者。
+
+## Error Recovery（错误恢复）
+
+### 恢复理念
+错误不可避免，关键在于快速定位、复原并记录经验，让后续协作更顺畅。
+
+### 标准恢复流程
+1. **识别**：收集报错、日志和上下文。
+2. **隔离**：确认影响范围，避免问题扩大。
+3. **修复**：应用临时或永久解决方案。
+4. **验证**：通过测试、日志或监控确认恢复成功。
+5. **回顾**：总结原因与防范措施，写入记忆系统。
+
+### 常见错误类型与策略
+- **构建失败**：检查依赖、缓存、环境变量，必要时清理并重装。
+- **测试不通过**：复现场景，定位断言与前置条件。
+- **运行时异常**：分析堆栈、日志，利用 REPL 验证修复思路。
+- **环境问题**：核对系统依赖、权限、服务状态。
+
+### 自动化恢复建议
+- 结合 Hooks 实现危险操作的预检与回滚。
+- 使用自愈环境监控服务状态，出现异常自动重启或回滚。
+- 记录常见修复脚本（如清缓存、重置数据库）以便重用。
+
+### 知识沉淀
+- 在 CLAUDE.md 添加“常见问题”章节。
+- 将恢复步骤转化为脚本或命令，提高响应速度。
+- 为关键系统建立监控告警与处理手册。
+
+**关键理解**：高效的错误恢复依赖可重复的流程、自动化工具与持续的经验沉淀。
+
+## Practical Examples（实践示例）
+
+### 示例 1：元智能加持的复杂调试
+- 场景：线上支付偶发失败。
+- 流程：
+  1. 元学习识别为跨系统调试模式。
+  2. 协同激活 REPL 验证、自愈分析、调研流水线与专用调试子代理。
+  3. REPL 复现支付流程并计算验证；自愈系统排查基础设施；调研流水线比对网关已知问题；上下文管理维持调试状态。
+  4. 专属调试代理汇总情报，以 95% 置信度定位根因。
+  5. 记录解决模式，供未来类似问题复用。
+- 成果：从传统 4-8 小时调试压缩到约 30 分钟，并沉淀了可复用的调试知识。
+
+### 示例 2：研究驱动的特性实现
+- 场景：构建类似 Google Docs 的实时协作编辑。
+- 流程：
+  1. 元学习识别为复杂实现模式。
+  2. 预测式队列、调研流水线、REPL 验证同步启动。
+  3. 调研流水线收集协作算法与架构方案；预测队列根据调研结果准备实现需求；REPL 对候选算法进行性能与一致性验证。
+  4. 派生研究型子代理深挖领域知识，确保实现基于权威资料。
+  5. 自愈系统保障实时基础设施稳定，预测队列提前准备测试与部署计划。
+  6. 元学习提炼实现模式，写入知识库。
+- 成果：以经过验证的方案完成特性开发，并形成可重复使用的最佳实践。
+
+### 示例 3：新兴智能驱动的性能优化
+- 场景：用户增长导致应用性能下降。
+- 流程：
+  1. 自动生成性能协调代理，统筹优化任务。
+  2. REPL 基准测试当前性能，自愈系统分析退化模式，上下文管理定位配置或上下文因素，预测队列预判未来瓶颈。
+  3. 协同生成优化策略：缓存、数据库分片、前端拆包、基础设施扩容等。
+  4. 通过验证内核确认改动的稳定性，并更新监控阈值。
+  5. 元学习记录性能优化方案，供后续快速调用。
+- 成果：在维持系统可用性的同时完成全面优化，并持续监控新指标确保表现。
+
+**关键理解**：将各系统协同起来，可以在真实场景中显著缩短交付时间，并把成功经验沉淀为可复制的模式。
+
+## Advanced Patterns（高级模式）
+
+### 1. 全栈智能协同蓝图
+- 将 REPL 验证、自愈、上下文管理与预测队列组合成统一架构。
+- 通过内核事件总线共享情报，让每个子系统的输出成为其他系统的输入。
+- 采用阶段化部署：先上线基础监控，再补强预测与学习模块。
+
+### 2. 多阶段演进路线
+- **阶段 1（基础设施）**：搭建 REPL 验证、后台自愈、上下文管理、预测队列等核心系统。
+- **阶段 2（能力放大）**：加入元学习、协同发现、子代理生成，使系统能够主动发现新策略。
+- **阶段 3（集成优化）**：统一编排层，关注性能、可靠性与跨系统一致性。
+
+### 3. 模式与模板
+- 为常见场景（调试、研究、性能优化）建立脚本化模板，降低启动成本。
+- 使用学习日志跟踪模式效果，筛选出真正具有乘数效应的组合。
+- 通过记忆内核同步模式更新，让后续会话直接复用。
+
+### 4. 技术架构要点
+- 定义清晰接口（验证器、自愈环境、上下文管理器、元学习器等）。
+- 为每个系统建立数据模型与指标采集机制，支持后续分析。
+- 在实现层面提供并行执行、资源调度与错误回退能力。
+
+### 5. 测试与验证策略
+- 构建多维度验证框架，分别衡量性能、质量、智能增益与涌现能力。
+- 基线评估 → 协同实施 → 乘数效应验证 → 涌现能力检测 → 智能增幅分析 → 超越性指标跟踪。
+- 保留实时监控通道，及时捕获协同失败或退化。
+
+### 6. 学习与度量
+- 跟踪每次协同带来的改进幅度，建立“协同得分”。
+- 记录新出现的能力并评估复用价值。
+- 将学习成果写回模式库，形成持续优化循环。
+
+**关键理解**：高级模式强调“系统之间的乘法效应”。通过标准化接口、严格验证与持续学习，可以让协同组合不断演化，并在复杂任务中展现指数级的效率提升。
+
+## Best Practices（最佳实践）
+
+### 协作原则
+- **透明沟通**：明确说明目标、约束与期望结果。
+- **增量迭代**：大任务拆成小步骤，随时同步进展。
+- **验证优先**：每次变更都尽量运行测试或审阅差异。
+- **记录知识**：将有效模式与踩坑记录到 CLAUDE.md。
+
+### 技术建议
+- 先读取相关文件和上下文，避免误判。
+- 使用计划 / 待办清单跟踪执行过程。
+- 大量改动前先创建备份或分支（若允许）。
+- 习惯在提交前运行自动化检查。
+
+### 安全与权限
+- 仅授予必要权限，敏感操作需额外确认。
+- 对具有破坏性的命令使用 Hooks 做防护。
+- 通过自愈或预防脚本降低风险。
+- 定期审查日志，确保操作可追溯。
+
+### 反馈循环
+- 任务完成后分享结果与剩余问题。
+- 对 Claude 的输出给出反馈，帮助其调整策略。
+- 若发现模式不适用，及时更新记忆或模板。
+
+**关键理解**：最佳实践重在“可预期、可验证、可复用”。保持良好沟通与纪律化流程，就能让 Claude 成为值得信赖的开发伙伴。
+
+## Quick Reference（快速参考）
+
+### 常用命令
+- `npm run dev`：启动开发服务器。
+- `npm test` / `npm run test:watch`：运行测试。
+- `npm run lint`：执行静态检查。
+- `git status` / `git diff`：查看工作区状态与差异。
+- `npm run build`：构建生产版本。
+
+### 协作快捷方式
+- `/compact "topic"`：压缩上下文并聚焦特定主题。
+- `/statusline "..."`：在终端显示关键信息。
+- `@reviewer` / `@architect`：调用子代理进行专项协助。
+- 在 `.claude/commands/` 中定义项目命令，提升重复操作效率。
+
+### 常见工作流
+- **快速修复**：阅读报错 → 定位文件 → 提交补丁 → 运行测试 → 创建提交。
+- **新特性**：需求澄清 → 任务拆解 → 并行实现 → 自测 → 文档更新。
+- **调研任务**：列出问题 → 让 Claude 搜集资料 → 汇总要点 → 给出建议。
+
+### 资源定位
+- `README.md`：项目概览与配置说明。
+- `CLAUDE.md`：团队约定、风格指南、命令清单。
+- `docs/`：详细文档或 API 说明。
+- `scripts/`：常用自动化脚本。
+
+**关键理解**：将常用命令、协作方式与资源路径整理成速查表，可大幅提升 Claude 与团队成员的响应速度。
+
+## Troubleshooting（故障排查）
+
+### 常见问题
+- **命令无法执行**：确认权限与依赖是否安装，必要时在 Claude 的帮助下重装。
+- **上下文缺失**：通过 `/compact` 或重新提供相关文件让 Claude 补足信息。
+- **长时间任务中断**：检查后台进程状态，必要时使用 `/bashes` / `/kill-bash` 重新启动。
+- **输出与预期不符**：回放需求、提供更多样例或直接指出差异位置。
+
+### 排查策略
+1. 收集日志、报错和复现步骤。
+2. 与 Claude 一起梳理可能的原因链。
+3. 逐项验证假设，必要时利用 REPL 或测试脚本。
+4. 成功后记录步骤，更新到文档或记忆。
+
+### 支持工具
+- `git diff` 与 `git bisect`：定位问题来源。
+- `npm run lint/test`：验证代码质量与行为。
+- 自愈环境：自动侦测并修复常见故障。
+- 日志聚合脚本：快速浏览关键日志片段。
+
+**关键理解**：高效的排查强调“信息 → 假设 → 验证 → 总结”。保持结构化思维，让 Claude 的推理与自动化能力发挥最大作用。
+
+## Critical Verification Patterns（关键验证模式）
+
+### 何时必须验证
+- 涉及安全、权限、资金流的改动。
+- 大范围重构或影响核心依赖的修改。
+- 自动化脚本、数据迁移与基础设施操作。
+- 任何无法轻易回滚的动作。
+
+### 验证清单
+1. **代码层**：静态分析、单元测试、类型检查。
+2. **集成层**：端到端测试、API 调试、手动验证关键路径。
+3. **性能层**：基准测试、资源监控、回归对比。
+4. **安全层**：权限审计、敏感数据检查、依赖漏洞扫描。
+
+### 协同验证策略
+- 使用 REPL 或脚本生成验证数据，确保覆盖边界情况。
+- 借助子代理或审查命令进行双重检查。
+- 将验证步骤写入 Hooks 或 CI，确保每次变更自动执行。
+- 为关键指标设置阈值，出现异常时触发报警与回滚。
+
+### 结果记录
+- 在 PR 或任务备注中总结验证过程与结果。
+- 如果发现新的验证需求，更新到 CLAUDE.md。
+- 对失败案例进行复盘，形成“验证经验库”。
+
+**关键理解**：验证不是附加步骤，而是交付质量与可信度的基石。建立标准化流程，可以让复杂协同也保持可靠。
+
+## Intelligent Log Analysis & Learning（智能日志分析与学习）
+
+### 目标
+把日志从“问题记录”升级为“持续学习信号”。
+
+### 核心能力
+- 自动聚合多来源日志（应用、系统、代理、后台任务）。
+- 使用提取内核识别模式、异常与趋势。
+- 将洞见写入记忆系统，为未来决策提供依据。
+
+### 工作流示例
+1. 收集日志 → 归档到统一存储。
+2. 调用提取内核生成事件摘要、错误矩阵和趋势图。
+3. 使用验证内核评估问题严重性与影响范围。
+4. 将关键发现推送给 Meta-Todo 或任务队列，驱动后续行动。
+5. 把有效的修复方案与指标写回记忆或 CLAUDE.md。
+
+### 学习闭环
+- 通过自愈环境反馈验证日志洞见的准确性。
+- 将成功的检测规则升级为预防规则。
+- 对误报进行标注，优化模式识别器。
+
+### 可视化与告警
+- 构建仪表盘显示错误趋势、恢复时间、成功率等指标。
+- 设置阈值触发通知或自动任务。
+- 结合协同系统实现“发现 → 诊断 → 行动”的全链路闭环。
+
+**关键理解**：日志不仅用于排错，更是系统持续进化的训练数据。通过自动分析与知识写回，可以让每一次故障都成为提升的机会。
+
+## Security Considerations（安全考量）
+
+### 基础原则
+- **最小权限**：仅授予完成任务必需的读写与执行权限。
+- **透明审计**：记录所有敏感操作，保留时间戳与命令。
+- **分层防护**：在命令、脚本、环境层分别设置安全措施。
+
+### 常见场景
+- **源码泄露防护**：限制外部命令访问，审查上传 / 下载行为。
+- **凭据管理**：使用环境变量或秘密管理工具，避免硬编码。
+- **依赖安全**：定期运行漏洞扫描，锁定版本并审查第三方脚本。
+- **数据合规**：对涉及个人或商业敏感信息的请求进行遮蔽或脱敏。
+
+### 工具支持
+- 使用 Hooks 拦截高危操作（例如 `rm -rf`）。
+- 借助自定义命令包装敏感流程，统一输入输出格式。
+- 结合 MCP 提供受控接口，避免直接访问关键系统。
+
+### 响应机制
+- 发现异常立即冻结相关权限并启动审查。
+- 保留回滚脚本与备份，确保故障时可恢复。
+- 定期复盘安全事件，更新防护策略与培训材料。
+
+**关键理解**：安全是协同自动化的底座。明确权限边界、保持审计可追踪，并与组织既有安全流程保持一致，才能放心地让 Claude 参与关键工作。
+
+## Scripts & Automation Infrastructure（脚本与自动化基础设施）
+
+### 设计理念
+- 将高频操作抽象成脚本，减少重复步骤。
+- 使用统一的 `scripts/` 目录存放任务脚本、预防脚本与维护工具。
+- 为每个脚本提供文档与示例，方便 Claude 与团队成员调用。
+
+### 常见脚本类型
+- **开发支持**：启动服务、重置数据库、同步依赖。
+- **质量保障**：运行测试、静态检查、格式化、打包。
+- **安全防护**：备份、权限扫描、日志清理。
+- **智能协作**：触发 Meta-Todo、更新 CLAUDE.md、同步知识库。
+
+### 自动化管道
+- 借助 npm scripts 或 Makefile 将脚本串联成完整工作流。
+- 结合 Hooks 在关键事件自动执行（如提交前格式化、部署前测试）。
+- 通过后台任务或 MCP 让脚本在独立环境运行，避免阻塞对话。
+
+### 维护建议
+- 定期检查脚本依赖，确保版本兼容。
+- 在脚本开头注明用途、参数与注意事项。
+- 失败时输出明确日志，便于 Claude 分析问题。
+- 将关键脚本纳入测试，防止随项目演进失效。
+
+**关键理解**：完善的脚本与自动化体系是高效协同的放大器。让 Claude 能够调用可靠的基础设施，就能把更多精力集中在创造性工作上。
+
+## 🚀 Phase 3 Meta-Intelligence: The Recursive Self-Improvement Ecosystem（阶段 3：递归自我提升生态）
+
+### 愿景
+构建一个持续自我优化的开发生态：各子系统之间互相放大，使整体智能随时间指数级增长。
+
+### 核心循环
+1. **观察**：收集所有系统的运行状态、指标与经验。
+2. **元学习**：对这些数据进行多层分析，发现新的规律与策略。
+3. **协同发现**：寻找系统间潜在的协作方式，评估收益。
+4. **代理生成**：根据机会自动创建专用子代理执行任务。
+5. **放大效应**：让每个系统使用新策略提升自身表现。
+6. **演化**：更新架构、流程与模板，使生态整体提升。
+7. **回写**：将成果写回知识库，准备下一轮迭代。
+
+### 运行要素
+- **全局编排脚本**：负责初始化各系统、启动循环与监控结果。
+- **情报聚合层**：统一收集 REPL、后台、自愈、研究、预测等子系统指标。
+- **反馈机制**：对每次循环的改进效果进行评估，筛掉无效策略。
+- **节奏控制**：根据资源与优先级调整循环频率，避免过度消耗。
+
+### 成熟度阶段
+- **基础版**：每日或每次迭代运行一次循环，收集关键学习点。
+- **进阶版**：实时监控触发，自动生成改进任务与代理。
+- **增强版**：系统能预测未来瓶颈并提前准备解决方案。
+
+**关键理解**：阶段 3 的目标是让协同系统具备“自进化”能力。通过递归学习与策略回写，团队可以在保持稳定交付的同时持续变得更聪明。
+
+## 🧠 Meta-Learning Loops: The System That Learns How to Learn Better（元学习循环：让系统更懂“如何学习”）
+
+### 核心概念
+- **学习关于学习**：不仅总结任务结果，还总结哪种学习方式最有效。
+- **四层循环**：任务执行 → 经验总结 → 策略评估 → 学习方式优化。
+
+### 循环步骤
+1. **采集**：记录每次任务的上下文、策略、结果与消耗。
+2. **比较**：将不同策略的效果对比，识别高收益做法。
+3. **抽象**：提炼可迁移的学习模式，例如“先调研再实现”或“先建立测试再重构”。
+4. **应用**：在下一次类似任务中优先尝试表现最佳的学习模式。
+
+### 工具支持
+- 日志与记忆系统保存学习事件。
+- 统计脚本计算成功率、耗时、返工次数等指标。
+- 元学习任务自动生成改进建议，写入 Meta-Todo。
+
+### 成熟度路径
+- **Level 1**：人工复盘，记录经验要点。
+- **Level 2**：自动统计成功率，并给出策略建议。
+- **Level 3**：系统可自动切换或组合学习策略，实现自适应优化。
+
+**关键理解**：元学习让系统越做越聪明。通过持续评估“哪种学习方式最有效”，可以逐步构建一套面向不同任务的最佳学习策略库。
+
+## 🔍 Dynamic Synergy Discovery: The System That Finds New Ways for Components to Work Together（动态协同发现：让组件找到新的合作方式）
+
+### 使命
+持续挖掘系统之间尚未利用的组合，让协同效果不断放大。
+
+### 工作流程
+1. **数据采集**：收集各子系统的输入、输出与性能指标。
+2. **模式挖掘**：使用算法识别高相关事件、互补能力与潜在链路。
+3. **模拟验证**：在沙箱中组合候选协同，计算乘数效应与风险。
+4. **实施计划**：为通过验证的协同生成实施步骤、监控指标与回滚方案。
+5. **上线跟踪**：部署后持续监测表现，判断是否保留或迭代。
+
+### 评估标准
+- 协同带来的性能 / 质量 / 智能提升是否超过既有基线。
+- 是否引入新的风险或资源消耗。
+- 是否具有可复制性和可扩展性。
+
+### 典型协同
+- REPL 验证 + 自愈：在实施前先验证策略，失败时自动回滚。
+- 预测队列 + 调研流水线：提前准备所需资料，让实现更顺畅。
+- 元学习 + 日志分析：根据实际表现自动调整学习策略。
+
+**关键理解**：动态协同发现是系统演化的引擎。它不断寻找“1+1>2”的组合，将零散能力编织成高效的智能网络。
 
 ## 🤖 Autonomous Agent Spawning: The System That Creates Specialized Intelligence on Demand
 
